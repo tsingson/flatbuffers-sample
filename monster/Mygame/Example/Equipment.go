@@ -110,12 +110,12 @@ func (rcv Equipment) UnPackVector(table flatbuffers.Table) *EquipmentT {
 		x := GetTableVectorAsSpaceShip(&table)
 		return &EquipmentT{Type: EquipmentSpaceShip, Value: x.UnPack()}
 	case EquipmentOther:
-		x := ""
-		b := table.ByteVector(table.Pos)
-		if b != nil {
-			x = string(b)
+		x:=""
+		b:=table.ByteVector(table.Pos)
+		if b!=nil {
+			x =  string(b)
 		}
-		return &EquipmentT{Type: EquipmentOther, Value: x}
+		return &EquipmentT{Type: EquipmentOther, Value: x }
 	}
 	return nil
 }

@@ -9,4 +9,7 @@ table Gun {
   names:[string];
 }
 
+table Null {
+
+}
 
