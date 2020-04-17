@@ -1,0 +1,16 @@
+
+include "monster.fbs";
+// namespace MyGame;
+attribute "go_module:github.com/tsingson/flatbuffers-sample/namespace/";
+
+union Character {
+    weapon: weapons.Gun,
+   Monster: MyGame.Sample.Monster,
+}
+
+table MyGame {
+    Characters:Character;
+
+}
+root_type MyGame;
+file_identifier "MGME";

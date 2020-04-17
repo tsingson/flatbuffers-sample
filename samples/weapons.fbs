@@ -1,0 +1,12 @@
+namespace weapons;
+
+attribute "go_module:github.com/tsingson/flatbuffers-sample/samples/";
+
+table Gun {
+  damage:short;
+  bool:bool;
+  name:string;
+  names:[string];
+}
+
+

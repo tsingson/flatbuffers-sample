@@ -1,0 +1,33 @@
+// Demonstrates the ability to have vectors of unions, and also to
+// store structs and strings in unions.
+
+attribute "go_module:github.com/tsingson/flatbuffers-sample/union-vector/";
+
+table Attacker {
+  sword_attack_damage: int;
+}
+
+struct Rapunzel {
+  hair_length: int;
+}
+
+struct BookReader {
+  books_read: int;
+}
+
+union Character {
+  MuLan: Attacker,  // table
+  Rapunzel,         // struct
+  Belle: BookReader,
+  BookFan: BookReader,
+  Other: string,   // string
+  Unused: string
+}
+
+table Movie {
+  main_character: Character;
+  characters: [Character];  // vector of unions
+}
+
+root_type Movie;
+file_identifier "MOVI";
