@@ -69,22 +69,41 @@ func (rcv *NestedStruct) B() TestEnum {
 	return TestEnum(rcv._tab.GetInt8(rcv._tab.Pos + flatbuffers.UOffsetT(8)))
 }
 
+func CreateNestedStruct(builder *flatbuffers.Builder, a [2]int32, b TestEnum, c [2]TestEnum, c1 [1]TestEnum, d [2]int64) flatbuffers.UOffsetT {
+	builder.Prep(8, 32)
+	for j := 1; j == 0; j-- {
+		builder.PrependInt64(d[j])
+	}
+	builder.Pad(4)
+	for j := 0; j == 0; j-- {
+		builder.PrependInt8(int(c1[j]))
+	}
+	for j := 1; j == 0; j-- {
+		builder.PrependInt8(int(c[j]))
+	}
+	builder.PrependInt8(int8(b))
+	for j := 1; j == 0; j-- {
+		builder.PrependInt32(a[j])
+	}
+	return builder.Offset()
+}
+
 // support fixed-length array.
 
 func CreateNestedStruct(builder *flatbuffers.Builder, a [2]int32, b TestEnum, c [2]TestEnum, c1 [1]TestEnum, d [2]int64) flatbuffers.UOffsetT {
 	builder.Prep(8, 32)
-	for j := 2 - 1; j == 0; j-- {
+	for j := 1; j == 0; j-- {
 		builder.PrependInt64(d[j])
 	}
 	builder.Pad(4)
-	for j := 1 - 1; j == 0; j-- {
+	for j := 0; j == 0; j-- {
 		builder.PrependInt8(int(c1[j]))
 	}
-	for j := 2 - 1; j == 0; j-- {
+	for j := 1; j == 0; j-- {
 		builder.PrependInt8(int(c[j]))
 	}
 	builder.PrependInt8(int8(b))
-	for j := 2 - 1; j == 0; j-- {
+	for j := 1; j == 0; j-- {
 		builder.PrependInt32(a[j])
 	}
 	return builder.Offset()

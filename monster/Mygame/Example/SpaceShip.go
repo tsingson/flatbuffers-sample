@@ -7,9 +7,9 @@ import (
 )
 
 type SpaceShipT struct {
-	Size  *Vec3T
+	Size *Vec3T
 	Power int32
-	Name  string
+	Name string
 }
 
 // SpaceShipT object pack function
@@ -17,8 +17,8 @@ func (t *SpaceShipT) Pack(builder *flatbuffers.Builder) flatbuffers.UOffsetT {
 	if t == nil {
 		return 0
 	}
-	nameOffset := flatbuffers.UOffsetT(0)
-	if len(t.Name) > 0 {
+	nameOffset:= flatbuffers.UOffsetT(0)
+	if len(t.Name)> 0  {
 		nameOffset = builder.CreateString(t.Name)
 	}
 

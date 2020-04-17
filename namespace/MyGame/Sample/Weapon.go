@@ -7,7 +7,7 @@ import (
 )
 
 type WeaponT struct {
-	Name   string
+	Name string
 	Damage int16
 }
 
@@ -16,8 +16,8 @@ func (t *WeaponT) Pack(builder *flatbuffers.Builder) flatbuffers.UOffsetT {
 	if t == nil {
 		return 0
 	}
-	nameOffset := flatbuffers.UOffsetT(0)
-	if len(t.Name) > 0 {
+	nameOffset:= flatbuffers.UOffsetT(0)
+	if len(t.Name)> 0  {
 		nameOffset = builder.CreateString(t.Name)
 	}
 

@@ -16,6 +16,7 @@ func (t *MyGameT) Pack(builder *flatbuffers.Builder) flatbuffers.UOffsetT {
 		return 0
 	}
 	CharactersOffset := t.Characters.Pack(builder)
+	
 
 	// pack process all field
 

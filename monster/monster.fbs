@@ -1,6 +1,6 @@
 // Example IDL file for our monster's schema.
 
-include "../weapons.fbs";
+include "./weapons.fbs";
 
 namespace Mygame.Example;
 

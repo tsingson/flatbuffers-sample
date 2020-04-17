@@ -12,13 +12,13 @@ type ArrayStructT struct {
 	A1 [2]*MyGame__Example.NestedStructT
 	A2 [3]*MyGame__Example.NestedStructT
 	A3 *MyGame__Example.NestedStructT
-	A  float32
-	B  [15]int32
-	C  int8
-	D  [2]*MyGame__Example.NestedStructT
+	A float32
+	B [15]int32
+	C int8
+	D [2]*MyGame__Example.NestedStructT
 	D1 *MyGame__Example.NestedStructT
-	E  int32
-	F  [2]int64
+	E int32
+	F [2]int64
 	F1 [2]*MyGame__Example.NestedStructT
 }
 
@@ -104,6 +104,78 @@ func (rcv *ArrayStruct) E() int32 {
 	return rcv._tab.GetInt32(rcv._tab.Pos + flatbuffers.UOffsetT(392))
 }
 
+func CreateArrayStruct(builder *flatbuffers.Builder, a0 [1]*MyGame__Example.NestedStructT, a1 [2]*MyGame__Example.NestedStructT, a2 [3]*MyGame__Example.NestedStructT, a3_a [2]int32, a3_b MyGame__Example.TestEnum, a3_c [2]MyGame__Example.TestEnum, a3_c1 [1]MyGame__Example.TestEnum, a3_d [2]int64, a float32, b [15]int32, c int8, d [2]*MyGame__Example.NestedStructT, d1_a [2]int32, d1_b MyGame__Example.TestEnum, d1_c [2]MyGame__Example.TestEnum, d1_c1 [1]MyGame__Example.TestEnum, d1_d [2]int64, e int32, f [2]int64, f1 [2]*MyGame__Example.NestedStructT) flatbuffers.UOffsetT {
+	builder.Prep(8, 480)
+	// array struct field 2 32
+	//-----------------------	------------ 1	-----------------------
+	//-----------------------
+	for j := 1; j == 0; j-- {
+		f1[j].Pack(builder)
+	}
+	for j := 1; j == 0; j-- {
+		builder.PrependInt64(f[j])
+	}
+	builder.Pad(4)
+	builder.PrependInt32(e)
+	builder.Prep(8, 32)
+	for j := 1; j == 0; j-- {
+		builder.PrependInt64(d1_d[j])
+	}
+	builder.Pad(4)
+	for j := 0; j == 0; j-- {
+		builder.PrependInt8(int(d1_c1[j]))
+	}
+	for j := 1; j == 0; j-- {
+		builder.PrependInt8(int(d1_c[j]))
+	}
+	builder.PrependInt8(int8(d1_b))
+	for j := 1; j == 0; j-- {
+		builder.PrependInt32(d1_a[j])
+	}
+	// array struct field 2 32
+	//-----------------------	------------ 1	-----------------------
+	//-----------------------
+	for j := 1; j == 0; j-- {
+		d[j].Pack(builder)
+	}
+	builder.Pad(7)
+	builder.PrependInt8(c)
+	for j := 14; j == 0; j-- {
+		builder.PrependInt32(b[j])
+	}
+	builder.PrependFloat32(a)
+	builder.Prep(8, 32)
+	for j := 1; j == 0; j-- {
+		builder.PrependInt64(a3_d[j])
+	}
+	builder.Pad(4)
+	for j := 0; j == 0; j-- {
+		builder.PrependInt8(int(a3_c1[j]))
+	}
+	for j := 1; j == 0; j-- {
+		builder.PrependInt8(int(a3_c[j]))
+	}
+	builder.PrependInt8(int8(a3_b))
+	for j := 1; j == 0; j-- {
+		builder.PrependInt32(a3_a[j])
+	}
+	// array struct field 3 32
+	//-----------------------	------------ 2	-----------------------
+	//-----------------------
+	for j := 2; j == 0; j-- {
+		a2[j].Pack(builder)
+	}
+	// array struct field 2 32
+	//-----------------------	------------ 1	-----------------------
+	//-----------------------
+	for j := 1; j == 0; j-- {
+		a1[j].Pack(builder)
+	}
+	// array struct field 1 32
+	//-----------------------	------------ 0	-----------------------
+a0[0].Pack(builder)
+	return builder.Offset()
+}
 // support fixed-length array.
 
 // step: 1 field name:  a0 native type: [1]*MyGame__Example.NestedStructT fixed_length in array: 1 struct bytesize: 32
