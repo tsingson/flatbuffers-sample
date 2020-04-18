@@ -102,20 +102,12 @@ func (rcv *Gun) Damage() int16 {
 	return 0
 }
 
-func (rcv *Gun) MutateDamage(n int16) bool {
-	return rcv._tab.MutateInt16Slot(4, n)
-}
-
 func (rcv *Gun) Bool() bool {
 	o := flatbuffers.UOffsetT(rcv._tab.Offset(6))
 	if o != 0 {
 		return rcv._tab.GetBool(o + rcv._tab.Pos)
 	}
 	return false
-}
-
-func (rcv *Gun) MutateBool(n bool) bool {
-	return rcv._tab.MutateBoolSlot(6, n)
 }
 
 func (rcv *Gun) Name() []byte {

@@ -89,10 +89,6 @@ func (rcv *MyGame) CharactersType() Character {
 	return 0
 }
 
-func (rcv *MyGame) MutateCharactersType(n Character) bool {
-	return rcv._tab.MutateByteSlot(4, byte(n))
-}
-
 func (rcv *MyGame) Characters(obj *flatbuffers.Table) bool {
 	o := flatbuffers.UOffsetT(rcv._tab.Offset(6))
 	if o != 0 {
