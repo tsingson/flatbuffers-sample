@@ -4,14 +4,24 @@
 
 ### 1.1 namespace in IDL
 
-In the fbs IDL file, define namespace like:
+define namespace in fbs IDL file,  like this:
 
 ```
 namespace Mygame.Example;
 ```
+
+
+define multiple namespace  in fbs IDL file 
+
+```
+
+```
+
+
+
+
+
 ### 1.2 namespace in C++
-
-
 
 flatc --cpp will generate the following cpp header file:
 
