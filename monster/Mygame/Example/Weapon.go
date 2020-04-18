@@ -108,20 +108,12 @@ func (rcv *Weapon) Color() Color {
 	return 0
 }
 
-func (rcv *Weapon) MutateColor(n Color) bool {
-	return rcv._tab.MutateInt8Slot(6, int8(n))
-}
-
 func (rcv *Weapon) Power() int32 {
 	o := flatbuffers.UOffsetT(rcv._tab.Offset(8))
 	if o != 0 {
 		return rcv._tab.GetInt32(o + rcv._tab.Pos)
 	}
 	return 0
-}
-
-func (rcv *Weapon) MutatePower(n int32) bool {
-	return rcv._tab.MutateInt32Slot(8, n)
 }
 
 func (rcv *Weapon) Name() []byte {

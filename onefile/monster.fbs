@@ -1,0 +1,40 @@
+// Example IDL file for our monster's schema.
+namespace MyGame;
+attribute "go_module:github.com/tsingson/flatbuffers-sample/onefile/";
+
+enum Color:byte { Red = 0, Green, Blue = 2 }
+union Equipment {   MuLan: Weapon, Weapon,  SpaceShip, Other: string } // Optionally add more tables.
+
+struct Vec3 {
+  x:float;
+  y:float;
+  z:float;
+}
+
+table Monster {
+  pos:Vec3;
+  mana:short = 150;
+  hp:short = 100;
+  name:string;
+  names:[string];
+  friendly:bool = false (deprecated);
+  inventory:[ubyte];
+  color:Color = Blue;
+  weapons:[Weapon];
+  equipped:Equipment;
+  vectorOfUnions:[Equipment];  // vector of unions
+  path:[Vec3];
+}
+
+table Weapon {
+ color: Color;
+ power:int32;
+ name:string;
+}
+
+table SpaceShip {
+ size: Vec3;
+ power:int32;
+ name:string;
+}
+

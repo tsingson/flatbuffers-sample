@@ -12,6 +12,10 @@ struct Gun;
 struct GunBuilder;
 struct GunT;
 
+struct Null;
+struct NullBuilder;
+struct NullT;
+
 struct GunT : public flatbuffers::NativeTable {
   typedef Gun TableType;
   int16_t damage;
@@ -120,6 +124,47 @@ inline flatbuffers::Offset<Gun> CreateGunDirect(
 
 flatbuffers::Offset<Gun> CreateGun(flatbuffers::FlatBufferBuilder &_fbb, const GunT *_o, const flatbuffers::rehasher_function_t *_rehasher = nullptr);
 
+struct NullT : public flatbuffers::NativeTable {
+  typedef Null TableType;
+  NullT() {
+  }
+};
+
+struct Null FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  typedef NullT NativeTableType;
+  typedef NullBuilder Builder;
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           verifier.EndTable();
+  }
+  NullT *UnPack(const flatbuffers::resolver_function_t *_resolver = nullptr) const;
+  void UnPackTo(NullT *_o, const flatbuffers::resolver_function_t *_resolver = nullptr) const;
+  static flatbuffers::Offset<Null> Pack(flatbuffers::FlatBufferBuilder &_fbb, const NullT* _o, const flatbuffers::rehasher_function_t *_rehasher = nullptr);
+};
+
+struct NullBuilder {
+  typedef Null Table;
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  explicit NullBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+        : fbb_(_fbb) {
+    start_ = fbb_.StartTable();
+  }
+  flatbuffers::Offset<Null> Finish() {
+    const auto end = fbb_.EndTable(start_);
+    auto o = flatbuffers::Offset<Null>(end);
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<Null> CreateNull(
+    flatbuffers::FlatBufferBuilder &_fbb) {
+  NullBuilder builder_(_fbb);
+  return builder_.Finish();
+}
+
+flatbuffers::Offset<Null> CreateNull(flatbuffers::FlatBufferBuilder &_fbb, const NullT *_o, const flatbuffers::rehasher_function_t *_rehasher = nullptr);
+
 inline GunT *Gun::UnPack(const flatbuffers::resolver_function_t *_resolver) const {
   std::unique_ptr<weapons::GunT> _o = std::unique_ptr<weapons::GunT>(new GunT());
   UnPackTo(_o.get(), _resolver);
@@ -153,6 +198,29 @@ inline flatbuffers::Offset<Gun> CreateGun(flatbuffers::FlatBufferBuilder &_fbb, 
       _bool_,
       _name,
       _names);
+}
+
+inline NullT *Null::UnPack(const flatbuffers::resolver_function_t *_resolver) const {
+  std::unique_ptr<weapons::NullT> _o = std::unique_ptr<weapons::NullT>(new NullT());
+  UnPackTo(_o.get(), _resolver);
+  return _o.release();
+}
+
+inline void Null::UnPackTo(NullT *_o, const flatbuffers::resolver_function_t *_resolver) const {
+  (void)_o;
+  (void)_resolver;
+}
+
+inline flatbuffers::Offset<Null> Null::Pack(flatbuffers::FlatBufferBuilder &_fbb, const NullT* _o, const flatbuffers::rehasher_function_t *_rehasher) {
+  return CreateNull(_fbb, _o, _rehasher);
+}
+
+inline flatbuffers::Offset<Null> CreateNull(flatbuffers::FlatBufferBuilder &_fbb, const NullT *_o, const flatbuffers::rehasher_function_t *_rehasher) {
+  (void)_rehasher;
+  (void)_o;
+  struct _VectorArgs { flatbuffers::FlatBufferBuilder *__fbb; const NullT* __o; const flatbuffers::rehasher_function_t *__rehasher; } _va = { &_fbb, _o, _rehasher}; (void)_va;
+  return weapons::CreateNull(
+      _fbb);
 }
 
 }  // namespace weapons

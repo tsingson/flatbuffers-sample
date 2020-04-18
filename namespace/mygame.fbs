@@ -1,6 +1,57 @@
 
-include "monster.fbs";
-// namespace MyGame;
+
+namespace weapons;
+attribute "go_module:github.com/tsingson/flatbuffers-sample/namespace/";
+
+table Gun {
+  damage:short;
+  bool:bool;
+  name:string;
+  names:[string];
+}
+
+table Master {
+
+}
+
+
+namespace MyGame.Sample;
+attribute "go_module:github.com/tsingson/flatbuffers-sample/namespace/";
+
+enum Color:byte { Red = 0, Green, Blue = 2 }
+union Equipment {   MuLan: Weapon, Weapon, Gun:weapons.Gun } // Optionally add more tables.
+
+struct Vec3 {
+  x:float;
+  y:float;
+  z:float;
+}
+
+table Monster {
+  pos:Vec3;
+  mana:short = 150;
+  hp:short = 100;
+  name:string;
+  names:[string];
+  friendly:bool = false (deprecated);
+  inventory:[ubyte];
+  color:MyGame.Sample.Color = Blue;
+  weapons:[Weapon];
+  equipped:Equipment;
+//  vectorOfUnions:[Equipment];  // vector of unions
+  path:[Vec3];
+}
+
+table Weapon {
+  name:string;
+  damage:short;
+}
+
+root_type Monster;
+file_identifier "MNST";
+
+
+namespace MyGame;
 attribute "go_module:github.com/tsingson/flatbuffers-sample/namespace/";
 
 union Character {
