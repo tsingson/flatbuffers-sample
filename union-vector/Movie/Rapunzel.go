@@ -69,11 +69,3 @@ func CreateRapunzel(builder *flatbuffers.Builder, hairLength int32) flatbuffers.
 	builder.PrependInt32(hairLength)
 	return builder.Offset()
 }
-
-// support fixed-length array.
-
-func CreateRapunzel(builder *flatbuffers.Builder, hairLength int32) flatbuffers.UOffsetT {
-	builder.Prep(4, 4)
-	builder.PrependInt32(hairLength)
-	return builder.Offset()
-}

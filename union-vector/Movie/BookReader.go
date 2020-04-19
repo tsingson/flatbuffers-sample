@@ -69,11 +69,3 @@ func CreateBookReader(builder *flatbuffers.Builder, booksRead int32) flatbuffers
 	builder.PrependInt32(booksRead)
 	return builder.Offset()
 }
-
-// support fixed-length array.
-
-func CreateBookReader(builder *flatbuffers.Builder, booksRead int32) flatbuffers.UOffsetT {
-	builder.Prep(4, 4)
-	builder.PrependInt32(booksRead)
-	return builder.Offset()
-}

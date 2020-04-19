@@ -8,7 +8,7 @@ import (
 
 type MovieT struct {
 	MainCharacter *CharacterT
-	Characters    []*CharacterT
+	Characters []*CharacterT
 }
 
 // MovieT object pack function
@@ -17,8 +17,8 @@ func (t *MovieT) Pack(builder *flatbuffers.Builder) flatbuffers.UOffsetT {
 		return 0
 	}
 	mainCharacterOffset := t.MainCharacter.Pack(builder)
-
-	// vector of unions
+	
+	// vector of unions 
 	charactersOffset := flatbuffers.UOffsetT(0)
 	charactersTypeOffset := flatbuffers.UOffsetT(0)
 	if t.Characters != nil {

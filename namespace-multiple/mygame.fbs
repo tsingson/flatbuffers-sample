@@ -1,8 +1,8 @@
-// Example IDL file for our monster's schema.
 
-include "weapons.fbs";
+include "./weapons.fbs";
+
 namespace MyGame.Sample;
-attribute "go_module:github.com/tsingson/flatbuffers-sample/namespace/";
+attribute "go_module:github.com/tsingson/flatbuffers-sample/namespace-multiple/";
 
 enum Color:byte { Red = 0, Green, Blue = 2 }
 union Equipment {   MuLan: Weapon, Weapon, Gun:weapons.Gun } // Optionally add more tables.
@@ -24,7 +24,7 @@ table Monster {
   color:MyGame.Sample.Color = Blue;
   weapons:[Weapon];
   equipped:Equipment;
-  vectorOfUnions:[Equipment];  // vector of unions
+//  vectorOfUnions:[Equipment];  // vector of unions
   path:[Vec3];
 }
 
@@ -35,3 +35,19 @@ table Weapon {
 
 root_type Monster;
 file_identifier "MNST";
+
+
+namespace MyGame;
+attribute "go_module:github.com/tsingson/flatbuffers-sample/namespace-multiple/";
+
+union Character {
+    weapon: weapons.Gun,
+   Monster: MyGame.Sample.Monster,
+}
+
+table MyGame {
+    Characters:Character;
+
+}
+root_type MyGame;
+file_identifier "MGME";

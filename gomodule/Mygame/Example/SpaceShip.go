@@ -105,6 +105,10 @@ func (rcv *SpaceShip) Power() int32 {
 	return 0
 }
 
+func (rcv *SpaceShip) MutatePower(n int32) bool {
+	return rcv._tab.MutateInt32Slot(6, n)
+}
+
 func (rcv *SpaceShip) Name() []byte {
 	o := flatbuffers.UOffsetT(rcv._tab.Offset(8))
 	if o != 0 {

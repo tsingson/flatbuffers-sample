@@ -1,6 +1,5 @@
-
 namespace weapons;
-attribute "go_module:github.com/tsingson/flatbuffers-sample/namespace/";
+attribute "go_module:github.com/tsingson/flatbuffers-sample/namespace-multiple/";
 
 table Gun {
   damage:short;
@@ -12,3 +11,4 @@ table Gun {
 table Master {
 
 }
+
