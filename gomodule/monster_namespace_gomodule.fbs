@@ -1,0 +1,48 @@
+// Example IDL file for our monster's schema.
+
+namespace Mygame.Example;
+
+attribute "go_module:gomodule/";
+
+enum Color:byte { Red = 0, Green, Blue = 2 }
+union Equipment {   MuLan: Weapon, Weapon,   SpaceShip,   Other: string } // Optionally add more tables.
+
+struct Vec3 {
+  x:float;
+  y:float;
+  z:float;
+}
+
+table Weapon {
+  name:string;
+  damage:short;
+}
+
+table SpaceShip {
+ size:Vec3;
+ power:int32;
+ name:string;
+}
+
+namespace Mygame;
+
+attribute "go_module:gomodule/";
+
+table Monster {
+  pos:Mygame.Example.Vec3;
+  mana:short = 150;
+  hp:short = 100;
+  name:string;
+  names:[string];
+  friendly:bool = false (deprecated);
+  inventory:[ubyte];
+  color:Mygame.Example.Color = Blue;
+  weapons:[Mygame.Example.Weapon];
+  equipped:Mygame.Example.Equipment;
+  vectorOfUnions:[Mygame.Example.Equipment];  // vector of unions
+  path:[Mygame.Example.Vec3];
+}
+
+
+root_type Monster;
+file_identifier "MNST";
