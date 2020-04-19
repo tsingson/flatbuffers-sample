@@ -1,6 +1,8 @@
 # fbs support multiple namespace / go module
 
-same as https://github.com/google/flatbuffers/samples but support multiple namespace and attribute for go module 
+copy from https://github.com/google/flatbuffers/samples 
+
+change IDL file to support multiple namespace and attribute for go module 
 
 
 ## 1. setup go repo ( local go module )
@@ -112,6 +114,15 @@ attribute "go_module:gomodule/";
 flatc --go --gen-object-api --gen-mutable ./monster_namespace_gomodule.fbs 
 ```
 
-
 ## 4. run example go code
+
+```
+go run ./monster_namespace.go 
+```
+
+
+
+
+
+
 
