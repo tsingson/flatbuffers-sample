@@ -7,16 +7,16 @@ import (
 )
 
 type MonsterT struct {
-	Pos *Vec3T
-	Mana int16
-	Hp int16
-	Name string
-	Names []string
+	Pos       *Vec3T
+	Mana      int16
+	Hp        int16
+	Name      string
+	Names     []string
 	Inventory []byte
-	Color Color
-	Weapons []*WeaponT
-	Equipped *EquipmentT
-	Path []*Vec3T
+	Color     Color
+	Weapons   []*WeaponT
+	Equipped  *EquipmentT
+	Path      []*Vec3T
 }
 
 // MonsterT object pack function
@@ -24,13 +24,13 @@ func (t *MonsterT) Pack(builder *flatbuffers.Builder) flatbuffers.UOffsetT {
 	if t == nil {
 		return 0
 	}
-	nameOffset:= flatbuffers.UOffsetT(0)
-	if len(t.Name)> 0  {
+	nameOffset := flatbuffers.UOffsetT(0)
+	if len(t.Name) > 0 {
 		nameOffset = builder.CreateString(t.Name)
 	}
 	namesOffset := flatbuffers.UOffsetT(0)
 	if t.Names != nil {
-		namesOffset = builder.StringsVector( t.Names...)
+		namesOffset = builder.StringsVector(t.Names...)
 	}
 	inventoryOffset := flatbuffers.UOffsetT(0)
 	if t.Inventory != nil {
@@ -50,7 +50,7 @@ func (t *MonsterT) Pack(builder *flatbuffers.Builder) flatbuffers.UOffsetT {
 		weaponsOffset = MonsterEndWeaponsVector(builder, weaponsLength)
 	}
 	equippedOffset := t.Equipped.Pack(builder)
-	
+
 	pathOffset := flatbuffers.UOffsetT(0)
 	if t.Path != nil {
 		pathLength := len(t.Path)

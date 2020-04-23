@@ -81,10 +81,6 @@ func (rcv *Attacker) SwordAttackDamage() int32 {
 	return 0
 }
 
-func (rcv *Attacker) MutateSwordAttackDamage(n int32) bool {
-	return rcv._tab.MutateInt32Slot(4, n)
-}
-
 func AttackerStart(builder *flatbuffers.Builder) {
 	builder.StartObject(1)
 }

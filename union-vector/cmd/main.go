@@ -15,9 +15,9 @@ func main() {
 	attType := Movie.CharacterMuLan
 
 	Movie.MovieStart(fb)
-	Movie.MovieAddMainCharacterType(fb, attType)
-	Movie.MovieAddMainCharacter(fb, attOff)
+	Movie.MovieAddSingleType(fb, attType)
+	Movie.MovieAddSingle(fb, attOff)
 
-	Movie.MovieStartCharactersTypeVector(fb, 2)
+	Movie.MovieAddMultiple(fb, 2)
 
 }

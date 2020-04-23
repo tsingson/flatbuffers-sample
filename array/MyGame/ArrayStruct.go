@@ -12,13 +12,13 @@ type ArrayStructT struct {
 	A1 [2]*MyGame__Example.NestedStructT
 	A2 [3]*MyGame__Example.NestedStructT
 	A3 *MyGame__Example.NestedStructT
-	A float32
-	B [15]int32
-	C int8
-	D [2]*MyGame__Example.NestedStructT
+	A  float32
+	B  [15]int32
+	C  int8
+	D  [2]*MyGame__Example.NestedStructT
 	D1 *MyGame__Example.NestedStructT
-	E int32
-	F [2]int64
+	E  int32
+	F  [2]int64
 	F1 [2]*MyGame__Example.NestedStructT
 }
 
@@ -173,9 +173,10 @@ func CreateArrayStruct(builder *flatbuffers.Builder, a0 [1]*MyGame__Example.Nest
 	}
 	// array struct field 1 32
 	//-----------------------	------------ 0	-----------------------
-a0[0].Pack(builder)
+	a0[0].Pack(builder)
 	return builder.Offset()
 }
+
 // support fixed-length array.
 
 // step: 1 field name:  a0 native type: [1]*MyGame__Example.NestedStructT fixed_length in array: 1 struct bytesize: 32

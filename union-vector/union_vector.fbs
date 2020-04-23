@@ -25,8 +25,8 @@ union Character {
 }
 
 table Movie {
-  main_character: Character;
-  characters: [Character];  // vector of unions
+  single: Character;
+  multiple: [Character];  // vector of unions
 }
 
 root_type Movie;

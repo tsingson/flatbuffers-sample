@@ -8,9 +8,9 @@ import (
 
 type GunT struct {
 	Damage int16
-	Bool bool
-	Name string
-	Names []string
+	Bool   bool
+	Name   string
+	Names  []string
 }
 
 // GunT object pack function
@@ -18,13 +18,13 @@ func (t *GunT) Pack(builder *flatbuffers.Builder) flatbuffers.UOffsetT {
 	if t == nil {
 		return 0
 	}
-	nameOffset:= flatbuffers.UOffsetT(0)
-	if len(t.Name)> 0  {
+	nameOffset := flatbuffers.UOffsetT(0)
+	if len(t.Name) > 0 {
 		nameOffset = builder.CreateString(t.Name)
 	}
 	namesOffset := flatbuffers.UOffsetT(0)
 	if t.Names != nil {
-		namesOffset = builder.StringsVector( t.Names...)
+		namesOffset = builder.StringsVector(t.Names...)
 	}
 
 	// pack process all field
@@ -102,12 +102,20 @@ func (rcv *Gun) Damage() int16 {
 	return 0
 }
 
+func (rcv *Gun) MutateDamage(n int16) bool {
+	return rcv._tab.MutateInt16Slot(4, n)
+}
+
 func (rcv *Gun) Bool() bool {
 	o := flatbuffers.UOffsetT(rcv._tab.Offset(6))
 	if o != 0 {
 		return rcv._tab.GetBool(o + rcv._tab.Pos)
 	}
 	return false
+}
+
+func (rcv *Gun) MutateBool(n bool) bool {
+	return rcv._tab.MutateBoolSlot(6, n)
 }
 
 func (rcv *Gun) Name() []byte {

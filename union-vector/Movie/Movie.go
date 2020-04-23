@@ -7,8 +7,8 @@ import (
 )
 
 type MovieT struct {
-	MainCharacter *CharacterT
-	Characters []*CharacterT
+	Single *CharacterT
+	Multiple []*CharacterT
 }
 
 // MovieT object pack function
@@ -16,55 +16,57 @@ func (t *MovieT) Pack(builder *flatbuffers.Builder) flatbuffers.UOffsetT {
 	if t == nil {
 		return 0
 	}
-	mainCharacterOffset := t.MainCharacter.Pack(builder)
+	singleOffset := t.Single.Pack(builder)
 	
 	// vector of unions 
-	charactersOffset := flatbuffers.UOffsetT(0)
-	charactersTypeOffset := flatbuffers.UOffsetT(0)
-	if t.Characters != nil {
-		charactersLength := len(t.Characters)
-		charactersOffsets := make([]flatbuffers.UOffsetT, charactersLength)
-		for j := charactersLength - 1; j >= 0; j-- {
-			charactersOffsets[j] = t.Characters[j].Pack(builder)
+	multipleOffset := flatbuffers.UOffsetT(0)
+	multipleTypeOffset := flatbuffers.UOffsetT(0)
+	if t.Multiple != nil {
+		multipleLength := len(t.Multiple)
+		MovieStartMultipleTypeVector(builder, multipleLength)
+		for j := multipleLength - 1; j >= 0; j-- {
+			builder.PrependByte(byte(t.Multiple[j].Type))
 		}
-		MovieStartCharactersTypeVector(builder, charactersLength)
-		for j := charactersLength - 1; j >= 0; j-- {
-			builder.PrependByte(byte(t.Characters[j].Type))
+		multipleTypeOffset = MovieEndMultipleTypeVector(builder, multipleLength)
+
+		// vector array
+		multipleOffsets := make([]flatbuffers.UOffsetT, multipleLength)
+		for j := multipleLength - 1; j >= 0; j-- {
+			multipleOffsets[j] = t.Multiple[j].Pack(builder)
 		}
-		charactersTypeOffset = MovieEndCharactersTypeVector(builder, charactersLength)
-		MovieStartCharactersVector(builder, charactersLength)
-		for j := charactersLength - 1; j >= 0; j-- {
-			builder.PrependUOffsetT(charactersOffsets[j])
+		MovieStartMultipleVector(builder, multipleLength)
+		for j := multipleLength - 1; j >= 0; j-- {
+			builder.PrependUOffsetT(multipleOffsets[j])
 		}
-		charactersOffset = MovieEndCharactersVector(builder, charactersLength)
+		multipleOffset = MovieEndMultipleVector(builder, multipleLength)
 	}
 
 	// pack process all field
 
 	MovieStart(builder)
-	if t.MainCharacter != nil {
-		MovieAddMainCharacterType(builder, t.MainCharacter.Type)
+	if t.Single != nil {
+		MovieAddSingleType(builder, t.Single.Type)
 	}
-	MovieAddMainCharacter(builder, mainCharacterOffset)
-	MovieAddCharactersType(builder, charactersTypeOffset)
-	MovieAddCharacters(builder, charactersOffset)
+	MovieAddSingle(builder, singleOffset)
+	MovieAddMultipleType(builder, multipleTypeOffset)
+	MovieAddMultiple(builder, multipleOffset)
 	return MovieEnd(builder)
 }
 
 // MovieT object unpack function
 func (rcv *Movie) UnPackTo(t *MovieT) {
-	mainCharacterTable := flatbuffers.Table{}
-	if rcv.MainCharacter(&mainCharacterTable) {
-		t.MainCharacter = rcv.MainCharacterType().UnPack(mainCharacterTable)
+	singleTable := flatbuffers.Table{}
+	if rcv.Single(&singleTable) {
+		t.Single = rcv.SingleType().UnPack(singleTable)
 	}
-	charactersLength := rcv.CharactersLength()
-	t.Characters = make([]*CharacterT, charactersLength)
-	for j := 0; j < charactersLength; j++ {
+	multipleLength := rcv.MultipleLength()
+	t.Multiple = make([]*CharacterT, multipleLength)
+	for j := 0; j < multipleLength; j++ {
 		// vector of unions table unpack
-		CharactersType := rcv.CharactersType(j)
-		CharactersTable := flatbuffers.Table{}
-		if rcv.Characters(j, &CharactersTable) {
-			t.Characters[j] = CharactersType.UnPackVector(CharactersTable)
+		MultipleType := rcv.MultipleType(j)
+		MultipleTable := flatbuffers.Table{}
+		if rcv.Multiple(j, &MultipleTable) {
+			t.Multiple[j] = MultipleType.UnPackVector(MultipleTable)
 		}
 	}
 }
@@ -114,7 +116,7 @@ func (rcv *Movie) Table() flatbuffers.Table {
 	return rcv._tab
 }
 
-func (rcv *Movie) MainCharacterType() Character {
+func (rcv *Movie) SingleType() Character {
 	o := flatbuffers.UOffsetT(rcv._tab.Offset(4))
 	if o != 0 {
 		return Character(rcv._tab.GetByte(o + rcv._tab.Pos))
@@ -122,11 +124,7 @@ func (rcv *Movie) MainCharacterType() Character {
 	return 0
 }
 
-func (rcv *Movie) MutateMainCharacterType(n Character) bool {
-	return rcv._tab.MutateByteSlot(4, byte(n))
-}
-
-func (rcv *Movie) MainCharacter(obj *flatbuffers.Table) bool {
+func (rcv *Movie) Single(obj *flatbuffers.Table) bool {
 	o := flatbuffers.UOffsetT(rcv._tab.Offset(6))
 	if o != 0 {
 		rcv._tab.Union(obj, o)
@@ -135,7 +133,7 @@ func (rcv *Movie) MainCharacter(obj *flatbuffers.Table) bool {
 	return false
 }
 
-func (rcv *Movie) CharactersType(j int) Character {
+func (rcv *Movie) MultipleType(j int) Character {
 	o := flatbuffers.UOffsetT(rcv._tab.Offset(8))
 	if o != 0 {
 		a := rcv._tab.Vector(o)
@@ -144,7 +142,7 @@ func (rcv *Movie) CharactersType(j int) Character {
 	return 0
 }
 
-func (rcv *Movie) CharactersTypeLength() int {
+func (rcv *Movie) MultipleTypeLength() int {
 	o := flatbuffers.UOffsetT(rcv._tab.Offset(8))
 	if o != 0 {
 		return rcv._tab.VectorLen(o)
@@ -152,16 +150,7 @@ func (rcv *Movie) CharactersTypeLength() int {
 	return 0
 }
 
-func (rcv *Movie) MutateCharactersType(j int, n Character) bool {
-	o := flatbuffers.UOffsetT(rcv._tab.Offset(8))
-	if o != 0 {
-		a := rcv._tab.Vector(o)
-		return rcv._tab.MutateByte(a+flatbuffers.UOffsetT(j*1), byte(n))
-	}
-	return false
-}
-
-func (rcv *Movie) Characters(j int, obj *flatbuffers.Table) bool {
+func (rcv *Movie) Multiple(j int, obj *flatbuffers.Table) bool {
 	o := flatbuffers.UOffsetT(rcv._tab.Offset(10))
 	if o != 0 {
 		a := rcv._tab.Vector(o)
@@ -172,7 +161,7 @@ func (rcv *Movie) Characters(j int, obj *flatbuffers.Table) bool {
 	return false
 }
 
-func (rcv *Movie) CharactersLength() int {
+func (rcv *Movie) MultipleLength() int {
 	o := flatbuffers.UOffsetT(rcv._tab.Offset(10))
 	if o != 0 {
 		return rcv._tab.VectorLen(o)
@@ -184,36 +173,36 @@ func MovieStart(builder *flatbuffers.Builder) {
 	builder.StartObject(4)
 }
 
-func MovieAddMainCharacterType(builder *flatbuffers.Builder, mainCharacterType Character) {
-	builder.PrependByteSlot(0, byte(mainCharacterType), 0)
+func MovieAddSingleType(builder *flatbuffers.Builder, singleType Character) {
+	builder.PrependByteSlot(0, byte(singleType), 0)
 }
 
-func MovieAddMainCharacter(builder *flatbuffers.Builder, mainCharacter flatbuffers.UOffsetT) {
-	builder.PrependUOffsetTSlot(1, flatbuffers.UOffsetT(mainCharacter), 0)
+func MovieAddSingle(builder *flatbuffers.Builder, single flatbuffers.UOffsetT) {
+	builder.PrependUOffsetTSlot(1, flatbuffers.UOffsetT(single), 0)
 }
 
-func MovieAddCharactersType(builder *flatbuffers.Builder, charactersType flatbuffers.UOffsetT) {
-	builder.PrependUOffsetTSlot(2, flatbuffers.UOffsetT(charactersType), 0)
+func MovieStartMultipleTypeVector(builder *flatbuffers.Builder, numElems int)  {
+	builder.StartVector(1, numElems, 1)
 }
 
-func MovieStartCharactersTypeVector(builder *flatbuffers.Builder, numElems int) flatbuffers.UOffsetT {
-	return builder.StartVector(1, numElems, 1)
-}
-
-func MovieEndCharactersTypeVector(builder *flatbuffers.Builder, numElems int) flatbuffers.UOffsetT {
+func MovieEndMultipleTypeVector(builder *flatbuffers.Builder, numElems int) flatbuffers.UOffsetT {
 	return builder.EndVector(numElems)
 }
 
-func MovieAddCharacters(builder *flatbuffers.Builder, characters flatbuffers.UOffsetT) {
-	builder.PrependUOffsetTSlot(3, flatbuffers.UOffsetT(characters), 0)
+func MovieAddMultipleType(builder *flatbuffers.Builder, multipleType flatbuffers.UOffsetT) {
+	builder.PrependUOffsetTSlot(2, flatbuffers.UOffsetT(multipleType), 0)
 }
 
-func MovieStartCharactersVector(builder *flatbuffers.Builder, numElems int) flatbuffers.UOffsetT {
-	return builder.StartVector(4, numElems, 4)
+func MovieStartMultipleVector(builder *flatbuffers.Builder, numElems int)  {
+	builder.StartVector(4, numElems, 4)
 }
 
-func MovieEndCharactersVector(builder *flatbuffers.Builder, numElems int) flatbuffers.UOffsetT {
+func MovieEndMultipleVector(builder *flatbuffers.Builder, numElems int) flatbuffers.UOffsetT {
 	return builder.EndVector(numElems)
+}
+
+func MovieAddMultiple(builder *flatbuffers.Builder, multiple flatbuffers.UOffsetT) {
+	builder.PrependUOffsetTSlot(3, flatbuffers.UOffsetT(multiple), 0)
 }
 
 func MovieEnd(builder *flatbuffers.Builder) flatbuffers.UOffsetT {

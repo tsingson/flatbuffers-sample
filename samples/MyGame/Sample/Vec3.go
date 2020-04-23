@@ -89,6 +89,7 @@ func CreateVec3(builder *flatbuffers.Builder, x float32, y float32, z float32) f
 	builder.PrependFloat32(x)
 	return builder.Offset()
 }
+
 // support fixed-length array.
 
 func CreateVec3(builder *flatbuffers.Builder, x float32, y float32, z float32) flatbuffers.UOffsetT {

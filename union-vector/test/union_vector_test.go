@@ -17,19 +17,20 @@ func TestMovieUnionField1(t *testing.T) {
 		Value: str,
 	}
 	m := &Movie.MovieT{
-		MainCharacter: c1,
+		Single: c1,
 	}
 	fb := flatbuffers.NewBuilder(0)
-	buf := fb.Finish(m.Pack(fb)).FinishedBytes()
+	fb.Finish(m.Pack(fb))
+	buf := fb.FinishedBytes()
 	mt := Movie.GetRootAsMovie(buf, 0)
-	mct := mt.MainCharacterType()
+	mct := mt.SingleType()
 
 	if mct != Movie.CharacterMuLan {
 		t.Errorf("error")
 	}
 	tb := &flatbuffers.Table{}
-	if mt.MainCharacter(tb) {
-		mct := mt.MainCharacterType()
+	if mt.Single(tb) {
+		mct := mt.SingleType()
 		ct := mct.UnPack(*tb)
 		if ct.Type != mct {
 			t.Errorf("error")
@@ -47,18 +48,19 @@ func TestMovieUnionField2(t *testing.T) {
 		Value: str,
 	}
 	m := &Movie.MovieT{
-		MainCharacter: c1,
+		Single: c1,
 	}
 	fb := flatbuffers.NewBuilder(0)
-	buf := fb.Finish(m.Pack(fb)).FinishedBytes()
+	fb.Finish(m.Pack(fb))
+	buf := fb.FinishedBytes()
 	mt := Movie.GetRootAsMovie(buf, 0)
-	mct := mt.MainCharacterType()
+	mct := mt.SingleType()
 	if mct != Movie.CharacterOther {
 		t.Errorf("error ")
 	}
 	tb := &flatbuffers.Table{}
-	if mt.MainCharacter(tb) {
-		mct := mt.MainCharacterType()
+	if mt.Single(tb) {
+		mct := mt.SingleType()
 		ct := mct.UnPack(*tb)
 		if ct.Type != mct {
 			t.Errorf("error ")
@@ -78,18 +80,19 @@ func TestMovieUnionField3(t *testing.T) {
 		Value: r,
 	}
 	m := &Movie.MovieT{
-		MainCharacter: c2,
+		Single: c2,
 	}
 	fb := flatbuffers.NewBuilder(0)
-	buf := fb.Finish(m.Pack(fb)).FinishedBytes()
+	fb.Finish(m.Pack(fb))
+	buf := fb.FinishedBytes()
 	mt := Movie.GetRootAsMovie(buf, 0)
-	mct := mt.MainCharacterType()
+	mct := mt.SingleType()
 	if mct != Movie.CharacterRapunzel {
 		t.Errorf("error ")
 	}
 	tb := &flatbuffers.Table{}
-	if mt.MainCharacter(tb) {
-		mct := mt.MainCharacterType()
+	if mt.Single(tb) {
+		mct := mt.SingleType()
 		ct := mct.UnPack(*tb)
 		if ct.Type != mct {
 			t.Errorf("error ")
@@ -109,18 +112,19 @@ func TestMovieUnionField4(t *testing.T) {
 		Value: r,
 	}
 	m := &Movie.MovieT{
-		MainCharacter: c2,
+		Single: c2,
 	}
 	fb := flatbuffers.NewBuilder(0)
-	buf := fb.Finish(m.Pack(fb)).FinishedBytes()
+	fb.Finish(m.Pack(fb))
+	buf := fb.FinishedBytes()
 	mt := Movie.GetRootAsMovie(buf, 0)
-	mct := mt.MainCharacterType()
+	mct := mt.SingleType()
 	if mct != Movie.CharacterBookFan {
 		t.Errorf("error ")
 	}
 	tb := &flatbuffers.Table{}
-	if mt.MainCharacter(tb) {
-		mct := mt.MainCharacterType()
+	if mt.Single(tb) {
+		mct := mt.SingleType()
 		ct := mct.UnPack(*tb)
 		if ct.Type != mct {
 			t.Errorf("error ")
@@ -161,17 +165,18 @@ func TestMovieVectorUnions1(t *testing.T) {
 	}
 
 	m := &Movie.MovieT{
-		MainCharacter: c1,
-		Characters:    []*Movie.CharacterT{c1, c2, c1, c3, c4},
+		Single:   c1,
+		Multiple: []*Movie.CharacterT{c1, c2, c1, c3, c4},
 	}
 	fb := flatbuffers.NewBuilder(0)
-	buf := fb.Finish(m.Pack(fb)).FinishedBytes()
+	fb.Finish(m.Pack(fb))
+	buf := fb.FinishedBytes()
 
 	mt := Movie.GetRootAsMovie(buf, 0)
 
 	tb := &flatbuffers.Table{}
-	if mt.MainCharacter(tb) {
-		mct := mt.MainCharacterType()
+	if mt.Single(tb) {
+		mct := mt.SingleType()
 		ct := mct.UnPack(*tb)
 		if ct.Type != mct {
 			t.Errorf("error ")
@@ -180,8 +185,8 @@ func TestMovieVectorUnions1(t *testing.T) {
 			t.Errorf("error ")
 		}
 	}
-	if mt.Characters(0, tb) {
-		mct := mt.CharactersType(0)
+	if mt.Multiple(0, tb) {
+		mct := mt.MultipleType(0)
 		ct := mct.UnPackVector(*tb)
 		if ct.Type != mct {
 			t.Errorf("error ")
@@ -190,8 +195,8 @@ func TestMovieVectorUnions1(t *testing.T) {
 			t.Errorf("error ")
 		}
 	}
-	if mt.Characters(2, tb) {
-		mct := mt.CharactersType(2)
+	if mt.Multiple(2, tb) {
+		mct := mt.MultipleType(2)
 		ct := mct.UnPackVector(*tb)
 		if ct.Type != mct {
 			t.Errorf("error ")
@@ -200,8 +205,8 @@ func TestMovieVectorUnions1(t *testing.T) {
 			t.Errorf("error ")
 		}
 	}
-	if mt.Characters(1, tb) {
-		mct := mt.CharactersType(1)
+	if mt.Multiple(1, tb) {
+		mct := mt.MultipleType(1)
 		ct := mct.UnPackVector(*tb)
 		if ct.Type != mct {
 			t.Errorf("error ")
@@ -210,8 +215,8 @@ func TestMovieVectorUnions1(t *testing.T) {
 			t.Errorf("error ")
 		}
 	}
-	if mt.Characters(3, tb) {
-		mct := mt.CharactersType(3)
+	if mt.Multiple(3, tb) {
+		mct := mt.MultipleType(3)
 		ct := mct.UnPackVector(*tb)
 		if ct.Type != mct {
 			t.Errorf("error ")
@@ -220,8 +225,8 @@ func TestMovieVectorUnions1(t *testing.T) {
 			t.Errorf("error ")
 		}
 	}
-	if mt.Characters(4, tb) {
-		mct := mt.CharactersType(4)
+	if mt.Multiple(4, tb) {
+		mct := mt.MultipleType(4)
 		ct := mct.UnPackVector(*tb)
 		if ct.Type != mct {
 			t.Errorf("error ")
@@ -262,25 +267,25 @@ func TestMovieVectorUnions2(t *testing.T) {
 	}
 
 	m := &Movie.MovieT{
-		MainCharacter: c1,
-		Characters:    []*Movie.CharacterT{c1, c2, c1, c3, c4},
+		Single:   c1,
+		Multiple: []*Movie.CharacterT{c1, c2, c1, c3, c4},
 	}
 	fb := flatbuffers.NewBuilder(0)
-	buf := fb.Finish(m.Pack(fb)).FinishedBytes()
-
+	fb.Finish(m.Pack(fb))
+	buf := fb.FinishedBytes()
 	mt := Movie.GetRootAsMovie(buf, 0)
 
 	mvt := mt.UnPack()
-	if mvt.MainCharacter.Type != Movie.CharacterOther {
+	if mvt.Single.Type != Movie.CharacterOther {
 		t.Errorf("error ")
 	}
-	if mvt.MainCharacter.Value.(string) != str {
+	if mvt.Single.Value.(string) != str {
 		t.Errorf("error ")
 	}
 
-	l := len(mvt.Characters)
+	l := len(mvt.Multiple)
 	for i := 0; i < l; i++ {
-		ct := mvt.Characters[i]
+		ct := mvt.Multiple[i]
 		switch ct.Type {
 		case Movie.CharacterMuLan:
 

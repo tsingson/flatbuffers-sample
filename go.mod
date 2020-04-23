@@ -9,4 +9,4 @@ require (
 	honnef.co/go/tools v0.0.0-20190523083050-ea95bdfd59fc // indirect
 )
 
-replace github.com/google/flatbuffers v1.12.0 => /Users/qinshen/go/src/github.com/tsingson/flatbuffers
+replace github.com/google/flatbuffers v1.12.0 => /Users/qinshen/go/src/flatbuffers

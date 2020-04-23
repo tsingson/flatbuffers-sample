@@ -128,12 +128,12 @@ func (rcv Equipment) UnPackVector(table flatbuffers.Table) *EquipmentT {
 		x := GetTableVectorAsSpaceShip(&table)
 		return &EquipmentT{Type: EquipmentSpaceShip, Value: x.UnPack()}
 	case EquipmentOther:
-		x:=""
-		b:=table.ByteVector(table.Pos)
-		if b!=nil {
-			x =  string(b)
+		x := ""
+		b := table.ByteVector(table.Pos)
+		if b != nil {
+			x = string(b)
 		}
-		return &EquipmentT{Type: EquipmentOther, Value: x }
+		return &EquipmentT{Type: EquipmentOther, Value: x}
 	}
 	return nil
 }
@@ -210,18 +210,19 @@ func CreateVec3(builder *flatbuffers.Builder, x float32, y float32, z float32) f
 	builder.PrependFloat32(x)
 	return builder.Offset()
 }
+
 type MonsterT struct {
-	Pos *Vec3T
-	Mana int16
-	Hp int16
-	Name string
-	Names []string
-	Inventory []byte
-	Color Color
-	Weapons []*WeaponT
-	Equipped *EquipmentT
+	Pos            *Vec3T
+	Mana           int16
+	Hp             int16
+	Name           string
+	Names          []string
+	Inventory      []byte
+	Color          Color
+	Weapons        []*WeaponT
+	Equipped       *EquipmentT
 	VectorOfUnions []*EquipmentT
-	Path []*Vec3T
+	Path           []*Vec3T
 }
 
 // MonsterT object pack function
@@ -229,13 +230,13 @@ func (t *MonsterT) Pack(builder *flatbuffers.Builder) flatbuffers.UOffsetT {
 	if t == nil {
 		return 0
 	}
-	nameOffset:= flatbuffers.UOffsetT(0)
-	if len(t.Name)> 0  {
+	nameOffset := flatbuffers.UOffsetT(0)
+	if len(t.Name) > 0 {
 		nameOffset = builder.CreateString(t.Name)
 	}
 	namesOffset := flatbuffers.UOffsetT(0)
 	if t.Names != nil {
-		namesOffset = builder.StringsVector( t.Names...)
+		namesOffset = builder.StringsVector(t.Names...)
 	}
 	inventoryOffset := flatbuffers.UOffsetT(0)
 	if t.Inventory != nil {
@@ -255,8 +256,8 @@ func (t *MonsterT) Pack(builder *flatbuffers.Builder) flatbuffers.UOffsetT {
 		weaponsOffset = MonsterEndWeaponsVector(builder, weaponsLength)
 	}
 	equippedOffset := t.Equipped.Pack(builder)
-	
-	// vector of unions 
+
+	// vector of unions
 	vectorOfUnionsOffset := flatbuffers.UOffsetT(0)
 	vectorOfUnionsTypeOffset := flatbuffers.UOffsetT(0)
 	if t.VectorOfUnions != nil {
@@ -267,7 +268,7 @@ func (t *MonsterT) Pack(builder *flatbuffers.Builder) flatbuffers.UOffsetT {
 		}
 		MonsterStartVectorOfUnionsTypeVector(builder, vectorOfUnionsLength)
 		for j := vectorOfUnionsLength - 1; j >= 0; j-- {
-			builder.PrependByte(byte(t.VectorOfUnions[j].Type ))
+			builder.PrependByte(byte(t.VectorOfUnions[j].Type))
 		}
 		vectorOfUnionsTypeOffset = MonsterEndVectorOfUnionsTypeVector(builder, vectorOfUnionsLength)
 		MonsterStartVectorOfUnionsVector(builder, vectorOfUnionsLength)
@@ -335,7 +336,7 @@ func (rcv *Monster) UnPackTo(t *MonsterT) {
 	vectorOfUnionsLength := rcv.VectorOfUnionsLength()
 	t.VectorOfUnions = make([]*EquipmentT, vectorOfUnionsLength)
 	for j := 0; j < vectorOfUnionsLength; j++ {
-		// vector of unions table unpack 
+		// vector of unions table unpack
 		VectorOfUnionsType := rcv.VectorOfUnionsType(j)
 		VectorOfUnionsTable := flatbuffers.Table{}
 		if rcv.VectorOfUnions(j, &VectorOfUnionsTable) {
@@ -682,10 +683,11 @@ func MonsterEndPathVector(builder *flatbuffers.Builder, numElems int) flatbuffer
 func MonsterEnd(builder *flatbuffers.Builder) flatbuffers.UOffsetT {
 	return builder.EndObject()
 }
+
 type WeaponT struct {
 	Color Color
 	Power int32
-	Name string
+	Name  string
 }
 
 // WeaponT object pack function
@@ -693,8 +695,8 @@ func (t *WeaponT) Pack(builder *flatbuffers.Builder) flatbuffers.UOffsetT {
 	if t == nil {
 		return 0
 	}
-	nameOffset:= flatbuffers.UOffsetT(0)
-	if len(t.Name)> 0  {
+	nameOffset := flatbuffers.UOffsetT(0)
+	if len(t.Name) > 0 {
 		nameOffset = builder.CreateString(t.Name)
 	}
 
@@ -802,10 +804,11 @@ func WeaponAddName(builder *flatbuffers.Builder, name flatbuffers.UOffsetT) {
 func WeaponEnd(builder *flatbuffers.Builder) flatbuffers.UOffsetT {
 	return builder.EndObject()
 }
+
 type SpaceShipT struct {
-	Size *Vec3T
+	Size  *Vec3T
 	Power int32
-	Name string
+	Name  string
 }
 
 // SpaceShipT object pack function
@@ -813,8 +816,8 @@ func (t *SpaceShipT) Pack(builder *flatbuffers.Builder) flatbuffers.UOffsetT {
 	if t == nil {
 		return 0
 	}
-	nameOffset:= flatbuffers.UOffsetT(0)
-	if len(t.Name)> 0  {
+	nameOffset := flatbuffers.UOffsetT(0)
+	if len(t.Name) > 0 {
 		nameOffset = builder.CreateString(t.Name)
 	}
 
