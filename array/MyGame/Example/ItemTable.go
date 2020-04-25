@@ -140,28 +140,28 @@ func ItemTableStart(builder *flatbuffers.Builder) {
 	builder.StartObject(6)
 }
 
-func ItemTableAddBool(builder *flatbuffers.Builder, Bool bool) {
-	builder.PrependBoolSlot(0, Bool, false)
+func ItemTableAddBool(builder *flatbuffers.Builder, bool bool) {
+	builder.PrependBoolSlot(0, bool, false)
 }
 
-func ItemTableAddU64(builder *flatbuffers.Builder, U64 uint64) {
-	builder.PrependUint64Slot(1, U64, 0)
+func ItemTableAddU64(builder *flatbuffers.Builder, u64 uint64) {
+	builder.PrependUint64Slot(1, u64, 0)
 }
 
-func ItemTableAddColor(builder *flatbuffers.Builder, Color Color) {
-	builder.PrependInt8Slot(2, int8(Color), 0)
+func ItemTableAddColor(builder *flatbuffers.Builder, color Color) {
+	builder.PrependInt8Slot(2, int8(color), 0)
 }
 
-func ItemTableAddI8(builder *flatbuffers.Builder, I8 int8) {
-	builder.PrependInt8Slot(3, I8, 0)
+func ItemTableAddI8(builder *flatbuffers.Builder, i8 int8) {
+	builder.PrependInt8Slot(3, i8, 0)
 }
 
-func ItemTableAddF32(builder *flatbuffers.Builder, F32 float32) {
-	builder.PrependFloat32Slot(4, F32, 0.0)
+func ItemTableAddF32(builder *flatbuffers.Builder, f32 float32) {
+	builder.PrependFloat32Slot(4, f32, 0.0)
 }
 
-func ItemTableAddUbyte(builder *flatbuffers.Builder, Ubyte byte) {
-	builder.PrependByteSlot(5, Ubyte, 0)
+func ItemTableAddUbyte(builder *flatbuffers.Builder, ubyte byte) {
+	builder.PrependByteSlot(5, ubyte, 0)
 }
 
 func ItemTableEnd(builder *flatbuffers.Builder) flatbuffers.UOffsetT {

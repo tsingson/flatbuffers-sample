@@ -3,7 +3,7 @@
 package Movie
 
 import (
-	flatbuffers "github.com/tsingson/goflatbuffers/go"
+	flatbuffers "github.com/google/flatbuffers/go"
 )
 
 type RapunzelT struct {

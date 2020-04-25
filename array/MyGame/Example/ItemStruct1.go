@@ -66,9 +66,9 @@ func (rcv *ItemStruct1) Color() Color {
 	return Color(rcv._tab.GetInt8(rcv._tab.Pos + flatbuffers.UOffsetT(1)))
 }
 
-func CreateItemStruct1(builder *flatbuffers.Builder, Bool bool, Color Color) flatbuffers.UOffsetT {
+func CreateItemStruct1(builder *flatbuffers.Builder, bool bool, color Color) flatbuffers.UOffsetT {
 	builder.Prep(1, 2)
-	builder.PrependInt8(int8(Color))
-	builder.PrependBool(Bool)
+	builder.PrependInt8(int8(color))
+	builder.PrependBool(bool)
 	return builder.Offset()
 }

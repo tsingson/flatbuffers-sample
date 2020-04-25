@@ -86,16 +86,16 @@ func (rcv *ItemStruct) Ubyte() byte {
 	return rcv._tab.GetByte(rcv._tab.Pos + flatbuffers.UOffsetT(24))
 }
 
-func CreateItemStruct(builder *flatbuffers.Builder, Bool bool, U64 uint64, Color Color, I8 int8, F32 float32, Ubyte byte) flatbuffers.UOffsetT {
+func CreateItemStruct(builder *flatbuffers.Builder, bool bool, u64 uint64, color Color, i8 int8, f32 float32, ubyte byte) flatbuffers.UOffsetT {
 	builder.Prep(8, 32)
 	builder.Pad(7)
-	builder.PrependByte(Ubyte)
-	builder.PrependFloat32(F32)
+	builder.PrependByte(ubyte)
+	builder.PrependFloat32(f32)
 	builder.Pad(2)
-	builder.PrependInt8(I8)
-	builder.PrependInt8(int8(Color))
-	builder.PrependUint64(U64)
+	builder.PrependInt8(i8)
+	builder.PrependInt8(int8(color))
+	builder.PrependUint64(u64)
 	builder.Pad(7)
-	builder.PrependBool(Bool)
+	builder.PrependBool(bool)
 	return builder.Offset()
 }
