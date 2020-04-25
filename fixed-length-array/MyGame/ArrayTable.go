@@ -3,9 +3,10 @@
 package MyGame
 
 import (
-	flatbuffers "github.com/tsingson/goflatbuffers/go"
+	flatbuffers "github.com/google/flatbuffers/go"
 )
 
+// ArrayTableT native go object
 type ArrayTableT struct {
 	A *ArrayStructT
 }

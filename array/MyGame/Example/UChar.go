@@ -3,7 +3,7 @@
 package Example
 
 import (
-	flatbuffers "github.com/google/flatbuffers/go"
+	flatbuffers "github.com/tsingson/goflatbuffers/go"
 )
 
 type UCharT struct {
@@ -123,6 +123,15 @@ func (rcv *UChar) InventoryBytes() []byte {
 	return nil
 }
 
+func (rcv *UChar) MutateInventory(j int, n byte) bool {
+	o := flatbuffers.UOffsetT(rcv._tab.Offset(4))
+	if o != 0 {
+		a := rcv._tab.Vector(o)
+		return rcv._tab.MutateByte(a + flatbuffers.UOffsetT(j*1), n)
+	}
+	return false
+}
+
 func (rcv *UChar) Inventory1Length() int {
 	o := flatbuffers.UOffsetT(rcv._tab.Offset(6))
 	if o != 0 {
@@ -140,6 +149,15 @@ func (rcv *UChar) Inventory1(j int) int8 {
 	return 0
 }
 
+func (rcv *UChar) MutateInventory1(j int, n int8) bool {
+	o := flatbuffers.UOffsetT(rcv._tab.Offset(6))
+	if o != 0 {
+		a := rcv._tab.Vector(o)
+		return rcv._tab.MutateInt8(a + flatbuffers.UOffsetT(j*1), n)
+	}
+	return false
+}
+
 func (rcv *UChar) ColorListLength() int {
 	o := flatbuffers.UOffsetT(rcv._tab.Offset(8))
 	if o != 0 {
@@ -155,6 +173,15 @@ func (rcv *UChar) ColorList(j int) Color {
 		return Color(rcv._tab.GetInt8(a + flatbuffers.UOffsetT(j*1)))
 	}
 	return 0
+}
+
+func (rcv *UChar) MutateColorList(j int, n Color) bool {
+	o := flatbuffers.UOffsetT(rcv._tab.Offset(8))
+	if o != 0 {
+		a := rcv._tab.Vector(o)
+		return rcv._tab.MutateInt8(a + flatbuffers.UOffsetT(j*1), int8(n))
+	}
+	return false
 }
 
 func UCharStart(builder *flatbuffers.Builder) {
