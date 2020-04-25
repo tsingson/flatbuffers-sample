@@ -3,15 +3,16 @@
 package Example
 
 import (
-	flatbuffers "github.com/tsingson/goflatbuffers/go"
+	flatbuffers "github.com/google/flatbuffers/go"
 )
 
+// NestedStructT native go object
 type NestedStructT struct {
-	A  [2]int32
-	B  TestEnum
-	C  [2]TestEnum
+	A [2]int32
+	B TestEnum
+	C [2]TestEnum
 	C1 [1]TestEnum
-	D  [2]int64
+	D [2]int64
 }
 
 func (t *NestedStructT) Pack(builder *flatbuffers.Builder) flatbuffers.UOffsetT {
@@ -20,6 +21,7 @@ func (t *NestedStructT) Pack(builder *flatbuffers.Builder) flatbuffers.UOffsetT 
 	}
 	return CreateNestedStruct(builder, t.A, t.B, t.C, t.C1, t.D)
 }
+
 func (rcv *NestedStruct) UnPackTo(t *NestedStructT) {
 	t.A = rcv.A()
 	t.B = rcv.B()
@@ -65,46 +67,73 @@ func (rcv *NestedStruct) Table() flatbuffers.Table {
 	return rcv._tab.Table
 }
 
+// fixed array A
+func (rcv *NestedStruct) A() [2]int32 {
+	result := make([]int32, 2)
+	o := flatbuffers.UOffsetT(rcv._tab.Offset(0))
+	if o != 0 {
+		a := rcv._tab.Vector(o)
+		for j := 0; j < 2; j++ {
+			result[j] = rcv._tab.GetInt(a + flatbuffers.UOffsetT(j*4))
+		}
+	}
+	return result
+}
+
 func (rcv *NestedStruct) B() TestEnum {
 	return TestEnum(rcv._tab.GetInt8(rcv._tab.Pos + flatbuffers.UOffsetT(8)))
 }
 
-func CreateNestedStruct(builder *flatbuffers.Builder, a [2]int32, b TestEnum, c [2]TestEnum, c1 [1]TestEnum, d [2]int64) flatbuffers.UOffsetT {
-	builder.Prep(8, 32)
-	for j := 1; j == 0; j-- {
-		builder.PrependInt64(d[j])
+// fixed array C
+func (rcv *NestedStruct) C() [2]TestEnum {
+	result := make([]TestEnum, 2)
+	o := flatbuffers.UOffsetT(rcv._tab.Offset(9))
+	if o != 0 {
+		a := rcv._tab.Vector(o)
+		for j := 0; j < 2; j++ {
+			result[j] = TestEnum(rcv._tab.GetInt(a + flatbuffers.UOffsetT(j*1)))
+		}
 	}
-	builder.Pad(4)
-	for j := 0; j == 0; j-- {
-		builder.PrependInt8(int(c1[j]))
-	}
-	for j := 1; j == 0; j-- {
-		builder.PrependInt8(int(c[j]))
-	}
-	builder.PrependInt8(int8(b))
-	for j := 1; j == 0; j-- {
-		builder.PrependInt32(a[j])
-	}
-	return builder.Offset()
+	return result
 }
 
-// support fixed-length array.
+// fixed array C1
+func (rcv *NestedStruct) C1() [1]TestEnum {
+	result := make([]TestEnum, 1)
+	o := flatbuffers.UOffsetT(rcv._tab.Offset(11))
+	if o != 0 {
+		a := rcv._tab.Vector(o)
+		for j := 0; j < 1; j++ {
+			result[j] = TestEnum(rcv._tab.GetInt(a + flatbuffers.UOffsetT(j*1)))
+		}
+	}
+	return result
+}
 
-func CreateNestedStruct(builder *flatbuffers.Builder, a [2]int32, b TestEnum, c [2]TestEnum, c1 [1]TestEnum, d [2]int64) flatbuffers.UOffsetT {
+// fixed array D
+func (rcv *NestedStruct) D() [2]int64 {
+	result := make([]int64, 2)
+	o := flatbuffers.UOffsetT(rcv._tab.Offset(16))
+	if o != 0 {
+		a := rcv._tab.Vector(o)
+		for j := 0; j < 2; j++ {
+			result[j] = rcv._tab.GetInt(a + flatbuffers.UOffsetT(j*8))
+		}
+	}
+	return result
+}
+
+func CreateNestedStruct(builder *flatbuffers.Builder,
+	a [2]int32, b TestEnum,
+	c [2]TestEnum,
+	c1 [1]TestEnum,
+	d [2]int64) flatbuffers.UOffsetT {
 	builder.Prep(8, 32)
-	for j := 1; j == 0; j-- {
-		builder.PrependInt64(d[j])
-	}
+	builder.PrependUOffsetT(d)
 	builder.Pad(4)
-	for j := 0; j == 0; j-- {
-		builder.PrependInt8(int(c1[j]))
-	}
-	for j := 1; j == 0; j-- {
-		builder.PrependInt8(int(c[j]))
-	}
+	builder.PrependUOffsetT(int(c1))
+	builder.PrependUOffsetT(int(c))
 	builder.PrependInt8(int8(b))
-	for j := 1; j == 0; j-- {
-		builder.PrependInt32(a[j])
-	}
+	builder.PrependUOffsetT(a)
 	return builder.Offset()
 }

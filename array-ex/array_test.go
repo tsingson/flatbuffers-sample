@@ -1,6 +1,7 @@
 package array
 
 import (
+	"fmt"
 	"github.com/stretchr/testify/assert"
 	"github.com/tsingson/flatbuffers-sample/array-ex/MyGame/Example"
 	flatbuffers "github.com/tsingson/goflatbuffers/go"
@@ -73,16 +74,16 @@ func TestFCreateItemStruct(t *testing.T) {
 	as := assert.New(t)
 	ist := &Example.ItemStructT{
 		Bool:  true,
-		U64:   100,
+		U64:   1,
 		Color: Example.ColorBlue,
-		I8:    7,
-		F32:   32,
-		Ubyte: uint8(0x3),
+		I8:    1,
+		F32:   1,
+		Ubyte: uint8(0x1),
 	}
 	fsb := flatbuffers.NewStruct()
 	fb := FCreateItemStruct(fsb, ist.Bool, ist.U64, ist.Color, ist.I8, ist.F32, ist.Ubyte)
 	buf := fb.FinishedBytes()
-	// fmt.Printf("%0b\n", buf)
+	fmt.Printf("%0b\n", buf)
 
 	tb := &flatbuffers.Table{
 		Bytes: buf,

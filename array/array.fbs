@@ -11,13 +11,10 @@ struct ItemStruct{
  ubyte:ubyte;
 }
 
-
 struct ItemStruct1{
  bool:bool=false;
  color:Color=Red;
 }
-
-
 
 table ItemTable{
  bool:bool=false;

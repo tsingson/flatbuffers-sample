@@ -3,7 +3,7 @@
 package Example
 
 import (
-	flatbuffers "github.com/google/flatbuffers/go"
+	flatbuffers "github.com/tsingson/goflatbuffers/go"
 )
 
 type ItemStruct1T struct {
@@ -62,8 +62,15 @@ func (rcv *ItemStruct1) Table() flatbuffers.Table {
 func (rcv *ItemStruct1) Bool() bool {
 	return rcv._tab.GetBool(rcv._tab.Pos + flatbuffers.UOffsetT(0))
 }
+func (rcv *ItemStruct1) MutateBool(n bool) bool {
+	return rcv._tab.MutateBool(rcv._tab.Pos + flatbuffers.UOffsetT(0), n)
+}
+
 func (rcv *ItemStruct1) Color() Color {
 	return Color(rcv._tab.GetInt8(rcv._tab.Pos + flatbuffers.UOffsetT(1)))
+}
+func (rcv *ItemStruct1) MutateColor(n Color) bool {
+	return rcv._tab.MutateInt8(rcv._tab.Pos + flatbuffers.UOffsetT(1), int8(n))
 }
 
 func CreateItemStruct1(builder *flatbuffers.Builder, bool bool, color Color) flatbuffers.UOffsetT {

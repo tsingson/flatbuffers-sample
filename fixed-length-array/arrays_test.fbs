@@ -1,6 +1,6 @@
 namespace MyGame.Example;
 
-attribute "go_module:github.com/tsingson/flatbuffers-sample/fixed-langth-array/";
+attribute "go_module:github.com/tsingson/flatbuffers-sample/fixed-length-array/";
 enum TestEnum : byte { A, B, C }
 
 struct NestedStruct{
@@ -12,7 +12,7 @@ struct NestedStruct{
 }
 
 namespace MyGame;
-attribute "go_module:github.com/tsingson/flatbuffers-sample/fixed-langth-array/";
+attribute "go_module:github.com/tsingson/flatbuffers-sample/fixed-length-array/";
 
 struct ArrayStruct{
   a0:[MyGame.Example.NestedStruct:1];

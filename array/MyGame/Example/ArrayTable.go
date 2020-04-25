@@ -3,7 +3,7 @@
 package Example
 
 import (
-	flatbuffers "github.com/google/flatbuffers/go"
+	flatbuffers "github.com/tsingson/goflatbuffers/go"
 )
 
 type ArrayTableT struct {
@@ -215,6 +215,10 @@ func (rcv *ArrayTable) Bool() bool {
 	return false
 }
 
+func (rcv *ArrayTable) MutateBool(n bool) bool {
+	return rcv._tab.MutateBoolSlot(4, n)
+}
+
 func (rcv *ArrayTable) BoolListLength() int {
 	o := flatbuffers.UOffsetT(rcv._tab.Offset(6))
 	if o != 0 {
@@ -232,12 +236,25 @@ func (rcv *ArrayTable) BoolList(j int) bool {
 	return false
 }
 
+func (rcv *ArrayTable) MutateBoolList(j int, n bool) bool {
+	o := flatbuffers.UOffsetT(rcv._tab.Offset(6))
+	if o != 0 {
+		a := rcv._tab.Vector(o)
+		return rcv._tab.MutateBool(a + flatbuffers.UOffsetT(j*1), n)
+	}
+	return false
+}
+
 func (rcv *ArrayTable) Color() Color {
 	o := flatbuffers.UOffsetT(rcv._tab.Offset(8))
 	if o != 0 {
 		return Color(rcv._tab.GetInt8(o + rcv._tab.Pos))
 	}
 	return 0
+}
+
+func (rcv *ArrayTable) MutateColor(n Color) bool {
+	return rcv._tab.MutateInt8Slot(8, int8(n))
 }
 
 func (rcv *ArrayTable) ColorListLength() int {
@@ -257,12 +274,25 @@ func (rcv *ArrayTable) ColorList(j int) Color {
 	return 0
 }
 
+func (rcv *ArrayTable) MutateColorList(j int, n Color) bool {
+	o := flatbuffers.UOffsetT(rcv._tab.Offset(10))
+	if o != 0 {
+		a := rcv._tab.Vector(o)
+		return rcv._tab.MutateInt8(a + flatbuffers.UOffsetT(j*1), int8(n))
+	}
+	return false
+}
+
 func (rcv *ArrayTable) I8() int8 {
 	o := flatbuffers.UOffsetT(rcv._tab.Offset(12))
 	if o != 0 {
 		return rcv._tab.GetInt8(o + rcv._tab.Pos)
 	}
 	return 0
+}
+
+func (rcv *ArrayTable) MutateI8(n int8) bool {
+	return rcv._tab.MutateInt8Slot(12, n)
 }
 
 func (rcv *ArrayTable) I8ListLength() int {
@@ -282,12 +312,25 @@ func (rcv *ArrayTable) I8List(j int) int8 {
 	return 0
 }
 
+func (rcv *ArrayTable) MutateI8List(j int, n int8) bool {
+	o := flatbuffers.UOffsetT(rcv._tab.Offset(14))
+	if o != 0 {
+		a := rcv._tab.Vector(o)
+		return rcv._tab.MutateInt8(a + flatbuffers.UOffsetT(j*1), n)
+	}
+	return false
+}
+
 func (rcv *ArrayTable) F32() float32 {
 	o := flatbuffers.UOffsetT(rcv._tab.Offset(16))
 	if o != 0 {
 		return rcv._tab.GetFloat32(o + rcv._tab.Pos)
 	}
 	return 0.0
+}
+
+func (rcv *ArrayTable) MutateF32(n float32) bool {
+	return rcv._tab.MutateFloat32Slot(16, n)
 }
 
 func (rcv *ArrayTable) F32ListLength() int {
@@ -305,6 +348,15 @@ func (rcv *ArrayTable) F32List(j int) float32 {
 		return rcv._tab.GetFloat32(a + flatbuffers.UOffsetT(j*4))
 	}
 	return 0
+}
+
+func (rcv *ArrayTable) MutateF32List(j int, n float32) bool {
+	o := flatbuffers.UOffsetT(rcv._tab.Offset(18))
+	if o != 0 {
+		a := rcv._tab.Vector(o)
+		return rcv._tab.MutateFloat32(a + flatbuffers.UOffsetT(j*4), n)
+	}
+	return false
 }
 
 func (rcv *ArrayTable) String_() []byte {
