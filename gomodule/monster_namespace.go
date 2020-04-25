@@ -6,7 +6,7 @@ import (
 	"gomodule/Mygame"
 	"gomodule/Mygame/Example"
 
-	flatbuffers "github.com/google/flatbuffers/go"
+	flatbuffers "github.com/tsingson/goflatbuffers/go"
 	"strconv"
 )
 

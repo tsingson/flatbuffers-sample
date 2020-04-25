@@ -5,7 +5,7 @@ package Sample
 import (
 	"strconv"
 
-	flatbuffers "github.com/google/flatbuffers/go"
+	flatbuffers "github.com/tsingson/goflatbuffers/go"
 	weapons "github.com/tsingson/flatbuffers-sample/namespace/weapons"
 )
 

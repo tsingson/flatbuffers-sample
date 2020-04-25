@@ -5,7 +5,7 @@ import (
 
 	"github.com/tsingson/flatbuffers-sample/union-vector/Movie"
 
-	flatbuffers "github.com/google/flatbuffers/go"
+	flatbuffers "github.com/tsingson/goflatbuffers/go"
 )
 
 func TestMovieUnionField1(t *testing.T) {

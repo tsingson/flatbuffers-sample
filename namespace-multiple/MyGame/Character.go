@@ -5,7 +5,7 @@ package MyGame
 import (
 	"strconv"
 
-	flatbuffers "github.com/google/flatbuffers/go"
+	flatbuffers "github.com/tsingson/goflatbuffers/go"
 	MyGame__Sample "github.com/tsingson/flatbuffers-sample/namespace-multiple/MyGame/Sample"
 	weapons "github.com/tsingson/flatbuffers-sample/namespace-multiple/weapons"
 )

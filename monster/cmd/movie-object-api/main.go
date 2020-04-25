@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	flatbuffers "github.com/google/flatbuffers/go"
+	flatbuffers "github.com/tsingson/goflatbuffers/go"
 	"github.com/tsingson/flatbuffers-sample/union-vector/Movie"
 )
 

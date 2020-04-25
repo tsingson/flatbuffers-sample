@@ -3,11 +3,11 @@
 package Movie
 
 import (
-	flatbuffers "github.com/google/flatbuffers/go"
+	flatbuffers "github.com/tsingson/goflatbuffers/go"
 )
 
 type MovieT struct {
-	Single *CharacterT
+	Single   *CharacterT
 	Multiple []*CharacterT
 }
 
@@ -17,8 +17,8 @@ func (t *MovieT) Pack(builder *flatbuffers.Builder) flatbuffers.UOffsetT {
 		return 0
 	}
 	singleOffset := t.Single.Pack(builder)
-	
-	// vector of unions 
+
+	// vector of unions
 	multipleOffset := flatbuffers.UOffsetT(0)
 	multipleTypeOffset := flatbuffers.UOffsetT(0)
 	if t.Multiple != nil {
@@ -133,6 +133,14 @@ func (rcv *Movie) Single(obj *flatbuffers.Table) bool {
 	return false
 }
 
+func (rcv *Movie) MultipleTypeLength() int {
+	o := flatbuffers.UOffsetT(rcv._tab.Offset(8))
+	if o != 0 {
+		return rcv._tab.VectorLen(o)
+	}
+	return 0
+}
+
 func (rcv *Movie) MultipleType(j int) Character {
 	o := flatbuffers.UOffsetT(rcv._tab.Offset(8))
 	if o != 0 {
@@ -142,8 +150,8 @@ func (rcv *Movie) MultipleType(j int) Character {
 	return 0
 }
 
-func (rcv *Movie) MultipleTypeLength() int {
-	o := flatbuffers.UOffsetT(rcv._tab.Offset(8))
+func (rcv *Movie) MultipleLength() int {
+	o := flatbuffers.UOffsetT(rcv._tab.Offset(10))
 	if o != 0 {
 		return rcv._tab.VectorLen(o)
 	}
@@ -161,14 +169,6 @@ func (rcv *Movie) Multiple(j int, obj *flatbuffers.Table) bool {
 	return false
 }
 
-func (rcv *Movie) MultipleLength() int {
-	o := flatbuffers.UOffsetT(rcv._tab.Offset(10))
-	if o != 0 {
-		return rcv._tab.VectorLen(o)
-	}
-	return 0
-}
-
 func MovieStart(builder *flatbuffers.Builder) {
 	builder.StartObject(4)
 }
@@ -181,7 +181,7 @@ func MovieAddSingle(builder *flatbuffers.Builder, single flatbuffers.UOffsetT) {
 	builder.PrependUOffsetTSlot(1, flatbuffers.UOffsetT(single), 0)
 }
 
-func MovieStartMultipleTypeVector(builder *flatbuffers.Builder, numElems int)  {
+func MovieStartMultipleTypeVector(builder *flatbuffers.Builder, numElems int) {
 	builder.StartVector(1, numElems, 1)
 }
 
@@ -193,7 +193,7 @@ func MovieAddMultipleType(builder *flatbuffers.Builder, multipleType flatbuffers
 	builder.PrependUOffsetTSlot(2, flatbuffers.UOffsetT(multipleType), 0)
 }
 
-func MovieStartMultipleVector(builder *flatbuffers.Builder, numElems int)  {
+func MovieStartMultipleVector(builder *flatbuffers.Builder, numElems int) {
 	builder.StartVector(4, numElems, 4)
 }
 

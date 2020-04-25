@@ -3,7 +3,7 @@
 package MyGame
 
 import (
-	flatbuffers "github.com/google/flatbuffers/go"
+	flatbuffers "github.com/tsingson/goflatbuffers/go"
 	MyGame__Example "github.com/tsingson/flatbuffers-sample/array/MyGame/Example"
 )
 

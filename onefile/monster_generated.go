@@ -5,7 +5,7 @@ package monster
 import (
 	"strconv"
 
-	flatbuffers "github.com/google/flatbuffers/go"
+	flatbuffers "github.com/tsingson/goflatbuffers/go"
 )
 
 type Color int8
