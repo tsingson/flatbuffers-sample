@@ -3,15 +3,15 @@
 package Example
 
 import (
-	flatbuffers "github.com/google/flatbuffers/go"
+	flatbuffers "github.com/tsingson/goflatbuffers/go"
 )
 
 type ItemTableT struct {
-	Bool bool
-	U64 uint64
+	Bool  bool
+	U64   uint64
 	Color Color
-	I8 int8
-	F32 float32
+	I8    int8
+	F32   float32
 	Ubyte byte
 }
 
@@ -96,12 +96,20 @@ func (rcv *ItemTable) Bool() bool {
 	return false
 }
 
+func (rcv *ItemTable) MutateBool(n bool) bool {
+	return rcv._tab.MutateBoolSlot(4, n)
+}
+
 func (rcv *ItemTable) U64() uint64 {
 	o := flatbuffers.UOffsetT(rcv._tab.Offset(6))
 	if o != 0 {
 		return rcv._tab.GetUint64(o + rcv._tab.Pos)
 	}
 	return 0
+}
+
+func (rcv *ItemTable) MutateU64(n uint64) bool {
+	return rcv._tab.MutateUint64Slot(6, n)
 }
 
 func (rcv *ItemTable) Color() Color {
@@ -112,12 +120,20 @@ func (rcv *ItemTable) Color() Color {
 	return 0
 }
 
+func (rcv *ItemTable) MutateColor(n Color) bool {
+	return rcv._tab.MutateInt8Slot(8, int8(n))
+}
+
 func (rcv *ItemTable) I8() int8 {
 	o := flatbuffers.UOffsetT(rcv._tab.Offset(10))
 	if o != 0 {
 		return rcv._tab.GetInt8(o + rcv._tab.Pos)
 	}
 	return 0
+}
+
+func (rcv *ItemTable) MutateI8(n int8) bool {
+	return rcv._tab.MutateInt8Slot(10, n)
 }
 
 func (rcv *ItemTable) F32() float32 {
@@ -128,12 +144,20 @@ func (rcv *ItemTable) F32() float32 {
 	return 0.0
 }
 
+func (rcv *ItemTable) MutateF32(n float32) bool {
+	return rcv._tab.MutateFloat32Slot(12, n)
+}
+
 func (rcv *ItemTable) Ubyte() byte {
 	o := flatbuffers.UOffsetT(rcv._tab.Offset(14))
 	if o != 0 {
 		return rcv._tab.GetByte(o + rcv._tab.Pos)
 	}
 	return 0
+}
+
+func (rcv *ItemTable) MutateUbyte(n byte) bool {
+	return rcv._tab.MutateByteSlot(14, n)
 }
 
 func ItemTableStart(builder *flatbuffers.Builder) {

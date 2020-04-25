@@ -1,0 +1,51 @@
+namespace MyGame.Example;
+attribute "go_module:github.com/tsingson/flatbuffers-sample/array/";
+enum Color:byte { Red = 0, Green, Blue = 2 }
+
+struct ItemStruct{
+ bool:bool=false;
+ u64: uint64;
+ color:Color=Red;
+ i8: int8;
+ f32: float32;
+ ubyte:ubyte;
+}
+
+
+struct ItemStruct1{
+ bool:bool=false;
+ color:Color=Red;
+}
+
+
+
+table ItemTable{
+ bool:bool=false;
+ u64: uint64;
+ color:Color=Red;
+ i8: int8;
+ f32: float32;
+ ubyte:ubyte;
+}
+
+
+table ArrayTable{
+bool:bool=false;
+boolList:[bool];
+ color:Color=Red;
+ colorList:[Color];
+ i8: int8;
+ i8List:[int8];
+ f32: float32;
+ f32List:[float32];
+ string:string;
+ strList:[string];
+ struct:ItemStruct;
+ structList:[ItemStruct];
+ table:ItemTable;
+ tableList:[ItemTable];
+}
+
+root_type ArrayTable;
+file_identifier "ARRT";
+file_extension "mon";
