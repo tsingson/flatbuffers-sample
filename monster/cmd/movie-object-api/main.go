@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 
-	flatbuffers "github.com/tsingson/goflatbuffers/go"
 	"github.com/tsingson/flatbuffers-sample/union-vector/Movie"
+	flatbuffers "github.com/tsingson/goflatbuffers/go"
 )
 
 func main() {

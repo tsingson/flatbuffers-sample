@@ -20,8 +20,8 @@ package main
 
 import (
 	"fmt"
-	flatbuffers "github.com/tsingson/goflatbuffers/go"
 	sample "github.com/tsingson/flatbuffers-sample/samples/MyGame/Sample"
+	flatbuffers "github.com/tsingson/goflatbuffers/go"
 	"strconv"
 )
 

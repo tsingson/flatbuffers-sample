@@ -3,8 +3,8 @@
 package MyGame
 
 import (
-	flatbuffers "github.com/tsingson/goflatbuffers/go"
 	MyGame__Example "github.com/tsingson/flatbuffers-sample/array/MyGame/Example"
+	flatbuffers "github.com/tsingson/goflatbuffers/go"
 )
 
 type ArrayStructT struct {

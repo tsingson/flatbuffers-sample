@@ -7,7 +7,7 @@ import (
 )
 
 type WeaponT struct {
-	Name string
+	Name   string
 	Damage int16
 }
 

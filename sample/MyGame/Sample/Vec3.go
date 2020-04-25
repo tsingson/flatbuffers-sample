@@ -65,21 +65,21 @@ func (rcv *Vec3) X() float32 {
 	return rcv._tab.GetFloat32(rcv._tab.Pos + flatbuffers.UOffsetT(0))
 }
 func (rcv *Vec3) MutateX(n float32) bool {
-	return rcv._tab.MutateFloat32(rcv._tab.Pos + flatbuffers.UOffsetT(0), n)
+	return rcv._tab.MutateFloat32(rcv._tab.Pos+flatbuffers.UOffsetT(0), n)
 }
 
 func (rcv *Vec3) Y() float32 {
 	return rcv._tab.GetFloat32(rcv._tab.Pos + flatbuffers.UOffsetT(4))
 }
 func (rcv *Vec3) MutateY(n float32) bool {
-	return rcv._tab.MutateFloat32(rcv._tab.Pos + flatbuffers.UOffsetT(4), n)
+	return rcv._tab.MutateFloat32(rcv._tab.Pos+flatbuffers.UOffsetT(4), n)
 }
 
 func (rcv *Vec3) Z() float32 {
 	return rcv._tab.GetFloat32(rcv._tab.Pos + flatbuffers.UOffsetT(8))
 }
 func (rcv *Vec3) MutateZ(n float32) bool {
-	return rcv._tab.MutateFloat32(rcv._tab.Pos + flatbuffers.UOffsetT(8), n)
+	return rcv._tab.MutateFloat32(rcv._tab.Pos+flatbuffers.UOffsetT(8), n)
 }
 
 func CreateVec3(builder *flatbuffers.Builder, X float32, Y float32, Z float32) flatbuffers.UOffsetT {

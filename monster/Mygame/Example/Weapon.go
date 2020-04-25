@@ -7,10 +7,10 @@ import (
 )
 
 type WeaponT struct {
-	Size *Vec3T
+	Size  *Vec3T
 	Color Color
 	Power int32
-	Name string
+	Name  string
 }
 
 // WeaponT object pack function
