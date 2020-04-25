@@ -3,15 +3,15 @@
 package Example
 
 import (
-	flatbuffers "github.com/google/flatbuffers/go"
+	flatbuffers "github.com/tsingson/goflatbuffers/go"
 )
 
 type ItemStructT struct {
-	Bool bool
-	U64 uint64
+	Bool  bool
+	U64   uint64
 	Color Color
-	I8 int8
-	F32 float32
+	I8    int8
+	F32   float32
 	Ubyte byte
 }
 
@@ -70,32 +70,55 @@ func (rcv *ItemStruct) Table() flatbuffers.Table {
 func (rcv *ItemStruct) Bool() bool {
 	return rcv._tab.GetBool(rcv._tab.Pos + flatbuffers.UOffsetT(0))
 }
+func (rcv *ItemStruct) MutateBool(n bool) bool {
+	return rcv._tab.MutateBool(rcv._tab.Pos+flatbuffers.UOffsetT(0), n)
+}
+
 func (rcv *ItemStruct) U64() uint64 {
 	return rcv._tab.GetUint64(rcv._tab.Pos + flatbuffers.UOffsetT(8))
 }
+func (rcv *ItemStruct) MutateU64(n uint64) bool {
+	return rcv._tab.MutateUint64(rcv._tab.Pos+flatbuffers.UOffsetT(8), n)
+}
+
 func (rcv *ItemStruct) Color() Color {
 	return Color(rcv._tab.GetInt8(rcv._tab.Pos + flatbuffers.UOffsetT(16)))
 }
+func (rcv *ItemStruct) MutateColor(n Color) bool {
+	return rcv._tab.MutateInt8(rcv._tab.Pos+flatbuffers.UOffsetT(16), int8(n))
+}
+
 func (rcv *ItemStruct) I8() int8 {
 	return rcv._tab.GetInt8(rcv._tab.Pos + flatbuffers.UOffsetT(17))
 }
+func (rcv *ItemStruct) MutateI8(n int8) bool {
+	return rcv._tab.MutateInt8(rcv._tab.Pos+flatbuffers.UOffsetT(17), n)
+}
+
 func (rcv *ItemStruct) F32() float32 {
 	return rcv._tab.GetFloat32(rcv._tab.Pos + flatbuffers.UOffsetT(20))
 }
+func (rcv *ItemStruct) MutateF32(n float32) bool {
+	return rcv._tab.MutateFloat32(rcv._tab.Pos+flatbuffers.UOffsetT(20), n)
+}
+
 func (rcv *ItemStruct) Ubyte() byte {
 	return rcv._tab.GetByte(rcv._tab.Pos + flatbuffers.UOffsetT(24))
 }
+func (rcv *ItemStruct) MutateUbyte(n byte) bool {
+	return rcv._tab.MutateByte(rcv._tab.Pos+flatbuffers.UOffsetT(24), n)
+}
 
-func CreateItemStruct(builder *flatbuffers.Builder, bool bool, u64 uint64, color Color, i8 int8, f32 float32, ubyte byte) flatbuffers.UOffsetT {
+func CreateItemStruct(builder *flatbuffers.Builder, Bool bool, U64 uint64, Color Color, I8 int8, F32 float32, Ubyte byte) flatbuffers.UOffsetT {
 	builder.Prep(8, 32)
 	builder.Pad(7)
-	builder.PrependByte(ubyte)
-	builder.PrependFloat32(f32)
+	builder.PrependByte(Ubyte)
+	builder.PrependFloat32(F32)
 	builder.Pad(2)
-	builder.PrependInt8(i8)
-	builder.PrependInt8(int8(color))
-	builder.PrependUint64(u64)
+	builder.PrependInt8(I8)
+	builder.PrependInt8(int8(Color))
+	builder.PrependUint64(U64)
 	builder.Pad(7)
-	builder.PrependBool(bool)
+	builder.PrependBool(Bool)
 	return builder.Offset()
 }

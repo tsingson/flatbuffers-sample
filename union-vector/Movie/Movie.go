@@ -3,11 +3,11 @@
 package Movie
 
 import (
-	flatbuffers "github.com/tsingson/goflatbuffers/go"
+	flatbuffers "github.com/google/flatbuffers/go"
 )
 
 type MovieT struct {
-	Single   *CharacterT
+	Single *CharacterT
 	Multiple []*CharacterT
 }
 
@@ -17,8 +17,8 @@ func (t *MovieT) Pack(builder *flatbuffers.Builder) flatbuffers.UOffsetT {
 		return 0
 	}
 	singleOffset := t.Single.Pack(builder)
-
-	// vector of unions
+	
+	// vector of unions 
 	multipleOffset := flatbuffers.UOffsetT(0)
 	multipleTypeOffset := flatbuffers.UOffsetT(0)
 	if t.Multiple != nil {
@@ -62,7 +62,6 @@ func (rcv *Movie) UnPackTo(t *MovieT) {
 	multipleLength := rcv.MultipleLength()
 	t.Multiple = make([]*CharacterT, multipleLength)
 	for j := 0; j < multipleLength; j++ {
-		// vector of unions table unpack
 		MultipleType := rcv.MultipleType(j)
 		MultipleTable := flatbuffers.Table{}
 		if rcv.Multiple(j, &MultipleTable) {

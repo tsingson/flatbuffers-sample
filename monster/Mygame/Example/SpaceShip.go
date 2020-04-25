@@ -3,13 +3,13 @@
 package Example
 
 import (
-	flatbuffers "github.com/tsingson/goflatbuffers/go"
+	flatbuffers "github.com/google/flatbuffers/go"
 )
 
 type SpaceShipT struct {
-	Size  *Vec3T
+	Size *Vec3T
 	Power int32
-	Name  string
+	Name string
 }
 
 // SpaceShipT object pack function
@@ -117,16 +117,16 @@ func SpaceShipStart(builder *flatbuffers.Builder) {
 	builder.StartObject(3)
 }
 
-func SpaceShipAddSize(builder *flatbuffers.Builder, Size flatbuffers.UOffsetT) {
-	builder.PrependStructSlot(0, flatbuffers.UOffsetT(Size), 0)
+func SpaceShipAddSize(builder *flatbuffers.Builder, size flatbuffers.UOffsetT) {
+	builder.PrependStructSlot(0, flatbuffers.UOffsetT(size), 0)
 }
 
-func SpaceShipAddPower(builder *flatbuffers.Builder, Power int32) {
-	builder.PrependInt32Slot(1, Power, 0)
+func SpaceShipAddPower(builder *flatbuffers.Builder, power int32) {
+	builder.PrependInt32Slot(1, power, 0)
 }
 
-func SpaceShipAddName(builder *flatbuffers.Builder, Name flatbuffers.UOffsetT) {
-	builder.PrependUOffsetTSlot(2, flatbuffers.UOffsetT(Name), 0)
+func SpaceShipAddName(builder *flatbuffers.Builder, name flatbuffers.UOffsetT) {
+	builder.PrependUOffsetTSlot(2, flatbuffers.UOffsetT(name), 0)
 }
 
 func SpaceShipEnd(builder *flatbuffers.Builder) flatbuffers.UOffsetT {

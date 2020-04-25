@@ -28,11 +28,6 @@ table ItemTable{
  ubyte:ubyte;
 }
 
-table UChar {
-  inventory:[ubyte];
-  inventory1:[byte];
-  colorList:[Color];
-}
 
 table ArrayTable{
 bool:bool=false;

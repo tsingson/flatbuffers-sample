@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/tsingson/flatbuffers-sample/union-vector/Movie"
-	flatbuffers "github.com/tsingson/goflatbuffers/go"
+	flatbuffers "github.com/google/flatbuffers/go"
 )
 
 func main() {
@@ -37,22 +37,23 @@ func main() {
 	}
 
 	m := &Movie.MovieT{
-		MainCharacter: c1,
-		Characters:    []*Movie.CharacterT{c1, c2, c1, c3, c4},
+		Single: c1,
+		Multiple:    []*Movie.CharacterT{c1, c2, c1, c3, c4},
 	}
-	fb := flatbuffers.NewBuilder(0)
-	buf := fb.Finish(m.Pack(fb)).FinishedBytes()
+	builder := flatbuffers.NewBuilder(0)
+	 builder.Finish(m.Pack(builder))
+	buf := builder.FinishedBytes()
 
 	mt := Movie.GetRootAsMovie(buf, 0)
 
 	mvt := mt.UnPack()
-	if mvt.MainCharacter.Type == Movie.CharacterOther {
-		fmt.Println(mvt.MainCharacter.Value.(string))
+	if mvt.Single.Type == Movie.CharacterOther {
+		fmt.Println(mvt.Single.Value.(string))
 	}
 
-	l := len(mvt.Characters)
+	l := len(mvt.Multiple)
 	for i := 0; i < l; i++ {
-		ct := mvt.Characters[i]
+		ct := mvt.Multiple[i]
 		switch ct.Type {
 		case Movie.CharacterMuLan:
 

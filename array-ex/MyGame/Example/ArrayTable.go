@@ -3,24 +3,24 @@
 package Example
 
 import (
-	flatbuffers "github.com/google/flatbuffers/go"
+	flatbuffers "github.com/tsingson/goflatbuffers/go"
 )
 
 type ArrayTableT struct {
-	Bool bool
-	BoolList []bool
-	Color Color
-	ColorList []Color
-	I8 int8
-	I8List []int8
-	F32 float32
-	F32List []float32
-	String_ string
-	StrList []string
-	Struct_ *ItemStructT
+	Bool       bool
+	BoolList   []bool
+	Color      Color
+	ColorList  []Color
+	I8         int8
+	I8List     []int8
+	F32        float32
+	F32List    []float32
+	String_    string
+	StrList    []string
+	Struct_    *ItemStructT
 	StructList []*ItemStructT
-	Table_ *ItemTableT
-	TableList []*ItemTableT
+	Table_     *ItemTableT
+	TableList  []*ItemTableT
 }
 
 // ArrayTableT object pack function
@@ -64,9 +64,9 @@ func (t *ArrayTableT) Pack(builder *flatbuffers.Builder) flatbuffers.UOffsetT {
 		}
 		f32ListOffset = ArrayTableEndF32ListVector(builder, f32ListLength)
 	}
-	string_Offset := flatbuffers.UOffsetT(0)
+	String_Offset := flatbuffers.UOffsetT(0)
 	if len(t.String_) > 0 {
-		string_Offset = builder.CreateString(t.String_)
+		String_Offset = builder.CreateString(t.String_)
 	}
 	strListOffset := flatbuffers.UOffsetT(0)
 	if t.StrList != nil {
@@ -81,8 +81,8 @@ func (t *ArrayTableT) Pack(builder *flatbuffers.Builder) flatbuffers.UOffsetT {
 		}
 		structListOffset = ArrayTableEndStructListVector(builder, structListLength)
 	}
-	table_Offset := t.Table_.Pack(builder)
-	// vector of tables 
+	Table_Offset := t.Table_.Pack(builder)
+	// vector of tables
 	tableListOffset := flatbuffers.UOffsetT(0)
 	if t.TableList != nil {
 		tableListLength := len(t.TableList)
@@ -108,12 +108,12 @@ func (t *ArrayTableT) Pack(builder *flatbuffers.Builder) flatbuffers.UOffsetT {
 	ArrayTableAddI8List(builder, i8ListOffset)
 	ArrayTableAddF32(builder, t.F32)
 	ArrayTableAddF32List(builder, f32ListOffset)
-	ArrayTableAddString_(builder, string_Offset)
+	ArrayTableAddString_(builder, String_Offset)
 	ArrayTableAddStrList(builder, strListOffset)
-	struct_Offset := t.Struct_.Pack(builder)
-	ArrayTableAddStruct_(builder, struct_Offset)
+	Struct_Offset := t.Struct_.Pack(builder)
+	ArrayTableAddStruct_(builder, Struct_Offset)
 	ArrayTableAddStructList(builder, structListOffset)
-	ArrayTableAddTable_(builder, table_Offset)
+	ArrayTableAddTable_(builder, Table_Offset)
 	ArrayTableAddTableList(builder, tableListOffset)
 	return ArrayTableEnd(builder)
 }
@@ -124,22 +124,26 @@ func (rcv *ArrayTable) UnPackTo(t *ArrayTableT) {
 	boolListLength := rcv.BoolListLength()
 	t.BoolList = make([]bool, boolListLength)
 	for j := 0; j < boolListLength; j++ {
-		t.BoolList[j] = rcv.BoolList(j)	}
+		t.BoolList[j] = rcv.BoolList(j)
+	}
 	t.Color = rcv.Color()
 	colorListLength := rcv.ColorListLength()
 	t.ColorList = make([]Color, colorListLength)
 	for j := 0; j < colorListLength; j++ {
-		t.ColorList[j] = rcv.ColorList(j)	}
+		t.ColorList[j] = rcv.ColorList(j)
+	}
 	t.I8 = rcv.I8()
 	i8ListLength := rcv.I8ListLength()
 	t.I8List = make([]int8, i8ListLength)
 	for j := 0; j < i8ListLength; j++ {
-		t.I8List[j] = rcv.I8List(j)	}
+		t.I8List[j] = rcv.I8List(j)
+	}
 	t.F32 = rcv.F32()
 	f32ListLength := rcv.F32ListLength()
 	t.F32List = make([]float32, f32ListLength)
 	for j := 0; j < f32ListLength; j++ {
-		t.F32List[j] = rcv.F32List(j)	}
+		t.F32List[j] = rcv.F32List(j)
+	}
 	t.String_ = string(rcv.String_())
 	strListLength := rcv.StrListLength()
 	t.StrList = make([]string, strListLength)
@@ -152,6 +156,7 @@ func (rcv *ArrayTable) UnPackTo(t *ArrayTableT) {
 	for j := 0; j < structListLength; j++ {
 		x := ItemStruct{}
 		rcv.StructList(&x, j)
+		t.StructList[j] = x.UnPack()
 	}
 	t.Table_ = rcv.Table_(nil).UnPack()
 	tableListLength := rcv.TableListLength()
@@ -159,6 +164,7 @@ func (rcv *ArrayTable) UnPackTo(t *ArrayTableT) {
 	for j := 0; j < tableListLength; j++ {
 		x := ItemTable{}
 		rcv.TableList(&x, j)
+		t.TableList[j] = x.UnPack()
 	}
 }
 
@@ -215,6 +221,10 @@ func (rcv *ArrayTable) Bool() bool {
 	return false
 }
 
+func (rcv *ArrayTable) MutateBool(n bool) bool {
+	return rcv._tab.MutateBoolSlot(4, n)
+}
+
 func (rcv *ArrayTable) BoolListLength() int {
 	o := flatbuffers.UOffsetT(rcv._tab.Offset(6))
 	if o != 0 {
@@ -232,12 +242,25 @@ func (rcv *ArrayTable) BoolList(j int) bool {
 	return false
 }
 
+func (rcv *ArrayTable) MutateBoolList(j int, n bool) bool {
+	o := flatbuffers.UOffsetT(rcv._tab.Offset(6))
+	if o != 0 {
+		a := rcv._tab.Vector(o)
+		return rcv._tab.MutateBool(a+flatbuffers.UOffsetT(j*1), n)
+	}
+	return false
+}
+
 func (rcv *ArrayTable) Color() Color {
 	o := flatbuffers.UOffsetT(rcv._tab.Offset(8))
 	if o != 0 {
 		return Color(rcv._tab.GetInt8(o + rcv._tab.Pos))
 	}
 	return 0
+}
+
+func (rcv *ArrayTable) MutateColor(n Color) bool {
+	return rcv._tab.MutateInt8Slot(8, int8(n))
 }
 
 func (rcv *ArrayTable) ColorListLength() int {
@@ -257,12 +280,25 @@ func (rcv *ArrayTable) ColorList(j int) Color {
 	return 0
 }
 
+func (rcv *ArrayTable) MutateColorList(j int, n Color) bool {
+	o := flatbuffers.UOffsetT(rcv._tab.Offset(10))
+	if o != 0 {
+		a := rcv._tab.Vector(o)
+		return rcv._tab.MutateInt8(a+flatbuffers.UOffsetT(j*1), int8(n))
+	}
+	return false
+}
+
 func (rcv *ArrayTable) I8() int8 {
 	o := flatbuffers.UOffsetT(rcv._tab.Offset(12))
 	if o != 0 {
 		return rcv._tab.GetInt8(o + rcv._tab.Pos)
 	}
 	return 0
+}
+
+func (rcv *ArrayTable) MutateI8(n int8) bool {
+	return rcv._tab.MutateInt8Slot(12, n)
 }
 
 func (rcv *ArrayTable) I8ListLength() int {
@@ -282,12 +318,25 @@ func (rcv *ArrayTable) I8List(j int) int8 {
 	return 0
 }
 
+func (rcv *ArrayTable) MutateI8List(j int, n int8) bool {
+	o := flatbuffers.UOffsetT(rcv._tab.Offset(14))
+	if o != 0 {
+		a := rcv._tab.Vector(o)
+		return rcv._tab.MutateInt8(a+flatbuffers.UOffsetT(j*1), n)
+	}
+	return false
+}
+
 func (rcv *ArrayTable) F32() float32 {
 	o := flatbuffers.UOffsetT(rcv._tab.Offset(16))
 	if o != 0 {
 		return rcv._tab.GetFloat32(o + rcv._tab.Pos)
 	}
 	return 0.0
+}
+
+func (rcv *ArrayTable) MutateF32(n float32) bool {
+	return rcv._tab.MutateFloat32Slot(16, n)
 }
 
 func (rcv *ArrayTable) F32ListLength() int {
@@ -305,6 +354,15 @@ func (rcv *ArrayTable) F32List(j int) float32 {
 		return rcv._tab.GetFloat32(a + flatbuffers.UOffsetT(j*4))
 	}
 	return 0
+}
+
+func (rcv *ArrayTable) MutateF32List(j int, n float32) bool {
+	o := flatbuffers.UOffsetT(rcv._tab.Offset(18))
+	if o != 0 {
+		a := rcv._tab.Vector(o)
+		return rcv._tab.MutateFloat32(a+flatbuffers.UOffsetT(j*4), n)
+	}
+	return false
 }
 
 func (rcv *ArrayTable) String_() []byte {
@@ -401,8 +459,8 @@ func ArrayTableStart(builder *flatbuffers.Builder) {
 	builder.StartObject(14)
 }
 
-func ArrayTableAddBool(builder *flatbuffers.Builder, bool bool) {
-	builder.PrependBoolSlot(0, bool, false)
+func ArrayTableAddBool(builder *flatbuffers.Builder, Bool bool) {
+	builder.PrependBoolSlot(0, Bool, false)
 }
 
 func ArrayTableStartBoolListVector(builder *flatbuffers.Builder, numElems int) {
@@ -413,12 +471,12 @@ func ArrayTableEndBoolListVector(builder *flatbuffers.Builder, numElems int) fla
 	return builder.EndVector(numElems)
 }
 
-func ArrayTableAddBoolList(builder *flatbuffers.Builder, boolList flatbuffers.UOffsetT) {
-	builder.PrependUOffsetTSlot(1, flatbuffers.UOffsetT(boolList), 0)
+func ArrayTableAddBoolList(builder *flatbuffers.Builder, BoolList flatbuffers.UOffsetT) {
+	builder.PrependUOffsetTSlot(1, flatbuffers.UOffsetT(BoolList), 0)
 }
 
-func ArrayTableAddColor(builder *flatbuffers.Builder, color Color) {
-	builder.PrependInt8Slot(2, int8(color), 0)
+func ArrayTableAddColor(builder *flatbuffers.Builder, Color Color) {
+	builder.PrependInt8Slot(2, int8(Color), 0)
 }
 
 func ArrayTableStartColorListVector(builder *flatbuffers.Builder, numElems int) {
@@ -429,12 +487,12 @@ func ArrayTableEndColorListVector(builder *flatbuffers.Builder, numElems int) fl
 	return builder.EndVector(numElems)
 }
 
-func ArrayTableAddColorList(builder *flatbuffers.Builder, colorList flatbuffers.UOffsetT) {
-	builder.PrependUOffsetTSlot(3, flatbuffers.UOffsetT(colorList), 0)
+func ArrayTableAddColorList(builder *flatbuffers.Builder, ColorList flatbuffers.UOffsetT) {
+	builder.PrependUOffsetTSlot(3, flatbuffers.UOffsetT(ColorList), 0)
 }
 
-func ArrayTableAddI8(builder *flatbuffers.Builder, i8 int8) {
-	builder.PrependInt8Slot(4, i8, 0)
+func ArrayTableAddI8(builder *flatbuffers.Builder, I8 int8) {
+	builder.PrependInt8Slot(4, I8, 0)
 }
 
 func ArrayTableStartI8ListVector(builder *flatbuffers.Builder, numElems int) {
@@ -445,12 +503,12 @@ func ArrayTableEndI8ListVector(builder *flatbuffers.Builder, numElems int) flatb
 	return builder.EndVector(numElems)
 }
 
-func ArrayTableAddI8List(builder *flatbuffers.Builder, i8List flatbuffers.UOffsetT) {
-	builder.PrependUOffsetTSlot(5, flatbuffers.UOffsetT(i8List), 0)
+func ArrayTableAddI8List(builder *flatbuffers.Builder, I8List flatbuffers.UOffsetT) {
+	builder.PrependUOffsetTSlot(5, flatbuffers.UOffsetT(I8List), 0)
 }
 
-func ArrayTableAddF32(builder *flatbuffers.Builder, f32 float32) {
-	builder.PrependFloat32Slot(6, f32, 0.0)
+func ArrayTableAddF32(builder *flatbuffers.Builder, F32 float32) {
+	builder.PrependFloat32Slot(6, F32, 0.0)
 }
 
 func ArrayTableStartF32ListVector(builder *flatbuffers.Builder, numElems int) {
@@ -461,12 +519,12 @@ func ArrayTableEndF32ListVector(builder *flatbuffers.Builder, numElems int) flat
 	return builder.EndVector(numElems)
 }
 
-func ArrayTableAddF32List(builder *flatbuffers.Builder, f32List flatbuffers.UOffsetT) {
-	builder.PrependUOffsetTSlot(7, flatbuffers.UOffsetT(f32List), 0)
+func ArrayTableAddF32List(builder *flatbuffers.Builder, F32List flatbuffers.UOffsetT) {
+	builder.PrependUOffsetTSlot(7, flatbuffers.UOffsetT(F32List), 0)
 }
 
-func ArrayTableAddString_(builder *flatbuffers.Builder, string_ flatbuffers.UOffsetT) {
-	builder.PrependUOffsetTSlot(8, flatbuffers.UOffsetT(string_), 0)
+func ArrayTableAddString_(builder *flatbuffers.Builder, String_ flatbuffers.UOffsetT) {
+	builder.PrependUOffsetTSlot(8, flatbuffers.UOffsetT(String_), 0)
 }
 
 func ArrayTableStartStrListVector(builder *flatbuffers.Builder, numElems int) {
@@ -477,12 +535,12 @@ func ArrayTableEndStrListVector(builder *flatbuffers.Builder, numElems int) flat
 	return builder.EndVector(numElems)
 }
 
-func ArrayTableAddStrList(builder *flatbuffers.Builder, strList flatbuffers.UOffsetT) {
-	builder.PrependUOffsetTSlot(9, flatbuffers.UOffsetT(strList), 0)
+func ArrayTableAddStrList(builder *flatbuffers.Builder, StrList flatbuffers.UOffsetT) {
+	builder.PrependUOffsetTSlot(9, flatbuffers.UOffsetT(StrList), 0)
 }
 
-func ArrayTableAddStruct_(builder *flatbuffers.Builder, struct_ flatbuffers.UOffsetT) {
-	builder.PrependStructSlot(10, flatbuffers.UOffsetT(struct_), 0)
+func ArrayTableAddStruct_(builder *flatbuffers.Builder, Struct_ flatbuffers.UOffsetT) {
+	builder.PrependStructSlot(10, flatbuffers.UOffsetT(Struct_), 0)
 }
 
 func ArrayTableStartStructListVector(builder *flatbuffers.Builder, numElems int) {
@@ -493,12 +551,12 @@ func ArrayTableEndStructListVector(builder *flatbuffers.Builder, numElems int) f
 	return builder.EndVector(numElems)
 }
 
-func ArrayTableAddStructList(builder *flatbuffers.Builder, structList flatbuffers.UOffsetT) {
-	builder.PrependUOffsetTSlot(11, flatbuffers.UOffsetT(structList), 0)
+func ArrayTableAddStructList(builder *flatbuffers.Builder, StructList flatbuffers.UOffsetT) {
+	builder.PrependUOffsetTSlot(11, flatbuffers.UOffsetT(StructList), 0)
 }
 
-func ArrayTableAddTable_(builder *flatbuffers.Builder, table_ flatbuffers.UOffsetT) {
-	builder.PrependUOffsetTSlot(12, flatbuffers.UOffsetT(table_), 0)
+func ArrayTableAddTable_(builder *flatbuffers.Builder, Table_ flatbuffers.UOffsetT) {
+	builder.PrependUOffsetTSlot(12, flatbuffers.UOffsetT(Table_), 0)
 }
 
 func ArrayTableStartTableListVector(builder *flatbuffers.Builder, numElems int) {
@@ -509,8 +567,8 @@ func ArrayTableEndTableListVector(builder *flatbuffers.Builder, numElems int) fl
 	return builder.EndVector(numElems)
 }
 
-func ArrayTableAddTableList(builder *flatbuffers.Builder, tableList flatbuffers.UOffsetT) {
-	builder.PrependUOffsetTSlot(13, flatbuffers.UOffsetT(tableList), 0)
+func ArrayTableAddTableList(builder *flatbuffers.Builder, TableList flatbuffers.UOffsetT) {
+	builder.PrependUOffsetTSlot(13, flatbuffers.UOffsetT(TableList), 0)
 }
 
 func ArrayTableEnd(builder *flatbuffers.Builder) flatbuffers.UOffsetT {

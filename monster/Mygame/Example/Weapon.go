@@ -3,14 +3,14 @@
 package Example
 
 import (
-	flatbuffers "github.com/tsingson/goflatbuffers/go"
+	flatbuffers "github.com/google/flatbuffers/go"
 )
 
 type WeaponT struct {
-	Size  *Vec3T
+	Size *Vec3T
 	Color Color
 	Power int32
-	Name  string
+	Name string
 }
 
 // WeaponT object pack function
@@ -128,20 +128,20 @@ func WeaponStart(builder *flatbuffers.Builder) {
 	builder.StartObject(4)
 }
 
-func WeaponAddSize(builder *flatbuffers.Builder, Size flatbuffers.UOffsetT) {
-	builder.PrependStructSlot(0, flatbuffers.UOffsetT(Size), 0)
+func WeaponAddSize(builder *flatbuffers.Builder, size flatbuffers.UOffsetT) {
+	builder.PrependStructSlot(0, flatbuffers.UOffsetT(size), 0)
 }
 
-func WeaponAddColor(builder *flatbuffers.Builder, Color Color) {
-	builder.PrependInt8Slot(1, int8(Color), 0)
+func WeaponAddColor(builder *flatbuffers.Builder, color Color) {
+	builder.PrependInt8Slot(1, int8(color), 0)
 }
 
-func WeaponAddPower(builder *flatbuffers.Builder, Power int32) {
-	builder.PrependInt32Slot(2, Power, 0)
+func WeaponAddPower(builder *flatbuffers.Builder, power int32) {
+	builder.PrependInt32Slot(2, power, 0)
 }
 
-func WeaponAddName(builder *flatbuffers.Builder, Name flatbuffers.UOffsetT) {
-	builder.PrependUOffsetTSlot(3, flatbuffers.UOffsetT(Name), 0)
+func WeaponAddName(builder *flatbuffers.Builder, name flatbuffers.UOffsetT) {
+	builder.PrependUOffsetTSlot(3, flatbuffers.UOffsetT(name), 0)
 }
 
 func WeaponEnd(builder *flatbuffers.Builder) flatbuffers.UOffsetT {

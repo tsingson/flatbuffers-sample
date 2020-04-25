@@ -3,15 +3,15 @@
 package Example
 
 import (
-	flatbuffers "github.com/google/flatbuffers/go"
+	flatbuffers "github.com/tsingson/goflatbuffers/go"
 )
 
 type ItemTableT struct {
-	Bool bool
-	U64 uint64
+	Bool  bool
+	U64   uint64
 	Color Color
-	I8 int8
-	F32 float32
+	I8    int8
+	F32   float32
 	Ubyte byte
 }
 
@@ -96,12 +96,20 @@ func (rcv *ItemTable) Bool() bool {
 	return false
 }
 
+func (rcv *ItemTable) MutateBool(n bool) bool {
+	return rcv._tab.MutateBoolSlot(4, n)
+}
+
 func (rcv *ItemTable) U64() uint64 {
 	o := flatbuffers.UOffsetT(rcv._tab.Offset(6))
 	if o != 0 {
 		return rcv._tab.GetUint64(o + rcv._tab.Pos)
 	}
 	return 0
+}
+
+func (rcv *ItemTable) MutateU64(n uint64) bool {
+	return rcv._tab.MutateUint64Slot(6, n)
 }
 
 func (rcv *ItemTable) Color() Color {
@@ -112,12 +120,20 @@ func (rcv *ItemTable) Color() Color {
 	return 0
 }
 
+func (rcv *ItemTable) MutateColor(n Color) bool {
+	return rcv._tab.MutateInt8Slot(8, int8(n))
+}
+
 func (rcv *ItemTable) I8() int8 {
 	o := flatbuffers.UOffsetT(rcv._tab.Offset(10))
 	if o != 0 {
 		return rcv._tab.GetInt8(o + rcv._tab.Pos)
 	}
 	return 0
+}
+
+func (rcv *ItemTable) MutateI8(n int8) bool {
+	return rcv._tab.MutateInt8Slot(10, n)
 }
 
 func (rcv *ItemTable) F32() float32 {
@@ -128,6 +144,10 @@ func (rcv *ItemTable) F32() float32 {
 	return 0.0
 }
 
+func (rcv *ItemTable) MutateF32(n float32) bool {
+	return rcv._tab.MutateFloat32Slot(12, n)
+}
+
 func (rcv *ItemTable) Ubyte() byte {
 	o := flatbuffers.UOffsetT(rcv._tab.Offset(14))
 	if o != 0 {
@@ -136,32 +156,36 @@ func (rcv *ItemTable) Ubyte() byte {
 	return 0
 }
 
+func (rcv *ItemTable) MutateUbyte(n byte) bool {
+	return rcv._tab.MutateByteSlot(14, n)
+}
+
 func ItemTableStart(builder *flatbuffers.Builder) {
 	builder.StartObject(6)
 }
 
-func ItemTableAddBool(builder *flatbuffers.Builder, bool bool) {
-	builder.PrependBoolSlot(0, bool, false)
+func ItemTableAddBool(builder *flatbuffers.Builder, Bool bool) {
+	builder.PrependBoolSlot(0, Bool, false)
 }
 
-func ItemTableAddU64(builder *flatbuffers.Builder, u64 uint64) {
-	builder.PrependUint64Slot(1, u64, 0)
+func ItemTableAddU64(builder *flatbuffers.Builder, U64 uint64) {
+	builder.PrependUint64Slot(1, U64, 0)
 }
 
-func ItemTableAddColor(builder *flatbuffers.Builder, color Color) {
-	builder.PrependInt8Slot(2, int8(color), 0)
+func ItemTableAddColor(builder *flatbuffers.Builder, Color Color) {
+	builder.PrependInt8Slot(2, int8(Color), 0)
 }
 
-func ItemTableAddI8(builder *flatbuffers.Builder, i8 int8) {
-	builder.PrependInt8Slot(3, i8, 0)
+func ItemTableAddI8(builder *flatbuffers.Builder, I8 int8) {
+	builder.PrependInt8Slot(3, I8, 0)
 }
 
-func ItemTableAddF32(builder *flatbuffers.Builder, f32 float32) {
-	builder.PrependFloat32Slot(4, f32, 0.0)
+func ItemTableAddF32(builder *flatbuffers.Builder, F32 float32) {
+	builder.PrependFloat32Slot(4, F32, 0.0)
 }
 
-func ItemTableAddUbyte(builder *flatbuffers.Builder, ubyte byte) {
-	builder.PrependByteSlot(5, ubyte, 0)
+func ItemTableAddUbyte(builder *flatbuffers.Builder, Ubyte byte) {
+	builder.PrependByteSlot(5, Ubyte, 0)
 }
 
 func ItemTableEnd(builder *flatbuffers.Builder) flatbuffers.UOffsetT {
