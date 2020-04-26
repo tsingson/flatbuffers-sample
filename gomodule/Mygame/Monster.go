@@ -7,6 +7,7 @@ import (
 	Mygame__Example "gomodule/Mygame/Example"
 )
 
+// MonsterT native go object
 type MonsterT struct {
 	Pos *Mygame__Example.Vec3T
 	Mana int16
@@ -76,6 +77,7 @@ func (t *MonsterT) Pack(builder *flatbuffers.Builder) flatbuffers.UOffsetT {
 		}
 		vectorOfUnionsOffset = MonsterEndVectorOfUnionsVector(builder, vectorOfUnionsLength)
 	}
+
 	pathOffset := flatbuffers.UOffsetT(0)
 	if t.Path != nil {
 		pathLength := len(t.Path)
@@ -126,7 +128,6 @@ func (rcv *Monster) UnPackTo(t *MonsterT) {
 	for j := 0; j < weaponsLength; j++ {
 		x := Mygame__Example.Weapon{}
 		rcv.Weapons(&x, j)
-		t.Weapons[j] = x.UnPack()
 	}
 	equippedTable := flatbuffers.Table{}
 	if rcv.Equipped(&equippedTable) {
@@ -135,7 +136,6 @@ func (rcv *Monster) UnPackTo(t *MonsterT) {
 	vectorOfUnionsLength := rcv.VectorOfUnionsLength()
 	t.VectorOfUnions = make([]*Mygame__Example.EquipmentT, vectorOfUnionsLength)
 	for j := 0; j < vectorOfUnionsLength; j++ {
-		// vector of unions table unpack
 		VectorOfUnionsType := rcv.VectorOfUnionsType(j)
 		VectorOfUnionsTable := flatbuffers.Table{}
 		if rcv.VectorOfUnions(j, &VectorOfUnionsTable) {
@@ -147,7 +147,6 @@ func (rcv *Monster) UnPackTo(t *MonsterT) {
 	for j := 0; j < pathLength; j++ {
 		x := Mygame__Example.Vec3{}
 		rcv.Path(&x, j)
-		t.Path[j] = x.UnPack()
 	}
 }
 

@@ -6,8 +6,9 @@ import (
 	flatbuffers "github.com/tsingson/goflatbuffers/go"
 )
 
+// WeaponT native go object
 type WeaponT struct {
-	Name   string
+	Name string
 	Damage int16
 }
 
@@ -104,12 +105,12 @@ func WeaponStart(builder *flatbuffers.Builder) {
 	builder.StartObject(2)
 }
 
-func WeaponAddName(builder *flatbuffers.Builder, Name flatbuffers.UOffsetT) {
-	builder.PrependUOffsetTSlot(0, flatbuffers.UOffsetT(Name), 0)
+func WeaponAddName(builder *flatbuffers.Builder, name flatbuffers.UOffsetT) {
+	builder.PrependUOffsetTSlot(0, flatbuffers.UOffsetT(name), 0)
 }
 
-func WeaponAddDamage(builder *flatbuffers.Builder, Damage int16) {
-	builder.PrependInt16Slot(1, Damage, 0)
+func WeaponAddDamage(builder *flatbuffers.Builder, damage int16) {
+	builder.PrependInt16Slot(1, damage, 0)
 }
 
 func WeaponEnd(builder *flatbuffers.Builder) flatbuffers.UOffsetT {

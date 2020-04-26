@@ -3,9 +3,10 @@
 package Example
 
 import (
-	flatbuffers "github.com/google/flatbuffers/go"
+	flatbuffers "github.com/tsingson/goflatbuffers/go"
 )
 
+// SpaceShipT native go object
 type SpaceShipT struct {
 	Size *Vec3T
 	Power int32
@@ -103,6 +104,10 @@ func (rcv *SpaceShip) Power() int32 {
 		return rcv._tab.GetInt32(o + rcv._tab.Pos)
 	}
 	return 0
+}
+
+func (rcv *SpaceShip) MutatePower(n int32) bool {
+	return rcv._tab.MutateInt32Slot(6, n)
 }
 
 func (rcv *SpaceShip) Name() []byte {

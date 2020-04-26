@@ -6,8 +6,9 @@ import (
 	flatbuffers "github.com/tsingson/goflatbuffers/go"
 )
 
+// WeaponT native go object
 type WeaponT struct {
-	Name   string
+	Name string
 	Damage int16
 }
 
@@ -94,6 +95,10 @@ func (rcv *Weapon) Damage() int16 {
 		return rcv._tab.GetInt16(o + rcv._tab.Pos)
 	}
 	return 0
+}
+
+func (rcv *Weapon) MutateDamage(n int16) bool {
+	return rcv._tab.MutateInt16Slot(6, n)
 }
 
 func WeaponStart(builder *flatbuffers.Builder) {

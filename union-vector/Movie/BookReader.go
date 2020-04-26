@@ -3,9 +3,10 @@
 package Movie
 
 import (
-	flatbuffers "github.com/google/flatbuffers/go"
+	flatbuffers "github.com/tsingson/goflatbuffers/go"
 )
 
+// BookReaderT native go object
 type BookReaderT struct {
 	BooksRead int32
 }
@@ -16,6 +17,7 @@ func (t *BookReaderT) Pack(builder *flatbuffers.Builder) flatbuffers.UOffsetT {
 	}
 	return CreateBookReader(builder, t.BooksRead)
 }
+
 func (rcv *BookReader) UnPackTo(t *BookReaderT) {
 	t.BooksRead = rcv.BooksRead()
 }
@@ -59,6 +61,10 @@ func (rcv *BookReader) Table() flatbuffers.Table {
 
 func (rcv *BookReader) BooksRead() int32 {
 	return rcv._tab.GetInt32(rcv._tab.Pos + flatbuffers.UOffsetT(0))
+}
+
+func (rcv *BookReader) MutateBooksRead(n int32) bool {
+	return rcv._tab.MutateInt32(rcv._tab.Pos + flatbuffers.UOffsetT(0), n)
 }
 
 func CreateBookReader(builder *flatbuffers.Builder, booksRead int32) flatbuffers.UOffsetT {

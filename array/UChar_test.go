@@ -1,15 +1,16 @@
-package Example
+package array
 
 import (
 	"fmt"
-	flatbuffers "github.com/google/flatbuffers/go"
 	"github.com/stretchr/testify/assert"
+	"github.com/tsingson/flatbuffers-sample/array/MyGame/Example"
+	flatbuffers "github.com/tsingson/goflatbuffers/go"
 	"testing"
 )
 
 func TestUChar_InventoryBytes(t *testing.T) {
 	as := assert.New(t)
-	uct := &UCharT{
+	uct := &Example.UCharT{
 		Inventory:  []byte("12345"),
 		Inventory1: []int8{0x1, 0x2, 0x3, 0x4, 0x5},
 	}
@@ -19,7 +20,7 @@ func TestUChar_InventoryBytes(t *testing.T) {
 
 	buf := builder.FinishedBytes()
 
-	uctt := GetRootAsUChar(buf, 0)
+	uctt := Example.GetRootAsUChar(buf, 0)
 
 	fmt.Println("byte: ", uctt.InventoryBytes())
 	fmt.Println("byte len: ", uctt.InventoryLength())

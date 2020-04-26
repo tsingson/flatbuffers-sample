@@ -6,6 +6,7 @@ import (
 	flatbuffers "github.com/tsingson/goflatbuffers/go"
 )
 
+// MyGameT native go object
 type MyGameT struct {
 	Characters *CharacterT
 }
@@ -16,6 +17,7 @@ func (t *MyGameT) Pack(builder *flatbuffers.Builder) flatbuffers.UOffsetT {
 		return 0
 	}
 	CharactersOffset := t.Characters.Pack(builder)
+	
 
 	// pack process all field
 
@@ -86,6 +88,10 @@ func (rcv *MyGame) CharactersType() Character {
 		return Character(rcv._tab.GetByte(o + rcv._tab.Pos))
 	}
 	return 0
+}
+
+func (rcv *MyGame) MutateCharactersType(n Character) bool {
+	return rcv._tab.MutateByteSlot(4, byte(n))
 }
 
 func (rcv *MyGame) Characters(obj *flatbuffers.Table) bool {

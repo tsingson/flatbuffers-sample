@@ -6,8 +6,9 @@ import (
 	flatbuffers "github.com/tsingson/goflatbuffers/go"
 )
 
+// WeaponT native go object
 type WeaponT struct {
-	Name   string
+	Name string
 	Damage int16
 }
 

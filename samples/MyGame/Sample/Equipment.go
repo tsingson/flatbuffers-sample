@@ -5,8 +5,8 @@ package Sample
 import (
 	"strconv"
 
-	weapons "github.com/tsingson/flatbuffers-sample/samples/weapons"
 	flatbuffers "github.com/tsingson/goflatbuffers/go"
+	weapons "github.com/tsingson/flatbuffers-sample/samples/weapons"
 )
 
 type Equipment byte

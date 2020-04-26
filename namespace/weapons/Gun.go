@@ -6,11 +6,12 @@ import (
 	flatbuffers "github.com/tsingson/goflatbuffers/go"
 )
 
+// GunT native go object
 type GunT struct {
 	Damage int16
-	Bool   bool
-	Name   string
-	Names  []string
+	Bool bool
+	Name string
+	Names []string
 }
 
 // GunT object pack function
@@ -102,12 +103,20 @@ func (rcv *Gun) Damage() int16 {
 	return 0
 }
 
+func (rcv *Gun) MutateDamage(n int16) bool {
+	return rcv._tab.MutateInt16Slot(4, n)
+}
+
 func (rcv *Gun) Bool() bool {
 	o := flatbuffers.UOffsetT(rcv._tab.Offset(6))
 	if o != 0 {
 		return rcv._tab.GetBool(o + rcv._tab.Pos)
 	}
 	return false
+}
+
+func (rcv *Gun) MutateBool(n bool) bool {
+	return rcv._tab.MutateBoolSlot(6, n)
 }
 
 func (rcv *Gun) Name() []byte {
@@ -118,6 +127,14 @@ func (rcv *Gun) Name() []byte {
 	return nil
 }
 
+func (rcv *Gun) NamesLength() int {
+	o := flatbuffers.UOffsetT(rcv._tab.Offset(10))
+	if o != 0 {
+		return rcv._tab.VectorLen(o)
+	}
+	return 0
+}
+
 func (rcv *Gun) Names(j int) []byte {
 	o := flatbuffers.UOffsetT(rcv._tab.Offset(10))
 	if o != 0 {
@@ -125,14 +142,6 @@ func (rcv *Gun) Names(j int) []byte {
 		return rcv._tab.ByteVector(a + flatbuffers.UOffsetT(j*4))
 	}
 	return nil
-}
-
-func (rcv *Gun) NamesLength() int {
-	o := flatbuffers.UOffsetT(rcv._tab.Offset(10))
-	if o != 0 {
-		return rcv._tab.VectorLen(o)
-	}
-	return 0
 }
 
 func GunStart(builder *flatbuffers.Builder) {
@@ -151,16 +160,16 @@ func GunAddName(builder *flatbuffers.Builder, name flatbuffers.UOffsetT) {
 	builder.PrependUOffsetTSlot(2, flatbuffers.UOffsetT(name), 0)
 }
 
-func GunAddNames(builder *flatbuffers.Builder, names flatbuffers.UOffsetT) {
-	builder.PrependUOffsetTSlot(3, flatbuffers.UOffsetT(names), 0)
-}
-
-func GunStartNamesVector(builder *flatbuffers.Builder, numElems int) flatbuffers.UOffsetT {
-	return builder.StartVector(4, numElems, 4)
+func GunStartNamesVector(builder *flatbuffers.Builder, numElems int) {
+	builder.StartVector(4, numElems, 4)
 }
 
 func GunEndNamesVector(builder *flatbuffers.Builder, numElems int) flatbuffers.UOffsetT {
 	return builder.EndVector(numElems)
+}
+
+func GunAddNames(builder *flatbuffers.Builder, names flatbuffers.UOffsetT) {
+	builder.PrependUOffsetTSlot(3, flatbuffers.UOffsetT(names), 0)
 }
 
 func GunEnd(builder *flatbuffers.Builder) flatbuffers.UOffsetT {

@@ -3,9 +3,10 @@
 package Movie
 
 import (
-	flatbuffers "github.com/google/flatbuffers/go"
+	flatbuffers "github.com/tsingson/goflatbuffers/go"
 )
 
+// AttackerT native go object
 type AttackerT struct {
 	SwordAttackDamage int32
 }
@@ -79,6 +80,10 @@ func (rcv *Attacker) SwordAttackDamage() int32 {
 		return rcv._tab.GetInt32(o + rcv._tab.Pos)
 	}
 	return 0
+}
+
+func (rcv *Attacker) MutateSwordAttackDamage(n int32) bool {
+	return rcv._tab.MutateInt32Slot(4, n)
 }
 
 func AttackerStart(builder *flatbuffers.Builder) {

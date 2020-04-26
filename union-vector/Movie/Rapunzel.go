@@ -3,9 +3,10 @@
 package Movie
 
 import (
-	flatbuffers "github.com/google/flatbuffers/go"
+	flatbuffers "github.com/tsingson/goflatbuffers/go"
 )
 
+// RapunzelT native go object
 type RapunzelT struct {
 	HairLength int32
 }
@@ -16,6 +17,7 @@ func (t *RapunzelT) Pack(builder *flatbuffers.Builder) flatbuffers.UOffsetT {
 	}
 	return CreateRapunzel(builder, t.HairLength)
 }
+
 func (rcv *Rapunzel) UnPackTo(t *RapunzelT) {
 	t.HairLength = rcv.HairLength()
 }
@@ -59,6 +61,10 @@ func (rcv *Rapunzel) Table() flatbuffers.Table {
 
 func (rcv *Rapunzel) HairLength() int32 {
 	return rcv._tab.GetInt32(rcv._tab.Pos + flatbuffers.UOffsetT(0))
+}
+
+func (rcv *Rapunzel) MutateHairLength(n int32) bool {
+	return rcv._tab.MutateInt32(rcv._tab.Pos + flatbuffers.UOffsetT(0), n)
 }
 
 func CreateRapunzel(builder *flatbuffers.Builder, hairLength int32) flatbuffers.UOffsetT {
