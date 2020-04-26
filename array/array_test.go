@@ -70,12 +70,12 @@ func BenchmarkCreateItemTable(b *testing.B) {
 
 }
 
-func TestFloat32( t *testing.T) {
-	buf := []byte{ 0x0, 0x0, 0x0, 0x0}
-	flatbuffers.WriteFloat32(buf, 1.1 )
-	fmt.Printf("%0b\n", buf )
-	f := flatbuffers.GetFloat32(buf )
-	fmt.Println(f )
+func TestFloat32(t *testing.T) {
+	buf := []byte{0x0, 0x0, 0x0, 0x0}
+	flatbuffers.WriteFloat32(buf, 1.1)
+	fmt.Printf("%0b\n", buf)
+	f := flatbuffers.GetFloat32(buf)
+	fmt.Println(f)
 }
 
 func TestFCreateItemStruct(t *testing.T) {

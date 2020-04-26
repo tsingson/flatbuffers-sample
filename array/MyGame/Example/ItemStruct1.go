@@ -6,8 +6,9 @@ import (
 	flatbuffers "github.com/tsingson/goflatbuffers/go"
 )
 
+// ItemStruct1T native go object
 type ItemStruct1T struct {
-	Bool bool
+	Bool  bool
 	Color Color
 }
 
@@ -17,6 +18,7 @@ func (t *ItemStruct1T) Pack(builder *flatbuffers.Builder) flatbuffers.UOffsetT {
 	}
 	return CreateItemStruct1(builder, t.Bool, t.Color)
 }
+
 func (rcv *ItemStruct1) UnPackTo(t *ItemStruct1T) {
 	t.Bool = rcv.Bool()
 	t.Color = rcv.Color()
@@ -62,15 +64,17 @@ func (rcv *ItemStruct1) Table() flatbuffers.Table {
 func (rcv *ItemStruct1) Bool() bool {
 	return rcv._tab.GetBool(rcv._tab.Pos + flatbuffers.UOffsetT(0))
 }
+
 func (rcv *ItemStruct1) MutateBool(n bool) bool {
-	return rcv._tab.MutateBool(rcv._tab.Pos + flatbuffers.UOffsetT(0), n)
+	return rcv._tab.MutateBool(rcv._tab.Pos+flatbuffers.UOffsetT(0), n)
 }
 
 func (rcv *ItemStruct1) Color() Color {
 	return Color(rcv._tab.GetInt8(rcv._tab.Pos + flatbuffers.UOffsetT(1)))
 }
+
 func (rcv *ItemStruct1) MutateColor(n Color) bool {
-	return rcv._tab.MutateInt8(rcv._tab.Pos + flatbuffers.UOffsetT(1), int8(n))
+	return rcv._tab.MutateInt8(rcv._tab.Pos+flatbuffers.UOffsetT(1), int8(n))
 }
 
 func CreateItemStruct1(builder *flatbuffers.Builder, bool bool, color Color) flatbuffers.UOffsetT {

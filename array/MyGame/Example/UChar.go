@@ -6,10 +6,11 @@ import (
 	flatbuffers "github.com/tsingson/goflatbuffers/go"
 )
 
+// UCharT native go object
 type UCharT struct {
-	Inventory []byte
+	Inventory  []byte
 	Inventory1 []int8
-	ColorList []Color
+	ColorList  []Color
 }
 
 // UCharT object pack function
@@ -55,11 +56,13 @@ func (rcv *UChar) UnPackTo(t *UCharT) {
 	inventory1Length := rcv.Inventory1Length()
 	t.Inventory1 = make([]int8, inventory1Length)
 	for j := 0; j < inventory1Length; j++ {
-		t.Inventory1[j] = rcv.Inventory1(j)	}
+		t.Inventory1[j] = rcv.Inventory1(j)
+	}
 	colorListLength := rcv.ColorListLength()
 	t.ColorList = make([]Color, colorListLength)
 	for j := 0; j < colorListLength; j++ {
-		t.ColorList[j] = rcv.ColorList(j)	}
+		t.ColorList[j] = rcv.ColorList(j)
+	}
 }
 
 func (rcv *UChar) UnPack() *UCharT {
@@ -127,7 +130,7 @@ func (rcv *UChar) MutateInventory(j int, n byte) bool {
 	o := flatbuffers.UOffsetT(rcv._tab.Offset(4))
 	if o != 0 {
 		a := rcv._tab.Vector(o)
-		return rcv._tab.MutateByte(a + flatbuffers.UOffsetT(j*1), n)
+		return rcv._tab.MutateByte(a+flatbuffers.UOffsetT(j*1), n)
 	}
 	return false
 }
@@ -153,7 +156,7 @@ func (rcv *UChar) MutateInventory1(j int, n int8) bool {
 	o := flatbuffers.UOffsetT(rcv._tab.Offset(6))
 	if o != 0 {
 		a := rcv._tab.Vector(o)
-		return rcv._tab.MutateInt8(a + flatbuffers.UOffsetT(j*1), n)
+		return rcv._tab.MutateInt8(a+flatbuffers.UOffsetT(j*1), n)
 	}
 	return false
 }
@@ -179,7 +182,7 @@ func (rcv *UChar) MutateColorList(j int, n Color) bool {
 	o := flatbuffers.UOffsetT(rcv._tab.Offset(8))
 	if o != 0 {
 		a := rcv._tab.Vector(o)
-		return rcv._tab.MutateInt8(a + flatbuffers.UOffsetT(j*1), int8(n))
+		return rcv._tab.MutateInt8(a+flatbuffers.UOffsetT(j*1), int8(n))
 	}
 	return false
 }
