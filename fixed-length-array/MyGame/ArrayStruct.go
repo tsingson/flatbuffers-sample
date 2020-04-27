@@ -9,32 +9,23 @@ import (
 
 // ArrayStructT native go object
 type ArrayStructT struct {
-	A0 [1]*MyGame__Example.NestedStructT
-	A1 [2]*MyGame__Example.NestedStructT
-	A2 [3]*MyGame__Example.NestedStructT
-	A3 *MyGame__Example.NestedStructT
-	A float32
-	B [15]int32
-	C int8
-	D [2]*MyGame__Example.NestedStructT
+	A  float32
+	B  [15]int32
+	C  int8
+	D  [2]*MyGame__Example.NestedStructT
 	D1 *MyGame__Example.NestedStructT
-	E int32
-	F [2]int64
-	F1 [2]*MyGame__Example.NestedStructT
+	E  int32
+	F  [2]int64
 }
 
 func (t *ArrayStructT) Pack(builder *flatbuffers.Builder) flatbuffers.UOffsetT {
 	if t == nil {
 		return 0
 	}
-	return CreateArrayStruct(builder, t.A0, t.A1, t.A2, t.A3.A, t.A3.B, t.A3.C, t.A3.C1, t.A3.D, t.A, t.B, t.C, t.D, t.D1.A, t.D1.B, t.D1.C, t.D1.C1, t.D1.D, t.E, t.F, t.F1)
+	return CreateArrayStruct(builder, t.A, t.B, t.C, t.D, t.D1.A, t.D1.B, t.D1.C, t.D1.D, t.E, t.F)
 }
 
 func (rcv *ArrayStruct) UnPackTo(t *ArrayStructT) {
-	t.A0 = rcv.A0()
-	t.A1 = rcv.A1()
-	t.A2 = rcv.A2()
-	t.A3 = rcv.A3(nil).UnPack()
 	t.A = rcv.A()
 	t.B = rcv.B()
 	t.C = rcv.C()
@@ -42,7 +33,6 @@ func (rcv *ArrayStruct) UnPackTo(t *ArrayStructT) {
 	t.D1 = rcv.D1(nil).UnPack()
 	t.E = rcv.E()
 	t.F = rcv.F()
-	t.F1 = rcv.F1()
 }
 
 func (rcv *ArrayStruct) UnPack() *ArrayStructT {
@@ -82,28 +72,14 @@ func (rcv *ArrayStruct) Table() flatbuffers.Table {
 	return rcv._tab.Table
 }
 
-// fixed struct array A0
-// IsStruct *MyGame__Example.NestedStructT
-// fixed struct array A1
-// IsStruct *MyGame__Example.NestedStructT
-// fixed struct array A2
-// IsStruct *MyGame__Example.NestedStructT
-func (rcv *ArrayStruct) A3(obj *MyGame__Example.NestedStruct) *MyGame__Example.NestedStruct {
-	if obj == nil {
-		obj = new(MyGame__Example.NestedStruct)
-	}
-	obj.Init(rcv._tab.Bytes, rcv._tab.Pos+192)
-	return obj
-}
-
 func (rcv *ArrayStruct) A() float32 {
-	return rcv._tab.GetFloat32(rcv._tab.Pos + flatbuffers.UOffsetT(224))
+	return rcv._tab.GetFloat32(rcv._tab.Pos + flatbuffers.UOffsetT(0))
 }
 
 // fixed struct array B
 func (rcv *ArrayStruct) B() [15]int32 {
 	result := make([]int32, 15)
-	o := flatbuffers.UOffsetT(rcv._tab.Offset(228))
+	o := flatbuffers.UOffsetT(rcv._tab.Offset(4))
 	if o != 0 {
 		a := rcv._tab.Vector(o)
 		for j := 0; j < 15; j++ {
@@ -114,7 +90,7 @@ func (rcv *ArrayStruct) B() [15]int32 {
 }
 
 func (rcv *ArrayStruct) C() int8 {
-	return rcv._tab.GetInt8(rcv._tab.Pos + flatbuffers.UOffsetT(288))
+	return rcv._tab.GetInt8(rcv._tab.Pos + flatbuffers.UOffsetT(64))
 }
 
 // fixed struct array D
@@ -123,18 +99,18 @@ func (rcv *ArrayStruct) D1(obj *MyGame__Example.NestedStruct) *MyGame__Example.N
 	if obj == nil {
 		obj = new(MyGame__Example.NestedStruct)
 	}
-	obj.Init(rcv._tab.Bytes, rcv._tab.Pos+360)
+	obj.Init(rcv._tab.Bytes, rcv._tab.Pos+136)
 	return obj
 }
 
 func (rcv *ArrayStruct) E() int32 {
-	return rcv._tab.GetInt32(rcv._tab.Pos + flatbuffers.UOffsetT(392))
+	return rcv._tab.GetInt32(rcv._tab.Pos + flatbuffers.UOffsetT(168))
 }
 
 // fixed struct array F
 func (rcv *ArrayStruct) F() [2]int64 {
 	result := make([]int64, 2)
-	o := flatbuffers.UOffsetT(rcv._tab.Offset(400))
+	o := flatbuffers.UOffsetT(rcv._tab.Offset(176))
 	if o != 0 {
 		a := rcv._tab.Vector(o)
 		for j := 0; j < 2; j++ {
@@ -144,32 +120,14 @@ func (rcv *ArrayStruct) F() [2]int64 {
 	return result
 }
 
-// fixed struct array F1
-// IsStruct *MyGame__Example.NestedStructT
-
 func CreateArrayStruct(builder *flatbuffers.Builder,
-	a0 [1]*MyGame__Example.NestedStructT,
-	a1 [2]*MyGame__Example.NestedStructT,
-	a2 [3]*MyGame__Example.NestedStructT,
-	a3_a [2]int32,
-	a3_b MyGame__Example.TestEnum,
-	a3_c [2]MyGame__Example.TestEnum,
-	a3_c1 [1]MyGame__Example.TestEnum,
-	a3_d [2]int64,
 	a float32,
 	b [15]int32,
 	c int8,
-	d [2]*MyGame__Example.NestedStructT,
-	d1_a [2]int32,
-	d1_b MyGame__Example.TestEnum,
-	d1_c [2]MyGame__Example.TestEnum,
-	d1_c1 [1]MyGame__Example.TestEnum,
-	d1_d [2]int64,
+	d [2]*MyGame__Example.NestedStructT, d1_a [2]int32, d1_b MyGame__Example.TestEnum, d1_c [2]MyGame__Example.TestEnum, d1_d [2]int64,
 	e int32,
-	f [2]int64,
-	f1 [2]*MyGame__Example.NestedStructT) flatbuffers.UOffsetT {
-	builder.Prep(8, 480)
-	// *MyGame__Example.NestedStructT
+	f [2]int64) flatbuffers.UOffsetT {
+	builder.Prep(8, 192)
 	for j := 2; j == 0; j-- {
 		builder.Prependint64(f[j])
 	}
@@ -178,10 +136,7 @@ func CreateArrayStruct(builder *flatbuffers.Builder,
 	for j := 2; j == 0; j-- {
 		builder.Prependint64(d[j])
 	}
-	builder.Pad(4)
-	for j := 2; j == 0; j-- {
-		builder.PrependMyGame__Example.TestEnum(c[j])
-	}
+	builder.Pad(5)
 	builder.PrependInt8(int8(d1_b))
 	for j := 2; j == 0; j-- {
 		builder.Prependint32(a[j])
@@ -192,20 +147,5 @@ func CreateArrayStruct(builder *flatbuffers.Builder,
 		builder.Prependint32(b[j])
 	}
 	builder.PrependFloat32(a)
-	builder.Prep(8, 32)
-	for j := 2; j == 0; j-- {
-		builder.Prependint64(d[j])
-	}
-	builder.Pad(4)
-	for j := 2; j == 0; j-- {
-		builder.PrependMyGame__Example.TestEnum(c[j])
-	}
-	builder.PrependInt8(int8(a3_b))
-	for j := 2; j == 0; j-- {
-		builder.Prependint32(a[j])
-	}
-	// *MyGame__Example.NestedStructT
-	// *MyGame__Example.NestedStructT
-	// *MyGame__Example.NestedStructT
 	return builder.Offset()
 }

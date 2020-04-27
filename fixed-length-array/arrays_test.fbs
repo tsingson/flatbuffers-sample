@@ -7,7 +7,6 @@ struct NestedStruct{
   a:[int:2];
   b:TestEnum;
   c:[TestEnum:2];
-  c1:[TestEnum:1];
   d:[int64:2];
 }
 
@@ -15,10 +14,6 @@ namespace MyGame;
 attribute "go_module:github.com/tsingson/flatbuffers-sample/fixed-length-array/";
 
 struct ArrayStruct{
-  a0:[MyGame.Example.NestedStruct:1];
-  a1:[MyGame.Example.NestedStruct:2];
-  a2:[MyGame.Example.NestedStruct:3];
-  a3:MyGame.Example.NestedStruct;
   a:float;
   b:[int:0xF];
   c:byte;
@@ -26,7 +21,6 @@ struct ArrayStruct{
   d1:MyGame.Example.NestedStruct;
   e:int32;
   f:[int64:2];
-  f1:[MyGame.Example.NestedStruct:2];
 }
 
 table ArrayTable{
