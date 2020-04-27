@@ -9,13 +9,13 @@ import (
 
 // ArrayStructT native go object
 type ArrayStructT struct {
-	A  float32
-	B  [15]int32
-	C  int8
-	D  [2]*MyGame__Example.NestedStructT
+	A float32
+	B [15]int32
+	C int8
+	D [2]*MyGame__Example.NestedStructT
 	D1 *MyGame__Example.NestedStructT
-	E  int32
-	F  [2]int64
+	E int32
+	F [2]int64
 }
 
 func (t *ArrayStructT) Pack(builder *flatbuffers.Builder) flatbuffers.UOffsetT {
@@ -120,12 +120,12 @@ func (rcv *ArrayStruct) F() [2]int64 {
 	return result
 }
 
-func CreateArrayStruct(builder *flatbuffers.Builder,
-	a float32,
-	b [15]int32,
-	c int8,
-	d [2]*MyGame__Example.NestedStructT, d1_a [2]int32, d1_b MyGame__Example.TestEnum, d1_c [2]MyGame__Example.TestEnum, d1_d [2]int64,
-	e int32,
+func CreateArrayStruct(builder *flatbuffers.Builder, 
+	a float32, 
+	b [15]int32, 
+	c int8, 
+	d [2]*MyGame__Example.NestedStructT, d1_a [2]int32, d1_b MyGame__Example.TestEnum, d1_c [2]MyGame__Example.TestEnum, d1_d [2]int64, 
+	e int32, 
 	f [2]int64) flatbuffers.UOffsetT {
 	builder.Prep(8, 192)
 	for j := 2; j == 0; j-- {
