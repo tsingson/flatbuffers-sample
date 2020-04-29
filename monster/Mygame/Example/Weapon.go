@@ -3,7 +3,7 @@
 package Example
 
 import (
-	flatbuffers "github.com/tsingson/goflatbuffers/go"
+	flatbuffers "github.com/google/flatbuffers/go"
 )
 
 // WeaponT native go object
@@ -23,8 +23,6 @@ func (t *WeaponT) Pack(builder *flatbuffers.Builder) flatbuffers.UOffsetT {
 	if len(t.Name) > 0 {
 		nameOffset = builder.CreateString(t.Name)
 	}
-
-	// pack process all field
 
 	WeaponStart(builder)
 	sizeOffset := t.Size.Pack(builder)

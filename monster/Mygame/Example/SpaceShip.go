@@ -3,7 +3,7 @@
 package Example
 
 import (
-	flatbuffers "github.com/tsingson/goflatbuffers/go"
+	flatbuffers "github.com/google/flatbuffers/go"
 )
 
 // SpaceShipT native go object
@@ -22,8 +22,6 @@ func (t *SpaceShipT) Pack(builder *flatbuffers.Builder) flatbuffers.UOffsetT {
 	if len(t.Name) > 0 {
 		nameOffset = builder.CreateString(t.Name)
 	}
-
-	// pack process all field
 
 	SpaceShipStart(builder)
 	sizeOffset := t.Size.Pack(builder)

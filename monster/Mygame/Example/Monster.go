@@ -3,7 +3,7 @@
 package Example
 
 import (
-	flatbuffers "github.com/tsingson/goflatbuffers/go"
+	flatbuffers "github.com/google/flatbuffers/go"
 )
 
 // MonsterT native go object
@@ -86,8 +86,6 @@ func (t *MonsterT) Pack(builder *flatbuffers.Builder) flatbuffers.UOffsetT {
 		}
 		pathOffset = MonsterEndPathVector(builder, pathLength)
 	}
-
-	// pack process all field
 
 	MonsterStart(builder)
 	posOffset := t.Pos.Pack(builder)

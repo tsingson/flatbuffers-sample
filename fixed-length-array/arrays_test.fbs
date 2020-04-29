@@ -8,6 +8,10 @@ struct NestedStruct{
   b:TestEnum;
   c:[TestEnum:2];
   d:[int64:2];
+  e:byte;
+  f:[byte:2];
+  g:int8;
+  h:bool;
 }
 
 namespace MyGame;
@@ -18,9 +22,14 @@ struct ArrayStruct{
   b:[int:0xF];
   c:byte;
   d:[MyGame.Example.NestedStruct:2];
-  d1:MyGame.Example.NestedStruct;
-  e:int32;
-  f:[int64:2];
+  e:MyGame.Example.NestedStruct;
+  f:MyGame.Example.TestEnum;
+  g:[MyGame.Example.TestEnum:3];
+  h:int32;
+  i:[int64:2];
+  j:[byte:2];
+  k:int8;
+  l:bool;
 }
 
 table ArrayTable{

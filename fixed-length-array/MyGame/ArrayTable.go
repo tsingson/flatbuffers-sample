@@ -17,8 +17,6 @@ func (t *ArrayTableT) Pack(builder *flatbuffers.Builder) flatbuffers.UOffsetT {
 		return 0
 	}
 
-	// pack process all field
-
 	ArrayTableStart(builder)
 	aOffset := t.A.Pack(builder)
 	ArrayTableAddA(builder, aOffset)

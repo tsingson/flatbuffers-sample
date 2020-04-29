@@ -5,7 +5,7 @@ package Movie
 import (
 	"strconv"
 
-	flatbuffers "github.com/tsingson/goflatbuffers/go"
+	flatbuffers "github.com/google/flatbuffers/go"
 )
 
 type Character byte

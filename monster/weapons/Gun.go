@@ -3,7 +3,7 @@
 package weapons
 
 import (
-	flatbuffers "github.com/tsingson/goflatbuffers/go"
+	flatbuffers "github.com/google/flatbuffers/go"
 )
 
 // GunT native go object
@@ -27,8 +27,6 @@ func (t *GunT) Pack(builder *flatbuffers.Builder) flatbuffers.UOffsetT {
 	if t.Names != nil {
 		namesOffset = builder.StringsVector(t.Names...)
 	}
-
-	// pack process all field
 
 	GunStart(builder)
 	GunAddDamage(builder, t.Damage)
