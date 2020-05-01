@@ -10,4 +10,4 @@ require (
 
 replace github.com/tsingson/goflatbuffers v0.0.0-20200420205847-de8b4cd9cf67 => /Users/qinshen/go/src/goflatbuffers
 
-replace github.com/google/flatbuffers v1.12.0 => /Users/qinshen/go/src/flatbuffers
+replace github.com/google/flatbuffers v1.12.0 => /Users/qinshen/go/src/github.com/google/flatbuffers

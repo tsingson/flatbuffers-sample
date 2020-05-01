@@ -6,50 +6,6 @@ import (
 	flatbuffers "github.com/google/flatbuffers/go"
 )
 
-// WeaponT native go object
-type WeaponT struct {
-	Size *Vec3T
-	Color Color
-	Power int32
-	Name string
-}
-
-// WeaponT object pack function
-func (t *WeaponT) Pack(builder *flatbuffers.Builder) flatbuffers.UOffsetT {
-	if t == nil {
-		return 0
-	}
-	nameOffset := flatbuffers.UOffsetT(0)
-	if len(t.Name) > 0 {
-		nameOffset = builder.CreateString(t.Name)
-	}
-
-	WeaponStart(builder)
-	sizeOffset := t.Size.Pack(builder)
-	WeaponAddSize(builder, sizeOffset)
-	WeaponAddColor(builder, t.Color)
-	WeaponAddPower(builder, t.Power)
-	WeaponAddName(builder, nameOffset)
-	return WeaponEnd(builder)
-}
-
-// WeaponT object unpack function
-func (rcv *Weapon) UnPackTo(t *WeaponT) {
-	t.Size = rcv.Size(nil).UnPack()
-	t.Color = rcv.Color()
-	t.Power = rcv.Power()
-	t.Name = string(rcv.Name())
-}
-
-func (rcv *Weapon) UnPack() *WeaponT {
-	if rcv == nil {
-		return nil
-	}
-	t := &WeaponT{}
-	rcv.UnPackTo(t)
-	return t
-}
-
 type Weapon struct {
 	_tab flatbuffers.Table
 }
@@ -107,20 +63,12 @@ func (rcv *Weapon) Color() Color {
 	return 0
 }
 
-func (rcv *Weapon) MutateColor(n Color) bool {
-	return rcv._tab.MutateInt8Slot(6, int8(n))
-}
-
 func (rcv *Weapon) Power() int32 {
 	o := flatbuffers.UOffsetT(rcv._tab.Offset(8))
 	if o != 0 {
 		return rcv._tab.GetInt32(o + rcv._tab.Pos)
 	}
 	return 0
-}
-
-func (rcv *Weapon) MutatePower(n int32) bool {
-	return rcv._tab.MutateInt32Slot(8, n)
 }
 
 func (rcv *Weapon) Name() []byte {

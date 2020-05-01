@@ -8,20 +8,20 @@ import (
 
 // ArrayTableT native go object
 type ArrayTableT struct {
-	Bool bool
-	BoolList []bool
-	Color Color
-	ColorList []Color
-	I8 int8
-	I8List []int8
-	F32 float32
-	F32List []float32
-	String_ string
-	StrList []string
-	Struct_ *ItemStructT
+	Bool       bool
+	BoolList   []bool
+	Color      Color
+	ColorList  []Color
+	I8         int8
+	I8List     []int8
+	F32        float32
+	F32List    []float32
+	String_    string
+	StrList    []string
+	Struct_    *ItemStructT
 	StructList []*ItemStructT
-	Table_ *ItemTableT
-	TableList []*ItemTableT
+	Table_     *ItemTableT
+	TableList  []*ItemTableT
 }
 
 // ArrayTableT object pack function
@@ -83,7 +83,7 @@ func (t *ArrayTableT) Pack(builder *flatbuffers.Builder) flatbuffers.UOffsetT {
 		structListOffset = ArrayTableEndStructListVector(builder, structListLength)
 	}
 	table_Offset := t.Table_.Pack(builder)
-	// vector of tables 
+	// vector of tables
 	tableListOffset := flatbuffers.UOffsetT(0)
 	if t.TableList != nil {
 		tableListLength := len(t.TableList)
@@ -125,22 +125,26 @@ func (rcv *ArrayTable) UnPackTo(t *ArrayTableT) {
 	boolListLength := rcv.BoolListLength()
 	t.BoolList = make([]bool, boolListLength)
 	for j := 0; j < boolListLength; j++ {
-		t.BoolList[j] = rcv.BoolList(j)	}
+		t.BoolList[j] = rcv.BoolList(j)
+	}
 	t.Color = rcv.Color()
 	colorListLength := rcv.ColorListLength()
 	t.ColorList = make([]Color, colorListLength)
 	for j := 0; j < colorListLength; j++ {
-		t.ColorList[j] = rcv.ColorList(j)	}
+		t.ColorList[j] = rcv.ColorList(j)
+	}
 	t.I8 = rcv.I8()
 	i8ListLength := rcv.I8ListLength()
 	t.I8List = make([]int8, i8ListLength)
 	for j := 0; j < i8ListLength; j++ {
-		t.I8List[j] = rcv.I8List(j)	}
+		t.I8List[j] = rcv.I8List(j)
+	}
 	t.F32 = rcv.F32()
 	f32ListLength := rcv.F32ListLength()
 	t.F32List = make([]float32, f32ListLength)
 	for j := 0; j < f32ListLength; j++ {
-		t.F32List[j] = rcv.F32List(j)	}
+		t.F32List[j] = rcv.F32List(j)
+	}
 	t.String_ = string(rcv.String_())
 	strListLength := rcv.StrListLength()
 	t.StrList = make([]string, strListLength)

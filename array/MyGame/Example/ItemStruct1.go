@@ -8,7 +8,7 @@ import (
 
 // ItemStruct1T native go object
 type ItemStruct1T struct {
-	Bool bool
+	Bool  bool
 	Color Color
 }
 

@@ -2,12 +2,7 @@
 
 package Example
 
-import (
-	"strconv"
-
-	flatbuffers "github.com/google/flatbuffers/go"
-	weapons "github.com/tsingson/flatbuffers-sample/monster/weapons"
-)
+import "strconv"
 
 type Equipment byte
 
@@ -46,76 +41,4 @@ func (v Equipment) String() string {
 		return s
 	}
 	return "Equipment(" + strconv.FormatInt(int64(v), 10) + ")"
-}
-
-type EquipmentT struct {
-	Type  Equipment
-	Value interface{}
-}
-
-func (t *EquipmentT) Pack(builder *flatbuffers.Builder) flatbuffers.UOffsetT {
-	if t == nil {
-		return 0
-	}
-	switch t.Type {
-	case EquipmentMuLan:
-		return t.Value.(*WeaponT).Pack(builder)
-	case EquipmentWeapon:
-		return t.Value.(*WeaponT).Pack(builder)
-	case EquipmentGun:
-		return t.Value.(*weapons.GunT).Pack(builder)
-	case EquipmentSpaceShip:
-		return t.Value.(*SpaceShipT).Pack(builder)
-	case EquipmentOther:
-		return builder.CreateString(t.Value.(string))
-	}
-	return 0
-}
-
-// UnPack use for single union field
-func (rcv Equipment) UnPack(table flatbuffers.Table) *EquipmentT {
-	switch rcv {
-	case EquipmentMuLan:
-		x := GetTableAsWeapon(&table)
-		return &EquipmentT{Type: EquipmentMuLan, Value: x.UnPack()}
-	case EquipmentWeapon:
-		x := GetTableAsWeapon(&table)
-		return &EquipmentT{Type: EquipmentWeapon, Value: x.UnPack()}
-	case EquipmentGun:
-		x := weapons.GetTableAsGun(&table)
-		return &EquipmentT{Type: EquipmentGun, Value: x.UnPack()}
-	case EquipmentSpaceShip:
-		x := GetTableAsSpaceShip(&table)
-		return &EquipmentT{Type: EquipmentSpaceShip, Value: x.UnPack()}
-	case EquipmentOther:
-		x := string(table.StringsVector(table.Pos))
-		return &EquipmentT{Type: EquipmentOther, Value: x}
-	}
-	return nil
-}
-
-// UnPackVector use for vector of unions
-func (rcv Equipment) UnPackVector(table flatbuffers.Table) *EquipmentT {
-	switch rcv {
-	case EquipmentMuLan:
-		x := GetTableVectorAsWeapon(&table)
-		return &EquipmentT{Type: EquipmentMuLan, Value: x.UnPack()}
-	case EquipmentWeapon:
-		x := GetTableVectorAsWeapon(&table)
-		return &EquipmentT{Type: EquipmentWeapon, Value: x.UnPack()}
-	case EquipmentGun:
-		x := weapons.GetTableVectorAsGun(&table)
-		return &EquipmentT{Type: EquipmentGun, Value: x.UnPack()}
-	case EquipmentSpaceShip:
-		x := GetTableVectorAsSpaceShip(&table)
-		return &EquipmentT{Type: EquipmentSpaceShip, Value: x.UnPack()}
-	case EquipmentOther:
-		x := ""
-		b := table.ByteVector(table.Pos)
-		if b != nil {
-			x = string(b)
-		}
-		return &EquipmentT{Type: EquipmentOther, Value: x}
-	}
-	return nil
 }

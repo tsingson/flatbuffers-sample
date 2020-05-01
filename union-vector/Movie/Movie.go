@@ -8,7 +8,7 @@ import (
 
 // MovieT native go object
 type MovieT struct {
-	Single *CharacterT
+	Single   *CharacterT
 	Multiple []*CharacterT
 }
 
@@ -18,8 +18,8 @@ func (t *MovieT) Pack(builder *flatbuffers.Builder) flatbuffers.UOffsetT {
 		return 0
 	}
 	singleOffset := t.Single.Pack(builder)
-	
-	// vector of unions 
+
+	// vector of unions
 	multipleOffset := flatbuffers.UOffsetT(0)
 	multipleTypeOffset := flatbuffers.UOffsetT(0)
 	if t.Multiple != nil {
@@ -41,7 +41,6 @@ func (t *MovieT) Pack(builder *flatbuffers.Builder) flatbuffers.UOffsetT {
 		}
 		multipleOffset = MovieEndMultipleVector(builder, multipleLength)
 	}
-
 
 	MovieStart(builder)
 	if t.Single != nil {
@@ -123,6 +122,10 @@ func (rcv *Movie) SingleType() Character {
 	return 0
 }
 
+func (rcv *Movie) MutateSingleType(n Character) bool {
+	return rcv._tab.MutateByteSlot(4, byte(n))
+}
+
 func (rcv *Movie) Single(obj *flatbuffers.Table) bool {
 	o := flatbuffers.UOffsetT(rcv._tab.Offset(6))
 	if o != 0 {
@@ -147,6 +150,15 @@ func (rcv *Movie) MultipleType(j int) Character {
 		return Character(rcv._tab.GetByte(a + flatbuffers.UOffsetT(j*1)))
 	}
 	return 0
+}
+
+func (rcv *Movie) MutateMultipleType(j int, n Character) bool {
+	o := flatbuffers.UOffsetT(rcv._tab.Offset(8))
+	if o != 0 {
+		a := rcv._tab.Vector(o)
+		return rcv._tab.MutateByte(a+flatbuffers.UOffsetT(j*1), byte(n))
+	}
+	return false
 }
 
 func (rcv *Movie) MultipleLength() int {

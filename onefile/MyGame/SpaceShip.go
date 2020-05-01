@@ -8,9 +8,9 @@ import (
 
 // SpaceShipT native go object
 type SpaceShipT struct {
-	Size *Vec3T
+	Size  *Vec3T
 	Power int32
-	Name string
+	Name  string
 }
 
 // SpaceShipT object pack function

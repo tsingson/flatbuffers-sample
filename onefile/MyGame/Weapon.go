@@ -10,7 +10,7 @@ import (
 type WeaponT struct {
 	Color Color
 	Power int32
-	Name string
+	Name  string
 }
 
 // WeaponT object pack function

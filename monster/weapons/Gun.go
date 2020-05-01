@@ -6,57 +6,6 @@ import (
 	flatbuffers "github.com/google/flatbuffers/go"
 )
 
-// GunT native go object
-type GunT struct {
-	Damage int16
-	Bool bool
-	Name string
-	Names []string
-}
-
-// GunT object pack function
-func (t *GunT) Pack(builder *flatbuffers.Builder) flatbuffers.UOffsetT {
-	if t == nil {
-		return 0
-	}
-	nameOffset := flatbuffers.UOffsetT(0)
-	if len(t.Name) > 0 {
-		nameOffset = builder.CreateString(t.Name)
-	}
-	namesOffset := flatbuffers.UOffsetT(0)
-	if t.Names != nil {
-		namesOffset = builder.StringsVector(t.Names...)
-	}
-
-	GunStart(builder)
-	GunAddDamage(builder, t.Damage)
-	GunAddBool(builder, t.Bool)
-	GunAddName(builder, nameOffset)
-	GunAddNames(builder, namesOffset)
-	return GunEnd(builder)
-}
-
-// GunT object unpack function
-func (rcv *Gun) UnPackTo(t *GunT) {
-	t.Damage = rcv.Damage()
-	t.Bool = rcv.Bool()
-	t.Name = string(rcv.Name())
-	namesLength := rcv.NamesLength()
-	t.Names = make([]string, namesLength)
-	for j := 0; j < namesLength; j++ {
-		t.Names[j] = string(rcv.Names(j))
-	}
-}
-
-func (rcv *Gun) UnPack() *GunT {
-	if rcv == nil {
-		return nil
-	}
-	t := &GunT{}
-	rcv.UnPackTo(t)
-	return t
-}
-
 type Gun struct {
 	_tab flatbuffers.Table
 }
@@ -101,20 +50,12 @@ func (rcv *Gun) Damage() int16 {
 	return 0
 }
 
-func (rcv *Gun) MutateDamage(n int16) bool {
-	return rcv._tab.MutateInt16Slot(4, n)
-}
-
 func (rcv *Gun) Bool() bool {
 	o := flatbuffers.UOffsetT(rcv._tab.Offset(6))
 	if o != 0 {
 		return rcv._tab.GetBool(o + rcv._tab.Pos)
 	}
 	return false
-}
-
-func (rcv *Gun) MutateBool(n bool) bool {
-	return rcv._tab.MutateBoolSlot(6, n)
 }
 
 func (rcv *Gun) Name() []byte {

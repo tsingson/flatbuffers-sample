@@ -6,156 +6,6 @@ import (
 	flatbuffers "github.com/google/flatbuffers/go"
 )
 
-// MonsterT native go object
-type MonsterT struct {
-	Pos *Vec3T
-	Mana int16
-	Hp int16
-	Name string
-	Names []string
-	Inventory []byte
-	Color Color
-	Weapons []*WeaponT
-	Equipped *EquipmentT
-	VectorOfUnions []*EquipmentT
-	Path []*Vec3T
-}
-
-// MonsterT object pack function
-func (t *MonsterT) Pack(builder *flatbuffers.Builder) flatbuffers.UOffsetT {
-	if t == nil {
-		return 0
-	}
-	nameOffset := flatbuffers.UOffsetT(0)
-	if len(t.Name) > 0 {
-		nameOffset = builder.CreateString(t.Name)
-	}
-	namesOffset := flatbuffers.UOffsetT(0)
-	if t.Names != nil {
-		namesOffset = builder.StringsVector(t.Names...)
-	}
-	inventoryOffset := flatbuffers.UOffsetT(0)
-	if t.Inventory != nil {
-		inventoryOffset = builder.CreateByteString(t.Inventory)
-	}
-	// vector of tables 
-	weaponsOffset := flatbuffers.UOffsetT(0)
-	if t.Weapons != nil {
-		weaponsLength := len(t.Weapons)
-		weaponsOffsets := make([]flatbuffers.UOffsetT, weaponsLength)
-		for j := weaponsLength - 1; j >= 0; j-- {
-			weaponsOffsets[j] = t.Weapons[j].Pack(builder)
-		}
-		MonsterStartWeaponsVector(builder, weaponsLength)
-		for j := weaponsLength - 1; j >= 0; j-- {
-			builder.PrependUOffsetT(weaponsOffsets[j])
-		}
-		weaponsOffset = MonsterEndWeaponsVector(builder, weaponsLength)
-	}
-	equippedOffset := t.Equipped.Pack(builder)
-	
-	// vector of unions 
-	vectorOfUnionsOffset := flatbuffers.UOffsetT(0)
-	vectorOfUnionsTypeOffset := flatbuffers.UOffsetT(0)
-	if t.VectorOfUnions != nil {
-		vectorOfUnionsLength := len(t.VectorOfUnions)
-		MonsterStartVectorOfUnionsTypeVector(builder, vectorOfUnionsLength)
-		for j := vectorOfUnionsLength - 1; j >= 0; j-- {
-			builder.PrependByte(byte(t.VectorOfUnions[j].Type))
-		}
-		vectorOfUnionsTypeOffset = MonsterEndVectorOfUnionsTypeVector(builder, vectorOfUnionsLength)
-
-		// vector array
-		vectorOfUnionsOffsets := make([]flatbuffers.UOffsetT, vectorOfUnionsLength)
-		for j := vectorOfUnionsLength - 1; j >= 0; j-- {
-			vectorOfUnionsOffsets[j] = t.VectorOfUnions[j].Pack(builder)
-		}
-		MonsterStartVectorOfUnionsVector(builder, vectorOfUnionsLength)
-		for j := vectorOfUnionsLength - 1; j >= 0; j-- {
-			builder.PrependUOffsetT(vectorOfUnionsOffsets[j])
-		}
-		vectorOfUnionsOffset = MonsterEndVectorOfUnionsVector(builder, vectorOfUnionsLength)
-	}
-
-	pathOffset := flatbuffers.UOffsetT(0)
-	if t.Path != nil {
-		pathLength := len(t.Path)
-		MonsterStartPathVector(builder, pathLength)
-		for j := pathLength - 1; j >= 0; j-- {
-			t.Path[j].Pack(builder)
-		}
-		pathOffset = MonsterEndPathVector(builder, pathLength)
-	}
-
-	MonsterStart(builder)
-	posOffset := t.Pos.Pack(builder)
-	MonsterAddPos(builder, posOffset)
-	MonsterAddMana(builder, t.Mana)
-	MonsterAddHp(builder, t.Hp)
-	MonsterAddName(builder, nameOffset)
-	MonsterAddNames(builder, namesOffset)
-	MonsterAddInventory(builder, inventoryOffset)
-	MonsterAddColor(builder, t.Color)
-	MonsterAddWeapons(builder, weaponsOffset)
-	if t.Equipped != nil {
-		MonsterAddEquippedType(builder, t.Equipped.Type)
-	}
-	MonsterAddEquipped(builder, equippedOffset)
-	MonsterAddVectorOfUnionsType(builder, vectorOfUnionsTypeOffset)
-	MonsterAddVectorOfUnions(builder, vectorOfUnionsOffset)
-	MonsterAddPath(builder, pathOffset)
-	return MonsterEnd(builder)
-}
-
-// MonsterT object unpack function
-func (rcv *Monster) UnPackTo(t *MonsterT) {
-	t.Pos = rcv.Pos(nil).UnPack()
-	t.Mana = rcv.Mana()
-	t.Hp = rcv.Hp()
-	t.Name = string(rcv.Name())
-	namesLength := rcv.NamesLength()
-	t.Names = make([]string, namesLength)
-	for j := 0; j < namesLength; j++ {
-		t.Names[j] = string(rcv.Names(j))
-	}
-	t.Inventory = rcv.InventoryBytes()
-	t.Color = rcv.Color()
-	weaponsLength := rcv.WeaponsLength()
-	t.Weapons = make([]*WeaponT, weaponsLength)
-	for j := 0; j < weaponsLength; j++ {
-		x := Weapon{}
-		rcv.Weapons(&x, j)
-	}
-	equippedTable := flatbuffers.Table{}
-	if rcv.Equipped(&equippedTable) {
-		t.Equipped = rcv.EquippedType().UnPack(equippedTable)
-	}
-	vectorOfUnionsLength := rcv.VectorOfUnionsLength()
-	t.VectorOfUnions = make([]*EquipmentT, vectorOfUnionsLength)
-	for j := 0; j < vectorOfUnionsLength; j++ {
-		VectorOfUnionsType := rcv.VectorOfUnionsType(j)
-		VectorOfUnionsTable := flatbuffers.Table{}
-		if rcv.VectorOfUnions(j, &VectorOfUnionsTable) {
-			t.VectorOfUnions[j] = VectorOfUnionsType.UnPackVector(VectorOfUnionsTable)
-		}
-	}
-	pathLength := rcv.PathLength()
-	t.Path = make([]*Vec3T, pathLength)
-	for j := 0; j < pathLength; j++ {
-		x := Vec3{}
-		rcv.Path(&x, j)
-	}
-}
-
-func (rcv *Monster) UnPack() *MonsterT {
-	if rcv == nil {
-		return nil
-	}
-	t := &MonsterT{}
-	rcv.UnPackTo(t)
-	return t
-}
-
 type Monster struct {
 	_tab flatbuffers.Table
 }
@@ -213,20 +63,12 @@ func (rcv *Monster) Mana() int16 {
 	return 150
 }
 
-func (rcv *Monster) MutateMana(n int16) bool {
-	return rcv._tab.MutateInt16Slot(6, n)
-}
-
 func (rcv *Monster) Hp() int16 {
 	o := flatbuffers.UOffsetT(rcv._tab.Offset(8))
 	if o != 0 {
 		return rcv._tab.GetInt16(o + rcv._tab.Pos)
 	}
 	return 100
-}
-
-func (rcv *Monster) MutateHp(n int16) bool {
-	return rcv._tab.MutateInt16Slot(8, n)
 }
 
 func (rcv *Monster) Name() []byte {
@@ -270,25 +112,12 @@ func (rcv *Monster) InventoryBytes() []byte {
 	return nil
 }
 
-func (rcv *Monster) MutateInventory(j int, n byte) bool {
-	o := flatbuffers.UOffsetT(rcv._tab.Offset(16))
-	if o != 0 {
-		a := rcv._tab.Vector(o)
-		return rcv._tab.MutateByte(a + flatbuffers.UOffsetT(j*1), n)
-	}
-	return false
-}
-
 func (rcv *Monster) Color() Color {
 	o := flatbuffers.UOffsetT(rcv._tab.Offset(18))
 	if o != 0 {
 		return Color(rcv._tab.GetInt8(o + rcv._tab.Pos))
 	}
 	return 2
-}
-
-func (rcv *Monster) MutateColor(n Color) bool {
-	return rcv._tab.MutateInt8Slot(18, int8(n))
 }
 
 func (rcv *Monster) WeaponsLength() int {
@@ -319,10 +148,6 @@ func (rcv *Monster) EquippedType() Equipment {
 	return 0
 }
 
-func (rcv *Monster) MutateEquippedType(n Equipment) bool {
-	return rcv._tab.MutateByteSlot(22, byte(n))
-}
-
 func (rcv *Monster) Equipped(obj *flatbuffers.Table) bool {
 	o := flatbuffers.UOffsetT(rcv._tab.Offset(24))
 	if o != 0 {
@@ -347,15 +172,6 @@ func (rcv *Monster) VectorOfUnionsType(j int) Equipment {
 		return Equipment(rcv._tab.GetByte(a + flatbuffers.UOffsetT(j*1)))
 	}
 	return 0
-}
-
-func (rcv *Monster) MutateVectorOfUnionsType(j int, n Equipment) bool {
-	o := flatbuffers.UOffsetT(rcv._tab.Offset(26))
-	if o != 0 {
-		a := rcv._tab.Vector(o)
-		return rcv._tab.MutateByte(a + flatbuffers.UOffsetT(j*1), byte(n))
-	}
-	return false
 }
 
 func (rcv *Monster) VectorOfUnionsLength() int {

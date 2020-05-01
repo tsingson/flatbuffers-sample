@@ -8,11 +8,11 @@ import (
 
 // ItemStructT native go object
 type ItemStructT struct {
-	Bool bool
-	U64 uint64
+	Bool  bool
+	U64   uint64
 	Color Color
-	I8 int8
-	F32 float32
+	I8    int8
+	F32   float32
 	Ubyte byte
 }
 
@@ -93,12 +93,12 @@ func (rcv *ItemStruct) Ubyte() byte {
 	return rcv._tab.GetByte(rcv._tab.Pos + flatbuffers.UOffsetT(24))
 }
 
-func CreateItemStruct(builder *flatbuffers.Builder, 
-	bool bool, 
-	u64 uint64, 
-	color Color, 
-	i8 int8, 
-	f32 float32, 
+func CreateItemStruct(builder *flatbuffers.Builder,
+	bool bool,
+	u64 uint64,
+	color Color,
+	i8 int8,
+	f32 float32,
 	ubyte byte) flatbuffers.UOffsetT {
 	builder.Prep(8, 32)
 	builder.Pad(7)

@@ -8,11 +8,11 @@ import (
 
 // ItemTableT native go object
 type ItemTableT struct {
-	Bool bool
-	U64 uint64
+	Bool  bool
+	U64   uint64
 	Color Color
-	I8 int8
-	F32 float32
+	I8    int8
+	F32   float32
 	Ubyte byte
 }
 

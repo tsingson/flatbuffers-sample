@@ -8,14 +8,14 @@ import (
 )
 
 type MonsterExtraT struct {
-	D0 float64
-	D1 float64
-	D2 float64
-	D3 float64
-	F0 float32
-	F1 float32
-	F2 float32
-	F3 float32
+	D0   float64
+	D1   float64
+	D2   float64
+	D3   float64
+	F0   float32
+	F1   float32
+	F2   float32
+	F3   float32
 	Dvec []float64
 	Fvec []float32
 }
@@ -73,11 +73,13 @@ func (rcv *MonsterExtra) UnPackTo(t *MonsterExtraT) {
 	dvecLength := rcv.DvecLength()
 	t.Dvec = make([]float64, dvecLength)
 	for j := 0; j < dvecLength; j++ {
-		t.Dvec[j] = rcv.Dvec(j)	}
+		t.Dvec[j] = rcv.Dvec(j)
+	}
 	fvecLength := rcv.FvecLength()
 	t.Fvec = make([]float32, fvecLength)
 	for j := 0; j < fvecLength; j++ {
-		t.Fvec[j] = rcv.Fvec(j)	}
+		t.Fvec[j] = rcv.Fvec(j)
+	}
 }
 
 func (rcv *MonsterExtra) UnPack() *MonsterExtraT {
@@ -154,7 +156,7 @@ func (rcv *MonsterExtra) D2() float64 {
 	if o != 0 {
 		return rcv._tab.GetFloat64(o + rcv._tab.Pos)
 	}
-return +math.Inf(0)
+	return +math.Inf(0)
 }
 
 func (rcv *MonsterExtra) MutateD2(n float64) bool {
@@ -242,7 +244,7 @@ func (rcv *MonsterExtra) MutateDvec(j int, n float64) bool {
 	o := flatbuffers.UOffsetT(rcv._tab.Offset(20))
 	if o != 0 {
 		a := rcv._tab.Vector(o)
-		return rcv._tab.MutateFloat64(a + flatbuffers.UOffsetT(j*8), n)
+		return rcv._tab.MutateFloat64(a+flatbuffers.UOffsetT(j*8), n)
 	}
 	return false
 }
@@ -268,7 +270,7 @@ func (rcv *MonsterExtra) MutateFvec(j int, n float32) bool {
 	o := flatbuffers.UOffsetT(rcv._tab.Offset(22))
 	if o != 0 {
 		a := rcv._tab.Vector(o)
-		return rcv._tab.MutateFloat32(a + flatbuffers.UOffsetT(j*4), n)
+		return rcv._tab.MutateFloat32(a+flatbuffers.UOffsetT(j*4), n)
 	}
 	return false
 }
@@ -278,7 +280,7 @@ func MonsterExtraStart(builder *flatbuffers.Builder) {
 }
 
 func MonsterExtraAddD0(builder *flatbuffers.Builder, D0 float64) {
-	builder.PrependFloat64Slot(0, D0, math.NaN )
+	builder.PrependFloat64Slot(0, D0, math.NaN)
 }
 
 func MonsterExtraAddD1(builder *flatbuffers.Builder, D1 float64) {
@@ -306,7 +308,7 @@ func MonsterExtraAddF2(builder *flatbuffers.Builder, F2 float32) {
 }
 
 func MonsterExtraAddF3(builder *flatbuffers.Builder, F3 float32) {
-	builder.PrependFloat32Slot(7, F3, float32(-math.Inf (0)))
+	builder.PrependFloat32Slot(7, F3, float32(-math.Inf(0)))
 }
 
 func MonsterExtraStartDvecVector(builder *flatbuffers.Builder, numElems int) {

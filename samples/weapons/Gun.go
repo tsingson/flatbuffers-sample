@@ -9,9 +9,9 @@ import (
 // GunT native go object
 type GunT struct {
 	Damage int16
-	Bool bool
-	Name string
-	Names []string
+	Bool   bool
+	Name   string
+	Names  []string
 }
 
 // GunT object pack function

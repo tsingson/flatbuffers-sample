@@ -8,15 +8,15 @@ import (
 
 // MonsterT native go object
 type MonsterT struct {
-	Pos *Vec3T
-	Mana int16
-	Hp int16
-	Name string
+	Pos       *Vec3T
+	Mana      int16
+	Hp        int16
+	Name      string
 	Inventory []byte
-	Color Color
-	Weapons []*WeaponT
-	Equipped *EquipmentT
-	Path []*Vec3T
+	Color     Color
+	Weapons   []*WeaponT
+	Equipped  *EquipmentT
+	Path      []*Vec3T
 }
 
 // MonsterT object pack function
@@ -32,7 +32,7 @@ func (t *MonsterT) Pack(builder *flatbuffers.Builder) flatbuffers.UOffsetT {
 	if t.Inventory != nil {
 		inventoryOffset = builder.CreateByteString(t.Inventory)
 	}
-	// vector of tables 
+	// vector of tables
 	weaponsOffset := flatbuffers.UOffsetT(0)
 	if t.Weapons != nil {
 		weaponsLength := len(t.Weapons)
@@ -47,7 +47,7 @@ func (t *MonsterT) Pack(builder *flatbuffers.Builder) flatbuffers.UOffsetT {
 		weaponsOffset = MonsterEndWeaponsVector(builder, weaponsLength)
 	}
 	equippedOffset := t.Equipped.Pack(builder)
-	
+
 	pathOffset := flatbuffers.UOffsetT(0)
 	if t.Path != nil {
 		pathLength := len(t.Path)
@@ -213,7 +213,7 @@ func (rcv *Monster) MutateInventory(j int, n byte) bool {
 	o := flatbuffers.UOffsetT(rcv._tab.Offset(14))
 	if o != 0 {
 		a := rcv._tab.Vector(o)
-		return rcv._tab.MutateByte(a + flatbuffers.UOffsetT(j*1), n)
+		return rcv._tab.MutateByte(a+flatbuffers.UOffsetT(j*1), n)
 	}
 	return false
 }

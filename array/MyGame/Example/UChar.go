@@ -8,9 +8,9 @@ import (
 
 // UCharT native go object
 type UCharT struct {
-	Inventory []byte
+	Inventory  []byte
 	Inventory1 []int8
-	ColorList []Color
+	ColorList  []Color
 }
 
 // UCharT object pack function
@@ -56,11 +56,13 @@ func (rcv *UChar) UnPackTo(t *UCharT) {
 	inventory1Length := rcv.Inventory1Length()
 	t.Inventory1 = make([]int8, inventory1Length)
 	for j := 0; j < inventory1Length; j++ {
-		t.Inventory1[j] = rcv.Inventory1(j)	}
+		t.Inventory1[j] = rcv.Inventory1(j)
+	}
 	colorListLength := rcv.ColorListLength()
 	t.ColorList = make([]Color, colorListLength)
 	for j := 0; j < colorListLength; j++ {
-		t.ColorList[j] = rcv.ColorList(j)	}
+		t.ColorList[j] = rcv.ColorList(j)
+	}
 }
 
 func (rcv *UChar) UnPack() *UCharT {

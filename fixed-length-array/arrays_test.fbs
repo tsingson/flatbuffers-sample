@@ -14,6 +14,10 @@ struct NestedStruct{
   h:bool;
 }
 
+table NestedTable {
+   nested:NestedStruct;
+}
+
 namespace MyGame;
 attribute "go_module:github.com/tsingson/flatbuffers-sample/fixed-length-array/";
 

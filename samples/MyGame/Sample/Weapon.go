@@ -8,7 +8,7 @@ import (
 
 // WeaponT native go object
 type WeaponT struct {
-	Name string
+	Name   string
 	Damage int16
 }
 

@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 
-	"github.com/tsingson/flatbuffers-sample/union-vector/Movie"
 	flatbuffers "github.com/google/flatbuffers/go"
+	"github.com/tsingson/flatbuffers-sample/union-vector/Movie"
 )
 
 func main() {
@@ -37,11 +37,11 @@ func main() {
 	}
 
 	m := &Movie.MovieT{
-		Single: c1,
-		Multiple:    []*Movie.CharacterT{c1, c2, c1, c3, c4},
+		Single:   c1,
+		Multiple: []*Movie.CharacterT{c1, c2, c1, c3, c4},
 	}
 	builder := flatbuffers.NewBuilder(0)
-	 builder.Finish(m.Pack(builder))
+	builder.Finish(m.Pack(builder))
 	buf := builder.FinishedBytes()
 
 	mt := Movie.GetRootAsMovie(buf, 0)

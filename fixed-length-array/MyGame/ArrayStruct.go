@@ -86,28 +86,17 @@ func (rcv *ArrayStruct) A() float32 {
 	return rcv._tab.GetFloat32(rcv._tab.Pos + flatbuffers.UOffsetT(0))
 }
 
-func (rcv *ArrayStruct) MutateA(n float32) bool {
-	return rcv._tab.MutateFloat32(rcv._tab.Pos + flatbuffers.UOffsetT(0), n)
-}
-
 func (rcv *ArrayStruct) B() [15]int32 {
 	result := [15]int32{}
-	o := flatbuffers.UOffsetT(rcv._tab.Offset(4))
-	if o != 0 {
-		a := rcv._tab.Vector(o)
-		for j := 0; j < 15; j++ {
-			result[j] = rcv._tab.GetInt32(a + flatbuffers.UOffsetT(j*4))
-		}
+	a := flatbuffers.UOffsetT(4)
+	for j := 0; j < 15; j++ {
+		result[j] = rcv._tab.GetInt32(a + flatbuffers.UOffsetT(j*4))
 	}
 	return result
 }
 
 func (rcv *ArrayStruct) C() int8 {
 	return rcv._tab.GetInt8(rcv._tab.Pos + flatbuffers.UOffsetT(64))
-}
-
-func (rcv *ArrayStruct) MutateC(n int8) bool {
-	return rcv._tab.MutateInt8(rcv._tab.Pos + flatbuffers.UOffsetT(64), n)
 }
 
 // IsStruct *MyGame__Example.NestedStructT
@@ -123,18 +112,11 @@ func (rcv *ArrayStruct) F() MyGame__Example.TestEnum {
 	return MyGame__Example.TestEnum(rcv._tab.GetInt8(rcv._tab.Pos + flatbuffers.UOffsetT(192)))
 }
 
-func (rcv *ArrayStruct) MutateF(n MyGame__Example.TestEnum) bool {
-	return rcv._tab.MutateInt8(rcv._tab.Pos + flatbuffers.UOffsetT(192), int8(n))
-}
-
 func (rcv *ArrayStruct) G() [3]MyGame__Example.TestEnum {
 	result := [3]MyGame__Example.TestEnum{}
-	o := flatbuffers.UOffsetT(rcv._tab.Offset(193))
-	if o != 0 {
-		a := rcv._tab.Vector(o)
-		for j := 0; j < 3; j++ {
-			result[j] = MyGame__Example.TestEnum(rcv._tab.GetInt8(a + flatbuffers.UOffsetT(j*1)))
-		}
+	a := flatbuffers.UOffsetT(193)
+	for j := 0; j < 3; j++ {
+		result[j] = MyGame__Example.TestEnum(rcv._tab.GetInt8(a + flatbuffers.UOffsetT(j*1)))
 	}
 	return result
 }
@@ -143,30 +125,20 @@ func (rcv *ArrayStruct) H() int32 {
 	return rcv._tab.GetInt32(rcv._tab.Pos + flatbuffers.UOffsetT(196))
 }
 
-func (rcv *ArrayStruct) MutateH(n int32) bool {
-	return rcv._tab.MutateInt32(rcv._tab.Pos + flatbuffers.UOffsetT(196), n)
-}
-
 func (rcv *ArrayStruct) I() [2]int64 {
 	result := [2]int64{}
-	o := flatbuffers.UOffsetT(rcv._tab.Offset(200))
-	if o != 0 {
-		a := rcv._tab.Vector(o)
-		for j := 0; j < 2; j++ {
-			result[j] = rcv._tab.GetInt64(a + flatbuffers.UOffsetT(j*8))
-		}
+	a := flatbuffers.UOffsetT(200)
+	for j := 0; j < 2; j++ {
+		result[j] = rcv._tab.GetInt64(a + flatbuffers.UOffsetT(j*8))
 	}
 	return result
 }
 
 func (rcv *ArrayStruct) J() [2]int8 {
 	result := [2]int8{}
-	o := flatbuffers.UOffsetT(rcv._tab.Offset(216))
-	if o != 0 {
-		a := rcv._tab.Vector(o)
-		for j := 0; j < 2; j++ {
-			result[j] = rcv._tab.GetInt8(a + flatbuffers.UOffsetT(j*1))
-		}
+	a := flatbuffers.UOffsetT(216)
+	for j := 0; j < 2; j++ {
+		result[j] = rcv._tab.GetInt8(a + flatbuffers.UOffsetT(j*1))
 	}
 	return result
 }
@@ -175,122 +147,174 @@ func (rcv *ArrayStruct) K() int8 {
 	return rcv._tab.GetInt8(rcv._tab.Pos + flatbuffers.UOffsetT(218))
 }
 
-func (rcv *ArrayStruct) MutateK(n int8) bool {
-	return rcv._tab.MutateInt8(rcv._tab.Pos + flatbuffers.UOffsetT(218), n)
-}
-
 func (rcv *ArrayStruct) L() bool {
 	return rcv._tab.GetBool(rcv._tab.Pos + flatbuffers.UOffsetT(219))
 }
 
-func (rcv *ArrayStruct) MutateL(n bool) bool {
-	return rcv._tab.MutateBool(rcv._tab.Pos + flatbuffers.UOffsetT(219), n)
-}
-
-func CreateArrayStruct(builder *flatbuffers.Builder, 
-	a float32, 
-	b [15]int32, 
-	c int8, 
-	d0_a [2]int32, 
-	d0_b MyGame__Example.TestEnum, 
-	d0_c [2]MyGame__Example.TestEnum, 
-	d0_d [2]int64, 
-	d0_e int8, 
-	d0_f [2]int8, 
-	d0_g int8, 
-	d0_h bool, 
-	d1_a [2]int32, 
-	d1_b MyGame__Example.TestEnum, 
-	d1_c [2]MyGame__Example.TestEnum, 
-	d1_d [2]int64, 
-	d1_e int8, 
-	d1_f [2]int8, 
-	d1_g int8, 
-	d1_h bool, 
-	e__a [2]int32, 
-	e__b MyGame__Example.TestEnum, 
-	e__c [2]MyGame__Example.TestEnum, 
-	e__d [2]int64, 
-	e__e int8, 
-	e__f [2]int8, 
-	e__g int8, 
-	e__h bool, 
-	f MyGame__Example.TestEnum, 
-	g [3]MyGame__Example.TestEnum, 
-	h int32, 
-	i [2]int64, 
-	j [2]int8, 
-	k int8, 
+func CreateArrayStruct(builder *flatbuffers.Builder,
+	a float32,
+	b [15]int32,
+	c int8,
+	d0_a [2]int32,
+	d0_b MyGame__Example.TestEnum,
+	d0_c [2]MyGame__Example.TestEnum,
+	d0_d [2]int64,
+	d0_e int8,
+	d0_f [2]int8,
+	d0_g int8,
+	d0_h bool,
+	d1_a [2]int32,
+	d1_b MyGame__Example.TestEnum,
+	d1_c [2]MyGame__Example.TestEnum,
+	d1_d [2]int64,
+	d1_e int8,
+	d1_f [2]int8,
+	d1_g int8,
+	d1_h bool,
+	e__a [2]int32,
+	e__b MyGame__Example.TestEnum,
+	e__c [2]MyGame__Example.TestEnum,
+	e__d [2]int64,
+	e__e int8,
+	e__f [2]int8,
+	e__g int8,
+	e__h bool,
+	f MyGame__Example.TestEnum,
+	g [3]MyGame__Example.TestEnum,
+	h int32,
+	i [2]int64,
+	j [2]int8,
+	k int8,
 	l bool) flatbuffers.UOffsetT {
 	builder.Prep(8, 224)
+	builder.Pad(4)
+	// offset: 219
 	builder.PrependBool(l)
+	// offset: 218
 	builder.PrependInt8(k)
-	for _j := 2; _j == 0; _j-- {
+	// offset: 216
+	j_length := 2
+	for _j := (j_length - 1); _j >= 0; _j-- {
 		builder.PrependInt8(j[_j])
 	}
-	for _j := 2; _j == 0; _j-- {
+	// offset: 200
+	i_length := 2
+	for _j := (i_length - 1); _j >= 0; _j-- {
 		builder.PrependInt64(i[_j])
 	}
+	// offset: 196
 	builder.PrependInt32(h)
-	for _j := 3; _j == 0; _j-- {
+	// offset: 193
+	g_length := 3
+	for _j := (g_length - 1); _j >= 0; _j-- {
 		builder.PrependInt8(int8(g[_j]))
 	}
-		builder.PrependByte(byte(f))
-// build struct E
+	// offset: 192
+	builder.PrependInt8(int8(f))
+	// offset: 152
+	// build struct E
+	builder.Pad(3)
+	// offset: 36
 	builder.PrependBool(e__h)
+	// offset: 35
 	builder.PrependInt8(e__g)
-	for _j := 2; _j == 0; _j-- {
+	// offset: 33
+	e__f_length := 2
+	for _j := (e__f_length - 1); _j >= 0; _j-- {
 		builder.PrependInt8(e__f[_j])
 	}
+	// offset: 32
 	builder.PrependInt8(e__e)
-	for _j := 2; _j == 0; _j-- {
+	// offset: 16
+	e__d_length := 2
+	for _j := (e__d_length - 1); _j >= 0; _j-- {
 		builder.PrependInt64(e__d[_j])
 	}
-	for _j := 2; _j == 0; _j-- {
+	builder.Pad(5)
+	// offset: 9
+	e__c_length := 2
+	for _j := (e__c_length - 1); _j >= 0; _j-- {
 		builder.PrependInt8(int8(e__c[_j]))
 	}
-		builder.PrependByte(byte(e__b))
-	for _j := 2; _j == 0; _j-- {
+	// offset: 8
+	builder.PrependInt8(int8(e__b))
+	// offset: 0
+	e__a_length := 2
+	for _j := (e__a_length - 1); _j >= 0; _j-- {
 		builder.PrependInt32(e__a[_j])
 	}
-// build struct D
+	// offset: 72
+	// build struct D
+	builder.Pad(3)
+	// offset: 36
 	builder.PrependBool(d0_h)
+	// offset: 35
 	builder.PrependInt8(d0_g)
-	for _j := 2; _j == 0; _j-- {
+	// offset: 33
+	d0_f_length := 2
+	for _j := (d0_f_length - 1); _j >= 0; _j-- {
 		builder.PrependInt8(d0_f[_j])
 	}
+	// offset: 32
 	builder.PrependInt8(d0_e)
-	for _j := 2; _j == 0; _j-- {
+	// offset: 16
+	d0_d_length := 2
+	for _j := (d0_d_length - 1); _j >= 0; _j-- {
 		builder.PrependInt64(d0_d[_j])
 	}
-	for _j := 2; _j == 0; _j-- {
+	builder.Pad(5)
+	// offset: 9
+	d0_c_length := 2
+	for _j := (d0_c_length - 1); _j >= 0; _j-- {
 		builder.PrependInt8(int8(d0_c[_j]))
 	}
-		builder.PrependByte(byte(d0_b))
-	for _j := 2; _j == 0; _j-- {
+	// offset: 8
+	builder.PrependInt8(int8(d0_b))
+	// offset: 0
+	d0_a_length := 2
+	for _j := (d0_a_length - 1); _j >= 0; _j-- {
 		builder.PrependInt32(d0_a[_j])
 	}
-// build struct D
+	// build struct D
+	builder.Pad(3)
+	// offset: 36
 	builder.PrependBool(d1_h)
+	// offset: 35
 	builder.PrependInt8(d1_g)
-	for _j := 2; _j == 0; _j-- {
+	// offset: 33
+	d1_f_length := 2
+	for _j := (d1_f_length - 1); _j >= 0; _j-- {
 		builder.PrependInt8(d1_f[_j])
 	}
+	// offset: 32
 	builder.PrependInt8(d1_e)
-	for _j := 2; _j == 0; _j-- {
+	// offset: 16
+	d1_d_length := 2
+	for _j := (d1_d_length - 1); _j >= 0; _j-- {
 		builder.PrependInt64(d1_d[_j])
 	}
-	for _j := 2; _j == 0; _j-- {
+	builder.Pad(5)
+	// offset: 9
+	d1_c_length := 2
+	for _j := (d1_c_length - 1); _j >= 0; _j-- {
 		builder.PrependInt8(int8(d1_c[_j]))
 	}
-		builder.PrependByte(byte(d1_b))
-	for _j := 2; _j == 0; _j-- {
+	// offset: 8
+	builder.PrependInt8(int8(d1_b))
+	// offset: 0
+	d1_a_length := 2
+	for _j := (d1_a_length - 1); _j >= 0; _j-- {
 		builder.PrependInt32(d1_a[_j])
 	}
+	builder.Pad(7)
+	// offset: 64
 	builder.PrependInt8(c)
-	for _j := 15; _j == 0; _j-- {
+	// offset: 4
+	b_length := 15
+	for _j := (b_length - 1); _j >= 0; _j-- {
 		builder.PrependInt32(b[_j])
 	}
+	// offset: 0
 	builder.PrependFloat32(a)
 	return builder.Offset()
 }

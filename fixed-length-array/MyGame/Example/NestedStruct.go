@@ -75,12 +75,9 @@ func (rcv *NestedStruct) Table() flatbuffers.Table {
 
 func (rcv *NestedStruct) A() [2]int32 {
 	result := [2]int32{}
-	o := flatbuffers.UOffsetT(rcv._tab.Offset(0))
-	if o != 0 {
-		a := rcv._tab.Vector(o)
-		for j := 0; j < 2; j++ {
-			result[j] = rcv._tab.GetInt32(a + flatbuffers.UOffsetT(j*4))
-		}
+	a := flatbuffers.UOffsetT(0)
+	for j := 0; j < 2; j++ {
+		result[j] = rcv._tab.GetInt32(a + flatbuffers.UOffsetT(j*4))
 	}
 	return result
 }
@@ -89,30 +86,20 @@ func (rcv *NestedStruct) B() TestEnum {
 	return TestEnum(rcv._tab.GetInt8(rcv._tab.Pos + flatbuffers.UOffsetT(8)))
 }
 
-func (rcv *NestedStruct) MutateB(n TestEnum) bool {
-	return rcv._tab.MutateInt8(rcv._tab.Pos + flatbuffers.UOffsetT(8), int8(n))
-}
-
 func (rcv *NestedStruct) C() [2]TestEnum {
 	result := [2]TestEnum{}
-	o := flatbuffers.UOffsetT(rcv._tab.Offset(9))
-	if o != 0 {
-		a := rcv._tab.Vector(o)
-		for j := 0; j < 2; j++ {
-			result[j] = TestEnum(rcv._tab.GetInt8(a + flatbuffers.UOffsetT(j*1)))
-		}
+	a := flatbuffers.UOffsetT(9)
+	for j := 0; j < 2; j++ {
+		result[j] = TestEnum(rcv._tab.GetInt8(a + flatbuffers.UOffsetT(j*1)))
 	}
 	return result
 }
 
 func (rcv *NestedStruct) D() [2]int64 {
 	result := [2]int64{}
-	o := flatbuffers.UOffsetT(rcv._tab.Offset(16))
-	if o != 0 {
-		a := rcv._tab.Vector(o)
-		for j := 0; j < 2; j++ {
-			result[j] = rcv._tab.GetInt64(a + flatbuffers.UOffsetT(j*8))
-		}
+	a := flatbuffers.UOffsetT(16)
+	for j := 0; j < 2; j++ {
+		result[j] = rcv._tab.GetInt64(a + flatbuffers.UOffsetT(j*8))
 	}
 	return result
 }
@@ -121,18 +108,11 @@ func (rcv *NestedStruct) E() int8 {
 	return rcv._tab.GetInt8(rcv._tab.Pos + flatbuffers.UOffsetT(32))
 }
 
-func (rcv *NestedStruct) MutateE(n int8) bool {
-	return rcv._tab.MutateInt8(rcv._tab.Pos + flatbuffers.UOffsetT(32), n)
-}
-
 func (rcv *NestedStruct) F() [2]int8 {
 	result := [2]int8{}
-	o := flatbuffers.UOffsetT(rcv._tab.Offset(33))
-	if o != 0 {
-		a := rcv._tab.Vector(o)
-		for j := 0; j < 2; j++ {
-			result[j] = rcv._tab.GetInt8(a + flatbuffers.UOffsetT(j*1))
-		}
+	a := flatbuffers.UOffsetT(33)
+	for j := 0; j < 2; j++ {
+		result[j] = rcv._tab.GetInt8(a + flatbuffers.UOffsetT(j*1))
 	}
 	return result
 }
@@ -141,42 +121,48 @@ func (rcv *NestedStruct) G() int8 {
 	return rcv._tab.GetInt8(rcv._tab.Pos + flatbuffers.UOffsetT(35))
 }
 
-func (rcv *NestedStruct) MutateG(n int8) bool {
-	return rcv._tab.MutateInt8(rcv._tab.Pos + flatbuffers.UOffsetT(35), n)
-}
-
 func (rcv *NestedStruct) H() bool {
 	return rcv._tab.GetBool(rcv._tab.Pos + flatbuffers.UOffsetT(36))
 }
 
-func (rcv *NestedStruct) MutateH(n bool) bool {
-	return rcv._tab.MutateBool(rcv._tab.Pos + flatbuffers.UOffsetT(36), n)
-}
-
-func CreateNestedStruct(builder *flatbuffers.Builder, 
-	a [2]int32, 
-	b TestEnum, 
-	c [2]TestEnum, 
-	d [2]int64, 
-	e int8, 
-	f [2]int8, 
-	g int8, 
+func CreateNestedStruct(builder *flatbuffers.Builder,
+	a [2]int32,
+	b TestEnum,
+	c [2]TestEnum,
+	d [2]int64,
+	e int8,
+	f [2]int8,
+	g int8,
 	h bool) flatbuffers.UOffsetT {
 	builder.Prep(8, 40)
+	builder.Pad(3)
+	// offset: 36
 	builder.PrependBool(h)
+	// offset: 35
 	builder.PrependInt8(g)
-	for _j := 2; _j == 0; _j-- {
+	// offset: 33
+	f_length := 2
+	for _j := (f_length - 1); _j >= 0; _j-- {
 		builder.PrependInt8(f[_j])
 	}
+	// offset: 32
 	builder.PrependInt8(e)
-	for _j := 2; _j == 0; _j-- {
+	// offset: 16
+	d_length := 2
+	for _j := (d_length - 1); _j >= 0; _j-- {
 		builder.PrependInt64(d[_j])
 	}
-	for _j := 2; _j == 0; _j-- {
+	builder.Pad(5)
+	// offset: 9
+	c_length := 2
+	for _j := (c_length - 1); _j >= 0; _j-- {
 		builder.PrependInt8(int8(c[_j]))
 	}
-		builder.PrependByte(byte(b))
-	for _j := 2; _j == 0; _j-- {
+	// offset: 8
+	builder.PrependInt8(int8(b))
+	// offset: 0
+	a_length := 2
+	for _j := (a_length - 1); _j >= 0; _j-- {
 		builder.PrependInt32(a[_j])
 	}
 	return builder.Offset()

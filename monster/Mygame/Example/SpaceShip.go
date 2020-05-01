@@ -6,47 +6,6 @@ import (
 	flatbuffers "github.com/google/flatbuffers/go"
 )
 
-// SpaceShipT native go object
-type SpaceShipT struct {
-	Size *Vec3T
-	Power int32
-	Name string
-}
-
-// SpaceShipT object pack function
-func (t *SpaceShipT) Pack(builder *flatbuffers.Builder) flatbuffers.UOffsetT {
-	if t == nil {
-		return 0
-	}
-	nameOffset := flatbuffers.UOffsetT(0)
-	if len(t.Name) > 0 {
-		nameOffset = builder.CreateString(t.Name)
-	}
-
-	SpaceShipStart(builder)
-	sizeOffset := t.Size.Pack(builder)
-	SpaceShipAddSize(builder, sizeOffset)
-	SpaceShipAddPower(builder, t.Power)
-	SpaceShipAddName(builder, nameOffset)
-	return SpaceShipEnd(builder)
-}
-
-// SpaceShipT object unpack function
-func (rcv *SpaceShip) UnPackTo(t *SpaceShipT) {
-	t.Size = rcv.Size(nil).UnPack()
-	t.Power = rcv.Power()
-	t.Name = string(rcv.Name())
-}
-
-func (rcv *SpaceShip) UnPack() *SpaceShipT {
-	if rcv == nil {
-		return nil
-	}
-	t := &SpaceShipT{}
-	rcv.UnPackTo(t)
-	return t
-}
-
 type SpaceShip struct {
 	_tab flatbuffers.Table
 }
@@ -102,10 +61,6 @@ func (rcv *SpaceShip) Power() int32 {
 		return rcv._tab.GetInt32(o + rcv._tab.Pos)
 	}
 	return 0
-}
-
-func (rcv *SpaceShip) MutatePower(n int32) bool {
-	return rcv._tab.MutateInt32Slot(6, n)
 }
 
 func (rcv *SpaceShip) Name() []byte {

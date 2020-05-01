@@ -7,12 +7,12 @@ import (
 )
 
 func TestGetRootAsMonsterExtra(t *testing.T) {
-	builder := flatbuffers.NewBuilder(256 )
+	builder := flatbuffers.NewBuilder(256)
 
-		dvecOffset := flatbuffers.UOffsetT(0)
+	dvecOffset := flatbuffers.UOffsetT(0)
 
-		Dvec := []float64{ 1.1, 2.2, 3.3 , 4.4 }
-		Fvec := []float32{ 1.1, 2.2, 3.3 , 4.4 }
+	Dvec := []float64{1.1, 2.2, 3.3, 4.4}
+	Fvec := []float32{1.1, 2.2, 3.3, 4.4}
 
 	if Dvec != nil {
 		dvecLength := len(Dvec)
@@ -35,20 +35,19 @@ func TestGetRootAsMonsterExtra(t *testing.T) {
 	// pack process all field
 
 	MonsterExtraStart(builder)
-	MonsterExtraAddD0(builder, 1.1 )
-	MonsterExtraAddD1(builder, 2.2 )
-	MonsterExtraAddD2(builder, 3.2 )
-	MonsterExtraAddD3(builder, 4.4 )
-	MonsterExtraAddF0(builder, 5.5 )
-	MonsterExtraAddF1(builder, 6.6 )
-	MonsterExtraAddF2(builder, 7.7 )
-	MonsterExtraAddF3(builder, 8.8 )
+	MonsterExtraAddD0(builder, 1.1)
+	MonsterExtraAddD1(builder, 2.2)
+	MonsterExtraAddD2(builder, 3.2)
+	MonsterExtraAddD3(builder, 4.4)
+	MonsterExtraAddF0(builder, 5.5)
+	MonsterExtraAddF1(builder, 6.6)
+	MonsterExtraAddF2(builder, 7.7)
+	MonsterExtraAddF3(builder, 8.8)
 	MonsterExtraAddDvec(builder, dvecOffset)
 	MonsterExtraAddFvec(builder, fvecOffset)
 	builder.Finish(MonsterExtraEnd(builder))
 	buf := builder.FinishedBytes()
 
-	fmt.Printf("%0b\n", buf )
-
+	fmt.Printf("%0b\n", buf)
 
 }
